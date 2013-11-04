@@ -8,9 +8,6 @@ Install with [npm](https://npmjs.org/package/imagemin): `npm install imagemin`
 
 ## Examples
 
-All `platform` and `arch` specific options takes precedence over the base 
-options. See [test.js](test.js) for a full fleshed example.
-
 ```js
 imagemin(img.gif, img-minified.gif, function () {
     console.log('GIF image minified!');
