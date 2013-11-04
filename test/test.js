@@ -34,4 +34,3 @@ describe('Imagemin.optimize()', function () {
         });
     });
 });
-
