@@ -1,10 +1,10 @@
-# imagemin [![Build Status](https://secure.travis-ci.org/kevva/imagemin.png?branch=master)](http://travis-ci.org/kevva/imagemin)
+# image-min [![Build Status](https://secure.travis-ci.org/kevva/image-min.png?branch=master)](http://travis-ci.org/kevva/image-min)
 
 Minify GIF, JPEG and PNG images seamlessly with Node.js.
 
 ## Getting started
 
-Install with [npm](https://npmjs.org/package/imagemin): `npm install imagemin`
+Install with [npm](https://npmjs.org/package/image-min): `npm install image-min`
 
 ## Examples
 

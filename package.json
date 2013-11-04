@@ -1,5 +1,5 @@
 {
-  "name": "imagemin",
+  "name": "image-min",
   "version": "0.1.0",
   "description": "Minify GIF, JPEG and PNG images",
   "keywords": [
@@ -11,15 +11,15 @@
     "minify",
     "png"
   ],
-  "homepage": "https://github.com/kevva/imagemin",
-  "bugs": "https://github.com/kevva/imagemin/issues",
+  "homepage": "https://github.com/kevva/image-min",
+  "bugs": "https://github.com/kevva/image-min/issues",
   "author": {
     "name": "Kevin Martensson",
     "email": "kevinmartensson@gmail.com",
     "url": "http://kevinmartensson.com"
   },
   "license": "MIT",
-  "repository": "git://github.com/kevva/imagemin.git",
+  "repository": "git://github.com/kevva/image-min.git",
   "scripts": {
     "test": "mocha --reporter list"
   },
