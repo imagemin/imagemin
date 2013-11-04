@@ -9,6 +9,8 @@ Install with [npm](https://npmjs.org/package/image-min): `npm install image-min`
 ## Examples
 
 ```js
+var imagemin = require('image-min');
+
 imagemin(img.gif, img-minified.gif, function () {
     console.log('GIF image minified!');
 });
