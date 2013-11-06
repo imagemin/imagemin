@@ -1,11 +1,15 @@
 'use strict';
 
+var cache = require('cache-file');
+var filesize = require('filesize');
+var fs = require('fs');
 var gifsicle = require('gifsicle').path;
-var grunt = require('grunt');
 var jpegtran = require('jpegtran-bin').path;
+var mkdir = require('mkdirp');
 var mout = require('mout');
 var optipng = require('optipng-bin').path;
-var pngquant = require('pngquant-bin').path;
+var path = require('path');
+var spawn = require('child_process').spawn;
 
 /**
  * Initialize `Imagemin` with options
@@ -43,7 +47,21 @@ Imagemin.prototype.optimize = function (cb) {
         cb = function () {};
     }
 
-    return this.optimizer(this.src, this.dest, cb);
+    if (!fs.existsSync(path.dirname(this.dest))) {
+        mkdir.sync(path.dirname(this.dest));
+    }
+
+    if (this.opts.cache && cache.check(this.src, { name: 'imagemin' })) {
+        cache.get(this.src, this.dest, { name: 'imagemin' });
+        return cb(this._process());
+    }
+
+    var self = this;
+    var optimizer = this.optimizer(this.src, this.dest, cb);
+
+    optimizer.once('close', function () {
+        cb(self._process());
+    });
 };
 
 /**
@@ -68,23 +86,17 @@ Imagemin.prototype._getOptimizer = function (src) {
  *
  * @param {String} src
  * @param {String} dest
- * @param {Function} cb
  * @api private
  */
 
-Imagemin.prototype._optimizeGif = function (src, dest, cb) {
+Imagemin.prototype._optimizeGif = function (src, dest) {
     var args = ['-w'];
 
     if (this.opts.interlaced) {
         args.push('--interlace');
     }
 
-    var optimizer = grunt.util.spawn({
-        cmd: gifsicle,
-        args: args.concat(['-o', dest, src])
-    }, cb);
-
-    return optimizer;
+    return spawn(gifsicle, args.concat(['-o', dest, src]));
 };
 
 /**
@@ -92,23 +104,17 @@ Imagemin.prototype._optimizeGif = function (src, dest, cb) {
  *
  * @param {String} src
  * @param {String} dest
- * @param {Function} cb
  * @api private
  */
 
-Imagemin.prototype._optimizeJpeg = function (src, dest, cb) {
+Imagemin.prototype._optimizeJpeg = function (src, dest) {
     var args = ['-copy', 'none', '-optimize'];
 
     if (this.opts.progressive) {
         args.push('-progressive');
     }
 
-    var optimizer = grunt.util.spawn({
-        cmd: jpegtran,
-        args: args.concat(['-outfile', dest, src])
-    }, cb);
-
-    return optimizer;
+    return spawn(jpegtran, args.concat(['-outfile', dest, src]));
 };
 
 /**
@@ -116,40 +122,34 @@ Imagemin.prototype._optimizeJpeg = function (src, dest, cb) {
  *
  * @param {String} src
  * @param {String} dest
- * @param {Function} cb
  * @api private
  */
 
-Imagemin.prototype._optimizePng = function (src, dest, cb) {
+Imagemin.prototype._optimizePng = function (src, dest) {
     var args = ['-strip', 'all'];
-    var optimizer;
-    var tmpDest = dest + '.tmp';
 
     if (typeof this.opts.optimizationLevel === 'number') {
         args.push('-o', this.opts.optimizationLevel);
     }
 
-    if (this.opts.pngquant) {
-        optimizer = grunt.util.spawn({
-            cmd: pngquant,
-            args: ['-o', tmpDest, src]
-        }, function () {
-            grunt.util.spawn({
-                cmd: optipng,
-                args: args.concat(['-out', dest, tmpDest])
-            }, function () {
-                grunt.file.delete(tmpDest);
-                cb();
-            });
-        });
-    } else {
-        optimizer = grunt.util.spawn({
-            cmd: optipng,
-            args: args.concat(['-out', dest, src])
-        }, cb);
+    return spawn(optipng, args.concat(['-out', dest, src]));
+};
+
+/**
+ * Process optimized images
+ *
+ * @api private
+ */
+
+Imagemin.prototype._process = function () {
+    var size = fs.statSync(this.src).size;
+    var saved = size - fs.statSync(this.dest).size;
+
+    if (this.opts.cache && !cache.check(this.src, { name: 'imagemin' })) {
+        cache.store(this.dest, this.src, { name: 'imagemin' });
     }
 
-    return optimizer;
+    return filesize(saved);
 };
 
 /**

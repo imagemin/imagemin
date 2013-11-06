@@ -28,13 +28,14 @@
     "imagemin.js"
   ],
   "dependencies": {
+    "cache-file": "~0.1.1",
     "chalk": "~0.2.0",
+    "filesize": "~2.0.0",
     "gifsicle": "~0.1.0",
-    "grunt": "~0.4.1",
     "jpegtran-bin": "~0.2.0",
+    "mkdirp": "~0.3.5",
     "mout": "~0.7.1",
-    "optipng-bin": "~0.3.0",
-    "pngquant-bin": "~0.1.0"
+    "optipng-bin": "~0.3.0"
   },
   "devDependencies": {
     "mocha": "~1.12.0"

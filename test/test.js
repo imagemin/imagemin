@@ -2,6 +2,7 @@
 'use strict';
 
 var assert = require('assert');
+var cache = require('cache-file');
 var imagemin = require('../imagemin');
 var path = require('path');
 
@@ -11,7 +12,7 @@ describe('Imagemin.optimize()', function () {
         var dest = path.join(__dirname, 'tmp/test.gif');
 
         imagemin(src, dest, function () {
-            assert(dest > src);
+            assert.ok(dest > src);
             cb();
         });
     });
@@ -20,7 +21,7 @@ describe('Imagemin.optimize()', function () {
         var dest = path.join(__dirname, 'tmp/test.jpg');
 
         imagemin(src, dest, function () {
-            assert(dest > src);
+            assert.ok(dest > src);
             cb();
         });
     });
@@ -29,7 +30,17 @@ describe('Imagemin.optimize()', function () {
         var dest = path.join(__dirname, 'tmp/test.png');
 
         imagemin(src, dest, function () {
-            assert(dest > src);
+            assert.ok(dest > src);
+            cb();
+        });
+    });
+    it('should store an optimized image in cache', function (cb) {
+        var src = path.join(__dirname, 'fixtures/test-cache.jpg');
+        var dest = path.join(__dirname, 'tmp/test-cache.jpg');
+
+        imagemin(src, dest, { cache: true }, function () {
+            assert.ok(cache.check(src, { name: 'imagemin' }));
+            cache.clean(src, { name: 'imagemin' });
             cb();
         });
     });
