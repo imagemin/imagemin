@@ -13,16 +13,16 @@ The callback returns `size` which tells you how much optimization was done.
 ```js
 var imagemin = require('image-min');
 
-imagemin(img.gif, img-minified.gif, function (size) {
-    console.log('Saved ' + size);
+imagemin(img.gif, img-minified.gif, function (data) {
+    console.log('Saved ' + data.size);
 });
 
-imagemin(img.jpg, img-minified.jpg, { progressive: true }, function (size) {
-    console.log('Saved ' + size);
+imagemin(img.jpg, img-minified.jpg, { progressive: true }, function (data) {
+    console.log('Saved ' + data.size);
 });
 
-imagemin(img.png, img-minified.png, { pngquant: true, optimizationLevel: 4 }, function (size) {
-    console.log('Saved ' + size);
+imagemin(img.png, img-minified.png, { pngquant: true, optimizationLevel: 4 }, function (data) {
+    console.log('Saved ' + data.size);
 });
 ```
 

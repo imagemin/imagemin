@@ -3,6 +3,7 @@
 
 var assert = require('assert');
 var cache = require('cache-file');
+var fs = require('fs');
 var imagemin = require('../imagemin');
 var path = require('path');
 
@@ -12,7 +13,7 @@ describe('Imagemin.optimize()', function () {
         var dest = path.join(__dirname, 'tmp/test.gif');
 
         imagemin(src, dest, function () {
-            assert.ok(dest > src);
+            assert.ok(fs.statSync(dest).size < fs.statSync(src).size);
             cb();
         });
     });
@@ -21,7 +22,7 @@ describe('Imagemin.optimize()', function () {
         var dest = path.join(__dirname, 'tmp/test.jpg');
 
         imagemin(src, dest, function () {
-            assert.ok(dest > src);
+            assert.ok(fs.statSync(dest).size < fs.statSync(src).size);
             cb();
         });
     });
@@ -30,7 +31,7 @@ describe('Imagemin.optimize()', function () {
         var dest = path.join(__dirname, 'tmp/test.png');
 
         imagemin(src, dest, function () {
-            assert.ok(dest > src);
+            assert.ok(fs.statSync(dest).size < fs.statSync(src).size);
             cb();
         });
     });

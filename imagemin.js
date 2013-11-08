@@ -149,7 +149,12 @@ Imagemin.prototype._process = function () {
         cache.store(this.dest, this.src, { name: 'imagemin' });
     }
 
-    return filesize(saved);
+    var data = {
+        size: filesize(saved),
+        sizeRaw: saved
+    };
+
+    return data;
 };
 
 /**
