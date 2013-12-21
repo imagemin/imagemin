@@ -1,13 +1,12 @@
 'use strict';
 
 var cache = require('cache-file');
+var endsWith = require('mout/string/endsWith');
 var filesize = require('filesize');
+var find = require('mout/array/find');
 var fs = require('fs');
-var gifsicle = require('gifsicle').path;
-var jpegtran = require('jpegtran-bin').path;
+var isFunction = require('mout/lang/isFunction');
 var mkdir = require('mkdirp');
-var mout = require('mout');
-var optipng = require('optipng-bin').path;
 var path = require('path');
 var spawn = require('child_process').spawn;
 
@@ -43,7 +42,7 @@ function Imagemin(src, dest, opts) {
  */
 
 Imagemin.prototype.optimize = function (cb) {
-    if (!cb || !mout.lang.isFunction(cb)) {
+    if (!cb || !isFunction(cb)) {
         cb = function () {};
     }
 
@@ -74,8 +73,8 @@ Imagemin.prototype.optimize = function (cb) {
 Imagemin.prototype._getOptimizer = function (src) {
     src = src.toLowerCase();
 
-    var ext = mout.array.find(this.optimizerTypes, function (ext) {
-        return mout.string.endsWith(src, ext);
+    var ext = find(this.optimizerTypes, function (ext) {
+        return endsWith(src, ext);
     });
 
     return ext ? this.optimizers[ext] : null;
@@ -91,6 +90,7 @@ Imagemin.prototype._getOptimizer = function (src) {
 
 Imagemin.prototype._optimizeGif = function (src, dest) {
     var args = ['-w'];
+    var gifsicle = require('gifsicle').path;
 
     if (this.opts.interlaced) {
         args.push('--interlace');
@@ -109,6 +109,7 @@ Imagemin.prototype._optimizeGif = function (src, dest) {
 
 Imagemin.prototype._optimizeJpeg = function (src, dest) {
     var args = ['-copy', 'none', '-optimize'];
+    var jpegtran = require('jpegtran-bin').path;
 
     if (this.opts.progressive) {
         args.push('-progressive');
@@ -127,6 +128,7 @@ Imagemin.prototype._optimizeJpeg = function (src, dest) {
 
 Imagemin.prototype._optimizePng = function (src, dest) {
     var args = ['-strip', 'all'];
+    var optipng = require('optipng-bin').path;
 
     if (typeof this.opts.optimizationLevel === 'number') {
         args.push('-o', this.opts.optimizationLevel);
@@ -162,7 +164,7 @@ Imagemin.prototype._process = function () {
  */
 
 module.exports = function (src, dest, opts, cb) {
-    if (!cb && mout.lang.isFunction(opts)) {
+    if (!cb && isFunction(opts)) {
         cb = opts;
         opts = {};
     }
