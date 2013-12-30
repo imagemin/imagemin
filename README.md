@@ -40,6 +40,11 @@ options below (optionally) to configure how your images are optimized.
 * `optimizationLevel` (PNG only) — Select optimization level between 0 and 7
 * `progressive` (JPEG only) — Lossless conversion to progressive
 
+## Used by
+
+- [gulp-imagemin](https://github.com/sindresorhus/gulp-imagemin)
+- [grunt-contrib-imagemin](https://github.com/gruntjs/grunt-contrib-imagemin)
+
 ## License
 
 [MIT License](http://en.wikipedia.org/wiki/MIT_License) (c) [Kevin Mårtensson](http://kevinmartensson.com)
