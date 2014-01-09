@@ -156,8 +156,10 @@ Imagemin.prototype._process = function () {
     }
 
     var data = {
-        size: filesize(saved),
-        sizeRaw: saved
+        origSize: filesize(size),
+        origSizeRaw: size,
+        diffSize: filesize(saved),
+        diffSizeRaw: saved
     };
 
     return data;
