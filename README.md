@@ -30,15 +30,38 @@ imagemin(img.png, img-minified.png, { pngquant: true, optimizationLevel: 4 }, fu
 
 ### imagemin(src, dest, opts, cb)
 
-Optimize a `GIF`, `JPEG`, or `PNG` image by providing a `src` and `dest`. Use the 
+Optimize a `GIF`, `JPEG`, or `PNG` image by providing a `src` and `dest`. Use the
 options below (optionally) to configure how your images are optimized.
 
 ## Options
 
-* `cache` — Whether to cache optimized images
-* `interlaced` (GIF only) — Interlace gif for progressive rendering
-* `optimizationLevel` (PNG only) — Select optimization level between 0 and 7
-* `progressive` (JPEG only) — Lossless conversion to progressive
+### cache
+
+Type: `Boolean`  
+Default: `false`
+
+Whether to cache optimized images.
+
+### interlaced (GIF only)
+
+Type: `Boolean`  
+Default: `false`
+
+Interlace gif for progressive rendering.
+
+### optimizationLevel (PNG only)
+
+Type: `Number`  
+Default: `2`
+
+Select a optimization level between 0 and 7.
+
+### progressive (JPEG only)
+
+Type: `Boolean`  
+Default: `false`
+
+Lossless conversion to progressive.
 
 ## License
 
