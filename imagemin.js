@@ -55,6 +55,10 @@ Imagemin.prototype.optimize = function (cb) {
         return cb(this._process());
     }
 
+    if (!isFunction(this.optimizer)) {
+        return cb();
+    }
+
     var self = this;
     var optimizer = this.optimizer(this.src, this.dest, cb);
 

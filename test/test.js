@@ -35,6 +35,16 @@ describe('Imagemin.optimize()', function () {
             cb();
         });
     });
+    it('should skip a unsupported image', function (cb) {
+        var src = path.join(__dirname, 'fixtures/test.bmp');
+        var dest = path.join(__dirname, 'tmp/test.bmp');
+
+        imagemin(src, dest, function () {
+            fs.exists(dest, function (exists) {
+                cb(assert.ok(!exists));
+            });
+        });
+    });
     it('should store an optimized image in cache', function (cb) {
         var src = path.join(__dirname, 'fixtures/test-cache.jpg');
         var dest = path.join(__dirname, 'tmp/test-cache.jpg');
