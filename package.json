@@ -29,7 +29,7 @@
   ],
   "dependencies": {
     "cache-file": "~0.1.1",
-    "chalk": "~0.2.0",
+    "chalk": "~0.4.0",
     "filesize": "~2.0.0",
     "gifsicle": "~0.1.0",
     "jpegtran-bin": "~0.2.0",
