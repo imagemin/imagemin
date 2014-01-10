@@ -52,7 +52,7 @@ Imagemin.prototype.optimize = function (cb) {
 
     if (this.opts.cache && cache.check(this.src, { name: 'imagemin' })) {
         cache.get(this.src, this.dest, { name: 'imagemin' });
-        return cb(this._process());
+        return cb(null, this._process());
     }
 
     if (!isFunction(this.optimizer)) {
@@ -62,8 +62,18 @@ Imagemin.prototype.optimize = function (cb) {
     var self = this;
     var optimizer = this.optimizer(this.src, this.dest, cb);
 
-    optimizer.once('close', function () {
-        cb(self._process());
+    optimizer.on('error', function (err) {
+        return cb(new Error(err));
+    });
+
+    optimizer.stderr.on('data', function (data) {
+        return cb(new Error(data.toString()));
+    });
+
+    optimizer.once('close', function (code) {
+        if (code === 0) {
+            return cb(null, self._process());
+        }
     });
 };
 
@@ -131,7 +141,7 @@ Imagemin.prototype._optimizeJpeg = function (src, dest) {
  */
 
 Imagemin.prototype._optimizePng = function (src, dest) {
-    var args = ['-strip', 'all'];
+    var args = ['-strip', 'all', '-quiet'];
     var optipng = require('optipng-bin').path;
 
     if (typeof this.opts.optimizationLevel === 'number') {
