@@ -8,21 +8,21 @@ Install with [npm](https://npmjs.org/package/image-min): `npm install image-min`
 
 ## Examples
 
-The callback returns `size` which tells you how much optimization was done.
+`data` returns information about how much optimization was done.
 
 ```js
 var imagemin = require('image-min');
 
-imagemin(img.gif, img-minified.gif, function (data) {
-    console.log('Saved ' + data.size);
+imagemin(img.gif, img-minified.gif, function (err, data) {
+    console.log('Saved ' + data.diffSize);
 });
 
-imagemin(img.jpg, img-minified.jpg, { progressive: true }, function (data) {
-    console.log('Saved ' + data.size);
+imagemin(img.jpg, img-minified.jpg, { progressive: true }, function (err, data) {
+    console.log('Saved ' + data.diffSize);
 });
 
-imagemin(img.png, img-minified.png, { pngquant: true, optimizationLevel: 4 }, function (data) {
-    console.log('Saved ' + data.size);
+imagemin(img.png, img-minified.png, { optimizationLevel: 4 }, function (err, data) {
+    console.log('Saved ' + data.diffSize);
 });
 ```
 
