@@ -28,20 +28,21 @@
     "imagemin.js"
   ],
   "dependencies": {
-    "cache-file": "~0.1.1",
+    "concat-stream": "~1.4.1",
+    "duplexer": "~0.1.1",
     "filesize": "~2.0.0",
-    "mkdirp": "~0.3.5",
-    "mout": "~0.7.1"
+    "mout": "~0.7.1",
+    "stream-combiner": "0.0.4",
+    "through2": "~0.4.0"
   },
   "devDependencies": {
-    "each-async": "~0.1.1",
     "mocha": "~1.12.0",
     "rimraf": "~2.2.6"
   },
   "optionalDependencies": {
     "gifsicle": "~0.1.0",
     "jpegtran-bin": "~0.2.0",
-    "optipng-bin": "~0.3.0"
+    "pngquant-bin": "~0.1.5"
   },
   "engines": {
     "node": ">=0.10.0"

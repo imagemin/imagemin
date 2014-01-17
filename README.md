@@ -8,39 +8,34 @@ Install with [npm](https://npmjs.org/package/image-min): `npm install image-min`
 
 ## Examples
 
-`data` returns information about how much optimization was done.
-
 ```js
+var fs = require('fs');
 var imagemin = require('image-min');
+var path = require('path');
 
-imagemin(img.gif, img-minified.gif, function (err, data) {
-    console.log('Saved ' + data.diffSize);
-});
+var src = fs.createReadStream('img.gif');
+var ext = path.extname(src.path);
 
-imagemin(img.jpg, img-minified.jpg, { progressive: true }, function (err, data) {
-    console.log('Saved ' + data.diffSize);
-});
-
-imagemin(img.png, img-minified.png, { optimizationLevel: 4 }, function (err, data) {
-    console.log('Saved ' + data.diffSize);
-});
+src
+    .pipe(imagemin({ ext: ext }))
+    .pipe(fs.createWriteStream('img-minified' + ext));
 ```
 
 ## API
 
-### imagemin(src, dest, opts, cb)
+### imagemin(opts)
 
-Optimize a `GIF`, `JPEG`, or `PNG` image by providing a `src` and `dest`. Use the
+Optimize a `GIF`, `JPEG`, or `PNG` image by providing a an `ext`. Use the
 options below (optionally) to configure how your images are optimized.
 
 ## Options
 
-### cache
+### ext
 
-Type: `Boolean`  
-Default: `false`
+Type `String`  
+Default: `undefined`
 
-Whether to cache optimized images.
+File extension used by imagemin to determine which optimizer to use.
 
 ### interlaced (GIF only)
 
@@ -48,13 +43,6 @@ Type: `Boolean`
 Default: `false`
 
 Interlace gif for progressive rendering.
-
-### optimizationLevel (PNG only)
-
-Type: `Number`  
-Default: `2`
-
-Select a optimization level between 0 and 7.
 
 ### progressive (JPEG only)
 

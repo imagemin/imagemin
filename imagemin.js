@@ -1,29 +1,25 @@
 'use strict';
 
-var cache = require('cache-file');
+var concat = require('concat-stream');
+var duplex = require('duplexer');
 var endsWith = require('mout/string/endsWith');
 var filesize = require('filesize');
 var find = require('mout/array/find');
-var fs = require('fs');
-var isFunction = require('mout/lang/isFunction');
-var mkdir = require('mkdirp');
-var path = require('path');
+var pipeline = require('stream-combiner');
 var spawn = require('child_process').spawn;
+var through = require('through2');
 
 /**
  * Initialize `Imagemin` with options
  *
- * @param {String} src
- * @param {String} dest
  * @param {Object} opts
  * @api private
  */
 
-function Imagemin(src, dest, opts) {
+function Imagemin(opts) {
     opts = opts || {};
     this.opts = opts;
-    this.src = src;
-    this.dest = dest;
+    this.ext = opts.ext || '';
     this.optimizers = {
         '.gif': this._optimizeGif,
         '.jpg': this._optimizeJpeg,
@@ -31,50 +27,45 @@ function Imagemin(src, dest, opts) {
         '.png': this._optimizePng
     };
     this.optimizerTypes = Object.keys(this.optimizers);
-    this.optimizer = this._getOptimizer(this.src);
+    this.optimizer = this._getOptimizer(this.ext);
 }
 
 /**
  * Optimize GIF, JPEG, and PNG images
  *
- * @param {Function} cb
  * @api public
  */
 
-Imagemin.prototype.optimize = function (cb) {
-    if (!cb || !isFunction(cb)) {
-        cb = function () {};
-    }
-
-    if (!fs.existsSync(path.dirname(this.dest))) {
-        mkdir.sync(path.dirname(this.dest));
-    }
-
-    if (this.opts.cache && cache.check(this.src)) {
-        cache.get(this.src, this.dest);
-        return cb(null, this._process());
-    }
-
-    if (!isFunction(this.optimizer)) {
-        return cb();
-    }
-
-    var self = this;
-    var optimizer = this.optimizer(this.src, this.dest, cb);
-
-    optimizer.on('error', function (err) {
-        return cb(new Error(err));
+Imagemin.prototype.optimize = function () {
+    var cp = this.optimizer();
+    var size = [];
+    var sizeDest;
+    var stream = duplex(cp.stdin, cp.stdout);
+    var src = through(function (data, enc, cb) {
+        size.push(data);
+        this.push(data);
+        cb();
     });
 
-    optimizer.stderr.on('data', function (data) {
-        return cb(new Error(data.toString()));
+    cp.stdout.pipe(concat(function (data) {
+        sizeDest = new Buffer(data).length;
+    }));
+
+    cp.stdout.on('close', function () {
+        size = Buffer.concat(size).length;
+
+        var saved = size - sizeDest;
+        var data = {
+            origSize: filesize(size),
+            origSizeRaw: size,
+            diffSize: filesize(saved),
+            diffSizeRaw: saved
+        };
+
+        stream.emit('close', data);
     });
 
-    optimizer.once('close', function (code) {
-        if (code === 0) {
-            return cb(null, self._process());
-        }
-    });
+    return pipeline(src, stream);
 };
 
 /**
@@ -97,12 +88,10 @@ Imagemin.prototype._getOptimizer = function (src) {
 /**
  * Optimize a GIF image
  *
- * @param {String} src
- * @param {String} dest
  * @api private
  */
 
-Imagemin.prototype._optimizeGif = function (src, dest) {
+Imagemin.prototype._optimizeGif = function () {
     var args = ['-w'];
     var gifsicle = require('gifsicle').path;
 
@@ -110,18 +99,16 @@ Imagemin.prototype._optimizeGif = function (src, dest) {
         args.push('--interlace');
     }
 
-    return spawn(gifsicle, args.concat(['-o', dest, src]));
+    return spawn(gifsicle, args);
 };
 
 /**
  * Optimize a JPEG image
  *
- * @param {String} src
- * @param {String} dest
  * @api private
  */
 
-Imagemin.prototype._optimizeJpeg = function (src, dest) {
+Imagemin.prototype._optimizeJpeg = function ( ){
     var args = ['-copy', 'none', '-optimize'];
     var jpegtran = require('jpegtran-bin').path;
 
@@ -129,62 +116,27 @@ Imagemin.prototype._optimizeJpeg = function (src, dest) {
         args.push('-progressive');
     }
 
-    return spawn(jpegtran, args.concat(['-outfile', dest, src]));
+    return spawn(jpegtran, args);
 };
 
 /**
  * Optimize a PNG image
  *
- * @param {String} src
- * @param {String} dest
  * @api private
  */
 
-Imagemin.prototype._optimizePng = function (src, dest) {
-    var args = ['-strip', 'all', '-quiet'];
-    var optipng = require('optipng-bin').path;
+Imagemin.prototype._optimizePng = function () {
+    var args = ['-'];
+    var pngquant = require('pngquant-bin').path;
 
-    if (typeof this.opts.optimizationLevel === 'number') {
-        args.push('-o', this.opts.optimizationLevel);
-    }
-
-    return spawn(optipng, args.concat(['-out', dest, src]));
-};
-
-/**
- * Process optimized images
- *
- * @api private
- */
-
-Imagemin.prototype._process = function () {
-    var size = fs.statSync(this.src).size;
-    var saved = size - fs.statSync(this.dest).size;
-
-    if (this.opts.cache && !cache.check(this.src)) {
-        cache.store(this.dest, this.src);
-    }
-
-    var data = {
-        origSize: filesize(size),
-        origSizeRaw: size,
-        diffSize: filesize(saved),
-        diffSizeRaw: saved
-    };
-
-    return data;
+    return spawn(pngquant, args);
 };
 
 /**
  * Module exports
  */
 
-module.exports = function (src, dest, opts, cb) {
-    if (!cb && isFunction(opts)) {
-        cb = opts;
-        opts = {};
-    }
-
-    var imagemin = new Imagemin(src, dest, opts);
-    return imagemin.optimize(cb);
+module.exports = function (opts) {
+    var imagemin = new Imagemin(opts);
+    return imagemin.optimize();
 };
