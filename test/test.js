@@ -8,7 +8,7 @@ var imagemin = require('../imagemin');
 var path = require('path');
 var rm = require('rimraf');
 
-afterEach(function () {
+after(function () {
     rm.sync(path.join(__dirname, 'tmp'));
     cache.clean(path.join(__dirname, 'fixtures/test-cache.jpg'));
 });
@@ -58,6 +58,15 @@ describe('Imagemin.optimize()', function () {
 
         imagemin(src, dest, { cache: true }, function () {
             cb(assert.ok(cache.check(src)));
+        });
+    });
+
+    it('should get an optmized image from cache', function (cb) {
+        var src = path.join(__dirname, 'fixtures/test-cache.jpg');
+        var dest = path.join(__dirname, 'tmp/test-cache.jpg');
+
+        imagemin(src, dest, { cache: true }, function () {
+            cb(assert.ok(fs.statSync(dest).size < fs.statSync(src).size));
         });
     });
 });
