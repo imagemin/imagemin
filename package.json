@@ -34,7 +34,9 @@
     "mout": "~0.7.1"
   },
   "devDependencies": {
-    "mocha": "~1.12.0"
+    "each-async": "~0.1.1",
+    "mocha": "~1.12.0",
+    "rimraf": "~2.2.6"
   },
   "optionalDependencies": {
     "gifsicle": "~0.1.0",

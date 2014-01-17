@@ -50,8 +50,8 @@ Imagemin.prototype.optimize = function (cb) {
         mkdir.sync(path.dirname(this.dest));
     }
 
-    if (this.opts.cache && cache.check(this.src, { name: 'imagemin' })) {
-        cache.get(this.src, this.dest, { name: 'imagemin' });
+    if (this.opts.cache && cache.check(this.src)) {
+        cache.get(this.src, this.dest);
         return cb(null, this._process());
     }
 
@@ -161,8 +161,8 @@ Imagemin.prototype._process = function () {
     var size = fs.statSync(this.src).size;
     var saved = size - fs.statSync(this.dest).size;
 
-    if (this.opts.cache && !cache.check(this.src, { name: 'imagemin' })) {
-        cache.store(this.dest, this.src, { name: 'imagemin' });
+    if (this.opts.cache && !cache.check(this.src)) {
+        cache.store(this.dest, this.src);
     }
 
     var data = {
