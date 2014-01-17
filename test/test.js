@@ -49,6 +49,17 @@ describe('Imagemin.optimize()', function () {
             }));
     });
 
+    it('should skip optimizing a non supported image', function (cb) {
+        var src = path.join(__dirname, 'fixtures/test.bmp');
+        var dest = path.join(__dirname, 'tmp/test.bmp');
+
+        fs.createReadStream(src)
+            .pipe(imagemin({ ext: '.bmp' }))
+            .pipe(fs.createWriteStream(dest).on('close', function () {
+                cb(assert.ok(fs.statSync(dest).size === fs.statSync(src).size));
+            }));
+    });
+
     it('should return size data', function (cb) {
         var src = path.join(__dirname, 'fixtures/test-data.jpg');
         var dest = path.join(__dirname, 'tmp/test-data.jpg');

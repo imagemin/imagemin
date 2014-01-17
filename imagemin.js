@@ -5,6 +5,7 @@ var duplex = require('duplexer');
 var endsWith = require('mout/string/endsWith');
 var filesize = require('filesize');
 var find = require('mout/array/find');
+var isFunction = require('mout/lang/isFunction');
 var pipeline = require('stream-combiner');
 var spawn = require('child_process').spawn;
 var through = require('through2');
@@ -138,5 +139,10 @@ Imagemin.prototype._optimizePng = function () {
 
 module.exports = function (opts) {
     var imagemin = new Imagemin(opts);
+
+    if (!isFunction(imagemin._getOptimizer(opts.ext))) {
+        return through();
+    }
+
     return imagemin.optimize();
 };
