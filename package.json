@@ -23,9 +23,9 @@
   "scripts": {
     "test": "mocha --reporter list"
   },
-  "main": "imagemin.js",
+  "main": "index.js",
   "files": [
-    "imagemin.js"
+    "index.js"
   ],
   "dependencies": {
     "concat-stream": "~1.4.1",

@@ -3,7 +3,7 @@
 
 var assert = require('assert');
 var fs = require('fs');
-var imagemin = require('../imagemin');
+var imagemin = require('../');
 var path = require('path');
 var rm = require('rimraf');
 
