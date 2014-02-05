@@ -39,22 +39,20 @@ function Imagemin(opts) {
 
 Imagemin.prototype.optimize = function () {
     var cp = this.optimizer();
-    var size = [];
-    var sizeDest;
     var stream = duplex(cp.stdin, cp.stdout);
-    var src = through(function (data, enc, cb) {
-        size.push(data);
-        this.push(data);
-        cb();
-    });
+    var src = through();
+    var size;
+    var sizeDest;
+
+    src.pipe(concat(function (data) {
+        size = new Buffer(data).length;
+    }));
 
     cp.stdout.pipe(concat(function (data) {
         sizeDest = new Buffer(data).length;
     }));
 
     cp.stdout.on('close', function () {
-        size = Buffer.concat(size).length;
-
         var saved = size - sizeDest;
         var data = {
             origSize: filesize(size),
@@ -140,7 +138,7 @@ Imagemin.prototype._optimizePng = function () {
 module.exports = function (opts) {
     var imagemin = new Imagemin(opts);
 
-    if (!isFunction(imagemin._getOptimizer(opts.ext))) {
+    if (!isFunction(imagemin.optimizer)) {
         return through();
     }
 
