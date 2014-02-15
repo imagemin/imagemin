@@ -51,8 +51,12 @@ Imagemin.prototype.optimize = function (cb) {
     }
 
     if (this.opts.cache && cache.check(this.src)) {
-        cache.get(this.src, this.dest);
-        return cb(null, this._process());
+        var destStream = cache.get(this.src, this.dest);
+        var self = this;
+        destStream.once('finish', function() {
+          return cb(null, self._process());
+        });
+        return;
     }
 
     if (!isFunction(this.optimizer)) {
