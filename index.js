@@ -1,11 +1,11 @@
 'use strict';
 
 var concat = require('concat-stream');
-var duplex = require('duplexer');
 var endsWith = require('mout/string/endsWith');
 var filesize = require('filesize');
 var find = require('mout/array/find');
 var isFunction = require('mout/lang/isFunction');
+var pipe = require('multipipe');
 var pipeline = require('stream-combiner');
 var spawn = require('child_process').spawn;
 var through = require('through2');
@@ -39,7 +39,7 @@ function Imagemin(opts) {
 
 Imagemin.prototype.optimize = function () {
     var cp = this.optimizer();
-    var stream = duplex(cp.stdin, cp.stdout);
+    var stream = pipe(cp.stdin, cp.stdout);
     var src = through();
     var size;
     var sizeDest;

@@ -62,18 +62,13 @@ describe('Imagemin.optimize()', function () {
 
     it('should return size data', function (cb) {
         var src = path.join(__dirname, 'fixtures/test-data.jpg');
-        var dest = path.join(__dirname, 'tmp/test-data.jpg');
-        var size;
 
         fs.createReadStream(src)
             .pipe(imagemin({ ext: '.jpg' }).on('close', function (data) {
-                size = data;
-            }))
-            .pipe(fs.createWriteStream(dest).on('close', function () {
-                assert.equal(size.origSize, '50.99 kB');
-                assert.equal(size.origSizeRaw, 50986);
-                assert.equal(size.diffSize, '4.00 kB');
-                assert.equal(size.diffSizeRaw, 3999);
+                assert.equal(data.origSize, '50.99 kB');
+                assert.equal(data.origSizeRaw, 50986);
+                assert.equal(data.diffSize, '4.00 kB');
+                assert.equal(data.diffSizeRaw, 3999);
                 cb();
             }));
     });
