@@ -44,6 +44,13 @@ Default: `false`
 
 Interlace gif for progressive rendering.
 
+### pngquant (PNG only)
+
+Type: `Boolean`  
+Default: `false`
+
+Whether to enable [pngquant](https://github.com/pornel/pngquant) compression.
+
 ### progressive (JPEG only)
 
 Type: `Boolean`  

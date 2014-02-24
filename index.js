@@ -125,10 +125,12 @@ Imagemin.prototype._optimizeJpeg = function ( ){
  */
 
 Imagemin.prototype._optimizePng = function () {
-    var args = ['-'];
-    var pngquant = require('pngquant-bin').path;
+    var pngquant;
 
-    return spawn(pngquant, args);
+    if (this.opts.pngquant) {
+        pngquant = require('pngquant-bin').path;
+        return spawn(pngquant, ['-']);
+    }
 };
 
 /**
