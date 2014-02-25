@@ -49,7 +49,7 @@ Interlace gif for progressive rendering.
 Type: `Boolean`  
 Default: `false`
 
-Whether to enable [pngquant](https://github.com/pornel/pngquant) compression.
+Whether to enable [pngquant](https://github.com/pornel/pngquant) lossy compression.
 
 ### progressive (JPEG only)
 
