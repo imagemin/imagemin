@@ -39,20 +39,30 @@ function Imagemin(opts) {
 
 Imagemin.prototype.optimize = function () {
     var cp = this.optimizer();
-    var stream = pipe(cp.stdin, cp.stdout);
+    var self = this;
+    var stream;
     var src = through();
+    var stdout;
     var size;
     var sizeDest;
+
+    if (this.ext === '.png' && !this.opts.pngquant) {
+        stream = cp;
+        stdout = cp;
+    } else {
+        stream = pipe(cp.stdin, cp.stdout);
+        stdout = cp.stdout;
+    }
 
     src.pipe(concat(function (data) {
         size = new Buffer(data).length;
     }));
 
-    cp.stdout.pipe(concat(function (data) {
+    stdout.pipe(concat(function (data) {
         sizeDest = new Buffer(data).length;
     }));
 
-    cp.stdout.on('close', function () {
+    stdout.on('end', function () {
         var saved = size - sizeDest;
         var data = {
             origSize: filesize(size),
@@ -61,7 +71,11 @@ Imagemin.prototype.optimize = function () {
             diffSizeRaw: saved
         };
 
-        stream.emit('close', data);
+        if (self.ext === '.png' && !self.opts.pngquant) {
+            this.emit('close', data);
+        } else {
+            stream.emit('close', data);
+        }
     });
 
     return pipeline(src, stream);
@@ -125,12 +139,15 @@ Imagemin.prototype._optimizeJpeg = function ( ){
  */
 
 Imagemin.prototype._optimizePng = function () {
+    var Optipng = require('optipng');
     var pngquant;
 
     if (this.opts.pngquant) {
         pngquant = require('pngquant-bin').path;
-        return spawn(pngquant, ['-']);
+        return new Optipng().pipe(spawn(pngquant, ['-']));
     }
+
+    return new Optipng();
 };
 
 /**
