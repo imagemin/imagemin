@@ -43,7 +43,7 @@ describe('Imagemin.optimize()', function () {
         var dest = path.join(__dirname, 'tmp/test.png');
 
         fs.createReadStream(src)
-            .pipe(imagemin({ ext: '.png', pngquant: true }))
+            .pipe(imagemin({ ext: '.png', optimizationLevel: 2 }))
             .pipe(fs.createWriteStream(dest).on('close', function () {
                 cb(assert.ok(fs.statSync(dest).size < fs.statSync(src).size));
             }));

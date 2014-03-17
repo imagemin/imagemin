@@ -21,7 +21,7 @@
   "license": "MIT",
   "repository": "git://github.com/kevva/image-min.git",
   "scripts": {
-    "test": "mocha --reporter list"
+    "test": "mocha --reporter list --timeout 0"
   },
   "main": "index.js",
   "files": [

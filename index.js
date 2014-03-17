@@ -20,6 +20,7 @@ var through = require('through2');
 function Imagemin(opts) {
     opts = opts || {};
     this.opts = opts;
+    this.optimizationLevel = opts.optimizationLevel || 7;
     this.ext = opts.ext || '';
     this.optimizers = {
         '.gif': this._optimizeGif,
@@ -139,15 +140,20 @@ Imagemin.prototype._optimizeJpeg = function ( ){
  */
 
 Imagemin.prototype._optimizePng = function () {
+    var args = ['-strip', 'all', '-quiet'];
     var Optipng = require('optipng');
     var pngquant;
 
-    if (this.opts.pngquant) {
-        pngquant = require('pngquant-bin').path;
-        return new Optipng().pipe(spawn(pngquant, ['-']));
+    if (typeof this.optimizationLevel === 'number') {
+        args.push('-o', this.optimizationLevel);
     }
 
-    return new Optipng();
+    if (this.opts.pngquant) {
+        pngquant = require('pngquant-bin').path;
+        return new Optipng(args).pipe(spawn(pngquant, ['-']));
+    }
+
+    return new Optipng(args);
 };
 
 /**
