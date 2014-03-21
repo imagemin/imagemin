@@ -40,20 +40,11 @@ function Imagemin(opts) {
 
 Imagemin.prototype.optimize = function () {
     var cp = this.optimizer();
-    var self = this;
-    var stream;
+    var stream = pipe(cp.stdin, cp.stdout);
     var src = through();
-    var stdout;
+    var stdout = cp.stdout;
     var size;
     var sizeDest;
-
-    if (this.ext === '.png' && !this.opts.pngquant) {
-        stream = cp;
-        stdout = cp;
-    } else {
-        stream = pipe(cp.stdin, cp.stdout);
-        stdout = cp.stdout;
-    }
 
     src.pipe(concat(function (data) {
         size = new Buffer(data).length;
@@ -72,11 +63,7 @@ Imagemin.prototype.optimize = function () {
             diffSizeRaw: saved
         };
 
-        if (self.ext === '.png' && !self.opts.pngquant) {
-            this.emit('close', data);
-        } else {
-            stream.emit('close', data);
-        }
+        stream.emit('close', data);
     });
 
     return pipeline(src, stream);
@@ -141,7 +128,7 @@ Imagemin.prototype._optimizeJpeg = function ( ){
 
 Imagemin.prototype._optimizePng = function () {
     var args = ['-strip', 'all', '-quiet'];
-    var Optipng = require('optipng');
+    var optipng = require('optipng-stream-bin').path;
     var pngquant;
 
     if (typeof this.optimizationLevel === 'number') {
@@ -150,10 +137,10 @@ Imagemin.prototype._optimizePng = function () {
 
     if (this.opts.pngquant) {
         pngquant = require('pngquant-bin').path;
-        return new Optipng(args).pipe(spawn(pngquant, ['-']));
+        return spawn(optipng, args).stdout.pipe(spawn(pngquant, ['-']));
     }
 
-    return new Optipng(args);
+    return spawn(optipng, args);
 };
 
 /**
