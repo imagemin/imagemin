@@ -1,6 +1,6 @@
 {
   "name": "image-min",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "description": "Minify GIF, JPEG and PNG images",
   "keywords": [
     "compress",
