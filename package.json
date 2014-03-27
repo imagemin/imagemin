@@ -28,22 +28,23 @@
     "index.js"
   ],
   "dependencies": {
-    "concat-stream": "~1.4.1",
-    "filesize": "~2.0.0",
-    "mout": "~0.9.0",
+    "concat-stream": "^1.4.1",
+    "filesize": "^2.0.0",
+    "mout": "^0.9.0",
     "multipipe": "0.0.2",
     "stream-combiner": "0.0.4",
-    "through2": "~0.4.0"
+    "through2": "^0.4.0",
+    "map-key": "^0.1.0"
   },
   "devDependencies": {
-    "mocha": "~1.17.1",
-    "rimraf": "~2.2.6"
+    "mocha": "^1.17.1",
+    "rimraf": "^2.2.6"
   },
   "optionalDependencies": {
-    "gifsicle": "~0.1.0",
-    "jpegtran-bin": "~0.2.0",
-    "optipng-stream-bin": "~0.0.5",
-    "pngquant-bin": "~0.1.6"
+    "gifsicle": "^0.1.0",
+    "jpegtran-bin": "^0.2.0",
+    "optipng-stream-bin": "^0.0.5",
+    "pngquant-bin": "^0.1.6"
   },
   "engines": {
     "node": ">=0.10.0"

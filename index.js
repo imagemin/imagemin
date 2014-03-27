@@ -1,10 +1,9 @@
 'use strict';
 
 var concat = require('concat-stream');
-var endsWith = require('mout/string/endsWith');
 var filesize = require('filesize');
-var find = require('mout/array/find');
 var isFunction = require('mout/lang/isFunction');
+var mapKey = require('map-key');
 var pipe = require('multipipe');
 var pipeline = require('stream-combiner');
 var spawn = require('child_process').spawn;
@@ -28,7 +27,6 @@ function Imagemin(opts) {
         '.jpeg': this._optimizeJpeg,
         '.png': this._optimizePng
     };
-    this.optimizerTypes = Object.keys(this.optimizers);
     this.optimizer = this._getOptimizer(this.ext);
 }
 
@@ -78,12 +76,7 @@ Imagemin.prototype.optimize = function () {
 
 Imagemin.prototype._getOptimizer = function (src) {
     src = src.toLowerCase();
-
-    var ext = find(this.optimizerTypes, function (ext) {
-        return endsWith(src, ext);
-    });
-
-    return ext ? this.optimizers[ext] : null;
+    return mapKey.endsWith(this.optimizers, src);
 };
 
 /**
