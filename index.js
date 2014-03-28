@@ -6,7 +6,7 @@ var isFunction = require('mout/lang/isFunction');
 var mapKey = require('map-key');
 var pipe = require('multipipe');
 var pipeline = require('stream-combiner');
-var spawn = process.platform === 'win32' ? require('win-spawn') : require('child_process').spawn;
+var spawn = require('win-spawn');
 var through = require('through2');
 
 /**
