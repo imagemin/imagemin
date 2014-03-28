@@ -43,7 +43,7 @@
   "optionalDependencies": {
     "gifsicle": "^0.1.0",
     "jpegtran-bin": "^0.2.0",
-    "optipng-stream-bin": "^0.0.5",
+    "optipng-bin": "^0.3.2",
     "pngquant-bin": "^0.1.6"
   },
   "engines": {

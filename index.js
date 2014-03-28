@@ -6,7 +6,7 @@ var isFunction = require('mout/lang/isFunction');
 var mapKey = require('map-key');
 var pipe = require('multipipe');
 var pipeline = require('stream-combiner');
-var spawn = require('child_process').spawn;
+var spawn = process.platform === 'win32' ? require('win-spawn') : require('child_process').spawn;
 var through = require('through2');
 
 /**
@@ -121,7 +121,7 @@ Imagemin.prototype._optimizeJpeg = function ( ){
 
 Imagemin.prototype._optimizePng = function () {
     var args = ['-strip', 'all', '-quiet'];
-    var optipng = require('optipng-stream-bin').path;
+    var optipng = require('optipng-bin').stream;
     var pngquant;
 
     if (typeof this.optimizationLevel === 'number') {
