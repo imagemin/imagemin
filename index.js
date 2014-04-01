@@ -40,7 +40,6 @@ Imagemin.prototype.optimize = function () {
     var cp = this.optimizer();
     var stream = pipe(cp.stdin, cp.stdout);
     var src = through();
-    var stdout = cp.stdout;
     var size;
     var sizeDest;
 
@@ -48,11 +47,11 @@ Imagemin.prototype.optimize = function () {
         size = new Buffer(data).length;
     }));
 
-    stdout.pipe(concat(function (data) {
+    cp.stdout.pipe(concat(function (data) {
         sizeDest = new Buffer(data).length;
     }));
 
-    stdout.on('end', function () {
+    cp.stdout.on('end', function () {
         var saved = size - sizeDest;
         var data = {
             origSize: filesize(size),
