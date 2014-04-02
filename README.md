@@ -1,12 +1,14 @@
 # image-min [![Build Status](https://secure.travis-ci.org/kevva/image-min.png?branch=master)](http://travis-ci.org/kevva/image-min)
 
-Minify GIF, JPEG and PNG images seamlessly with Node.js.
+> Minify GIF, JPEG and PNG images seamlessly with Node.js.
 
-## Getting started
+## Install
 
-Install with [npm](https://npmjs.org/package/image-min): `npm install image-min`
+```bash
+npm install --save image-min
+```
 
-## Examples
+## Usage
 
 ```js
 var fs = require('fs');
@@ -65,4 +67,4 @@ Lossless conversion to progressive.
 
 ## License
 
-[MIT License](http://en.wikipedia.org/wiki/MIT_License) (c) [Kevin Mårtensson](http://kevinmartensson.com)
+[MIT License](http://en.wikipedia.org/wiki/MIT_License) © [Kevin Mårtensson](http://kevinmartensson.com)

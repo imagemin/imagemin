@@ -2,30 +2,27 @@
   "name": "image-min",
   "version": "0.2.2",
   "description": "Minify GIF, JPEG and PNG images",
-  "keywords": [
-    "compress",
-    "image",
-    "img",
-    "jpeg",
-    "jpg",
-    "minify",
-    "png"
-  ],
-  "homepage": "https://github.com/kevva/image-min",
-  "bugs": "https://github.com/kevva/image-min/issues",
-  "author": {
-    "name": "Kevin Martensson",
-    "email": "kevinmartensson@gmail.com",
-    "url": "http://kevinmartensson.com"
-  },
   "license": "MIT",
-  "repository": "git://github.com/kevva/image-min.git",
+  "repository": "kevva/image-min",
+  "author": {
+    "name": "Kevin Mårtensson",
+    "email": "kevinmartensson@gmail.com",
+    "url": "https://github.com/kevva"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
   "scripts": {
     "test": "mocha --reporter list --timeout 0"
   },
-  "main": "index.js",
   "files": [
     "index.js"
+  ],
+  "keywords": [
+    "extract",
+    "tar",
+    "tar.gz",
+    "zip"
   ],
   "dependencies": {
     "concat-stream": "^1.4.1",
@@ -46,8 +43,5 @@
     "jpegtran-bin": "^0.2.0",
     "optipng-bin": "^0.3.2",
     "pngquant-bin": "^0.1.6"
-  },
-  "engines": {
-    "node": ">=0.10.0"
   }
 }
