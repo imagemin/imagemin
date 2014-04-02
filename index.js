@@ -3,7 +3,7 @@
 var concat = require('concat-stream');
 var filesize = require('filesize');
 var isFunction = require('mout/lang/isFunction');
-var mapKey = require('map-key');
+var map = require('map-key');
 var pipe = require('multipipe');
 var pipeline = require('stream-combiner');
 var spawn = require('win-spawn');
@@ -75,7 +75,7 @@ Imagemin.prototype.optimize = function () {
 
 Imagemin.prototype._getOptimizer = function (src) {
     src = src.toLowerCase();
-    return mapKey.endsWith(this.optimizers, src);
+    return map(this.optimizers, src);
 };
 
 /**
