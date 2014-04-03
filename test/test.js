@@ -59,17 +59,4 @@ describe('Imagemin.optimize()', function () {
                 cb(assert.ok(fs.statSync(dest).size === fs.statSync(src).size));
             }));
     });
-
-    it('should return size data', function (cb) {
-        var src = path.join(__dirname, 'fixtures/test-data.jpg');
-
-        fs.createReadStream(src)
-            .pipe(imagemin({ ext: '.jpg' }).on('close', function (data) {
-                assert.equal(data.origSize, '50.99 kB');
-                assert.equal(data.origSizeRaw, 50986);
-                assert.equal(data.diffSize, '4.00 kB');
-                assert.equal(data.diffSizeRaw, 3999);
-                cb();
-            }));
-    });
 });

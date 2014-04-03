@@ -1,11 +1,7 @@
 'use strict';
 
-var concat = require('concat-stream');
-var filesize = require('filesize');
-var isFunction = require('mout/lang/isFunction');
 var map = require('map-key');
-var pipe = require('multipipe');
-var pipeline = require('stream-combiner');
+var pipeline = require('multipipe');
 var spawn = require('win-spawn');
 var through = require('through2');
 
@@ -19,15 +15,8 @@ var through = require('through2');
 function Imagemin(opts) {
     opts = opts || {};
     this.opts = opts;
+    this.optimizer = this._getOptimizer(opts.ext);
     this.optimizationLevel = opts.optimizationLevel || 7;
-    this.ext = opts.ext || '';
-    this.optimizers = {
-        '.gif': this._optimizeGif,
-        '.jpg': this._optimizeJpeg,
-        '.jpeg': this._optimizeJpeg,
-        '.png': this._optimizePng
-    };
-    this.optimizer = this._getOptimizer(this.ext);
 }
 
 /**
@@ -38,44 +27,29 @@ function Imagemin(opts) {
 
 Imagemin.prototype.optimize = function () {
     var cp = this.optimizer();
-    var stream = pipe(cp.stdin, cp.stdout);
-    var src = through();
-    var size;
-    var sizeDest;
+    var stream = through();
 
-    src.pipe(concat(function (data) {
-        size = new Buffer(data).length;
-    }));
-
-    cp.stdout.pipe(concat(function (data) {
-        sizeDest = new Buffer(data).length;
-    }));
-
-    cp.stdout.on('end', function () {
-        var saved = size - sizeDest;
-        var data = {
-            origSize: filesize(size),
-            origSizeRaw: size,
-            diffSize: filesize(saved),
-            diffSizeRaw: saved
-        };
-
-        stream.emit('close', data);
-    });
-
-    return pipeline(src, stream);
+    return pipeline(stream, cp.stdin, cp.stdout);
 };
 
 /**
- * Get the optimizer for a desired file
+ * Get the optimizer for a desired file extension
  *
- * @param {String} src
+ * @param {String} ext
  * @api private
  */
 
-Imagemin.prototype._getOptimizer = function (src) {
-    src = src.toLowerCase();
-    return map(this.optimizers, src);
+Imagemin.prototype._getOptimizer = function (ext) {
+    ext = ext ? ext.toLowerCase() : null;
+
+    var optimizers = {
+        '.gif': this._optimizeGif,
+        '.jpg': this._optimizeJpeg,
+        '.jpeg': this._optimizeJpeg,
+        '.png': this._optimizePng
+    };
+
+    return map(optimizers, ext);
 };
 
 /**
@@ -101,7 +75,7 @@ Imagemin.prototype._optimizeGif = function () {
  * @api private
  */
 
-Imagemin.prototype._optimizeJpeg = function ( ){
+Imagemin.prototype._optimizeJpeg = function () {
     var args = ['-copy', 'none', '-optimize'];
     var jpegtran = require('jpegtran-bin').path;
 
@@ -142,7 +116,7 @@ Imagemin.prototype._optimizePng = function () {
 module.exports = function (opts) {
     var imagemin = new Imagemin(opts);
 
-    if (!isFunction(imagemin.optimizer)) {
+    if (!imagemin.optimizer) {
         return through();
     }
 
