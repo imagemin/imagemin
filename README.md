@@ -1,69 +1,57 @@
-# image-min [![Build Status](https://secure.travis-ci.org/kevva/image-min.png?branch=master)](http://travis-ci.org/kevva/image-min)
+# image-min [![Build Status](https://travis-ci.org/kevva/image-min.svg?branch=master)](https://travis-ci.org/kevva/image-min)
 
 > Minify GIF, JPEG and PNG images seamlessly with Node.js.
 
 ## Install
 
 ```bash
-npm install --save image-min
+$ npm install --save image-min
 ```
 
 ## Usage
 
 ```js
-var fs = require('fs');
-var imagemin = require('image-min');
-var path = require('path');
+var Imagemin = require('image-min');
+var jpegtran = require('image-min').jpegtran;
+var optipng = require('image-min').optipng;
 
-var src = fs.createReadStream('img.gif');
-var ext = path.extname(src.path);
+var imagemin = new Imagemin()
+    .source(['foo.png', 'bar.jpg'])
+    .destination('dist')
+    .use(jpegtran({ progressive: true }))
+    .use(optipng({ optimizationLevel: 4 }))
 
-src
-    .pipe(imagemin({ ext: ext }))
-    .pipe(fs.createWriteStream('img-minified' + ext));
+imagemin.optimize(function (err, files) {
+    console.log(files);
+    // => { 'foo.png': { contents: <Buffer ff d8 ff ...> }, 'bar.jpg': { contents: <Buffer 89 50 4e ...> }}
+});
 ```
 
 ## API
 
-### imagemin(opts)
+### new Imagemin()
 
-Optimize a `GIF`, `JPEG`, or `PNG` image by providing a an `ext`. Use the
-options below (optionally) to configure how your images are optimized.
+Creates a new `Imagemin` instance.
 
-## Options
+### .use(plugin)
 
-### ext
+Add a `plugin` to the middleware stack.
 
-Type `String`  
-Default: `undefined`
+### .source(files)
 
-File extension used by imagemin to determine which optimizer to use.
+Set the files to be optimized.
 
-### interlaced (GIF only)
+### .destination(path)
 
-Type: `Boolean`  
-Default: `false`
+Set the destination directory to where your files will be written.
 
-Interlace gif for progressive rendering.
+### .optimize(cb)
 
-### pngquant (PNG only)
+Optimize your files with the given settings.
 
-Type: `Boolean`  
-Default: `false`
+### .run(files, cb)
 
-Whether to enable [pngquant](https://github.com/pornel/pngquant) lossy compression.
-
-### progressive (JPEG only)
-
-Type: `Boolean`  
-Default: `false`
-
-Lossless conversion to progressive.
-
-## Used by
-
-* [gulp-imagemin](https://github.com/sindresorhus/gulp-imagemin)
-* [grunt-contrib-imagemin](https://github.com/gruntjs/grunt-contrib-imagemin)
+Run all middleware plugins on an array of files.
 
 ## License
 
