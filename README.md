@@ -16,8 +16,8 @@ var jpegtran = require('image-min').jpegtran;
 var optipng = require('image-min').optipng;
 
 var imagemin = new Imagemin()
-    .source(['foo.png', 'bar.jpg'])
-    .destination('dist')
+    .src(['foo.png', 'bar.jpg'])
+    .dest('dist')
     .use(jpegtran({ progressive: true }))
     .use(optipng({ optimizationLevel: 4 }))
 
@@ -37,11 +37,11 @@ Creates a new `Imagemin` instance.
 
 Add a `plugin` to the middleware stack.
 
-### .source(files)
+### .src(files)
 
 Set the files to be optimized.
 
-### .destination(path)
+### .dest(path)
 
 Set the destination directory to where your files will be written.
 

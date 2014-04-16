@@ -23,8 +23,8 @@ describe('Imagemin()', function () {
         ];
 
         this.imagemin = new Imagemin()
-            .source(this.src)
-            .destination(path.join(__dirname, 'tmp'));
+            .src(this.src)
+            .dest(path.join(__dirname, 'tmp'));
     });
 
     it('should optimize a GIF', function (cb) {
