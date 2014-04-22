@@ -29,6 +29,7 @@
   "dependencies": {
     "each-async": "^0.1.2",
     "fs-extra": "^0.8.1",
+    "image-type": "^0.1.0",
     "rimraf": "^2.2.6",
     "stat-mode": "^0.2.0",
     "tempfile": "^0.1.3",
