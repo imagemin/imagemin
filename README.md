@@ -52,6 +52,63 @@ Optimize your file with the given settings.
 
 Run all middleware plugins on your file.
 
+## Plugins
+
+The follwing plugins are bundled with image-min:
+
+* [gifsicle](#gifsicle) — Compress GIF images.
+* [jpegtran](#jpegtran) — Compress JPG images.
+* [optipng](#optipng) — Lossless compression of PNG images.
+* [pngquant](#pngquant) — Lossy compression of PNG images.
+
+### .gifsicle()
+
+Compress GIF images.
+
+```js
+var Imagemin = require('image-min');
+var gifsicle = require('image-min').gifsicle;
+
+var imagemin = new Imagemin()
+    .use(gifsicle({ interlaced: true }));
+```
+
+### .jpegtran()
+
+Compress JPG images.
+
+```js
+var Imagemin = require('image-min');
+var jpegtran = require('image-min').jpegtran;
+
+var imagemin = new Imagemin()
+    .use(jpegtran({ progressive: true }));
+```
+
+### .optipng()
+
+Lossless compression of PNG images.
+
+```js
+var Imagemin = require('image-min');
+var optipng = require('image-min').optipng;
+
+var imagemin = new Imagemin()
+    .use(optipng({ optimizationLevel: 3 }));
+```
+
+### .pngquant()
+
+Lossy compression of PNG images.
+
+```js
+var Imagemin = require('image-min');
+var pngquant = require('image-min').pngquant;
+
+var imagemin = new Imagemin()
+    .use(pngquant());
+```
+
 ## License
 
 [MIT License](http://en.wikipedia.org/wiki/MIT_License) © [Kevin Mårtensson](http://kevinmartensson.com)
