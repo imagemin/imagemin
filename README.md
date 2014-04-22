@@ -1,6 +1,6 @@
 # image-min [![Build Status](https://travis-ci.org/kevva/image-min.svg?branch=master)](https://travis-ci.org/kevva/image-min)
 
-> Minify GIF, JPEG and PNG images seamlessly with Node.js.
+> Minify images seamlessly with Node.js.
 
 ## Install
 
@@ -17,7 +17,7 @@ var jpegtran = require('image-min').jpegtran;
 var imagemin = new Imagemin()
     .src('foo.jpg')
     .dest('foo-optimized.jpg')
-    .use(jpegtran({ progressive: true }))
+    .use(jpegtran({ progressive: true }));
 
 imagemin.optimize(function (err, file) {
     console.log(file);
@@ -41,7 +41,8 @@ Set the file to be optimized. Could be a `Buffer` or the path to a file.
 
 ### .dest(file)
 
-Set the destination to where your files will be written.
+Set the destination to where your file will be written. If you don't set any destination
+the file won't be written.
 
 ### .optimize(cb)
 
