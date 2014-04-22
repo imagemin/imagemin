@@ -1,6 +1,6 @@
 {
   "name": "image-min",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Minify GIF, JPEG and PNG images",
   "license": "MIT",
   "repository": "kevva/image-min",
