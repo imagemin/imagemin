@@ -1,4 +1,4 @@
-/*global after, before, describe, it */
+/*global after, describe, it */
 'use strict';
 
 var assert = require('assert');
@@ -15,66 +15,59 @@ describe('Imagemin()', function () {
         rm(path.join(__dirname, 'tmp'), cb);
     });
 
-    before(function () {
-        this.src = [
-            path.join(__dirname, 'fixtures/test.gif'),
-            path.join(__dirname, 'fixtures/test.jpg'),
-            path.join(__dirname, 'fixtures/test.png')
-        ];
-
-        this.imagemin = new Imagemin()
-            .src(this.src)
-            .dest(path.join(__dirname, 'tmp'));
-    });
-
     it('should optimize a GIF', function (cb) {
-        var dest = path.join(__dirname, 'tmp/test.gif');
-        var self = this;
+        var imagemin = new Imagemin();
 
-        this.imagemin
+        imagemin
+            .src(path.join(__dirname, 'fixtures/test.gif'))
+            .dest(path.join(__dirname, 'tmp/test.gif'))
             .use(gifsicle())
             .optimize(function () {
-                assert(fs.statSync(dest).size < fs.statSync(self.src[0]).size);
-                assert(fs.statSync(dest).size > 0);
+                assert(fs.statSync(imagemin.dest()).size < fs.statSync(imagemin.src()).size);
+                assert(fs.statSync(imagemin.dest()).size > 0);
                 cb();
             });
     });
 
     it('should optimize a JPG', function (cb) {
-        var dest = path.join(__dirname, 'tmp/test.jpg');
-        var self = this;
+        var imagemin = new Imagemin();
 
-        this.imagemin
+        imagemin
+            .src(path.join(__dirname, 'fixtures/test.jpg'))
+            .dest(path.join(__dirname, 'tmp/test.jpg'))
             .use(jpegtran())
             .optimize(function () {
-                assert(fs.statSync(dest).size < fs.statSync(self.src[1]).size);
-                assert(fs.statSync(dest).size > 0);
+                assert(fs.statSync(imagemin.dest()).size < fs.statSync(imagemin.src()).size);
+                assert(fs.statSync(imagemin.dest()).size > 0);
                 cb();
             });
     });
 
     it('should optimize a PNG', function (cb) {
-        var dest = path.join(__dirname, 'tmp/test.png');
-        var self = this;
+        var imagemin = new Imagemin();
 
-        this.imagemin
+        imagemin
+            .src(path.join(__dirname, 'fixtures/test.png'))
+            .dest(path.join(__dirname, 'tmp/test.png'))
             .use(optipng())
             .optimize(function () {
-                assert(fs.statSync(dest).size < fs.statSync(self.src[2]).size);
-                assert(fs.statSync(dest).size > 0);
+                assert(fs.statSync(imagemin.dest()).size < fs.statSync(imagemin.src()).size);
+                assert(fs.statSync(imagemin.dest()).size > 0);
                 cb();
             });
     });
 
-    it('should optimize a PNG without writing', function (cb) {
-        var self = this;
+    it('should optimize a image using Buffer', function (cb) {
+        var buf = fs.readFileSync(path.join(__dirname, 'fixtures/test.jpg'));
+        var imagemin = new Imagemin();
 
-        this.imagemin
-            .use(optipng())
-            .read(function (err, files) {
-                self.imagemin.run(files, function (err, files) {
-                    cb(assert(files['test/fixtures/test.png'].contents.length < fs.readFileSync(self.src[2]).length));
-                });
+        imagemin
+            .src(buf)
+            .use(jpegtran())
+            .optimize(function (err, file) {
+                console.log(file);
+                assert(file.contents.length < buf.length);
+                cb();
             });
     });
 });

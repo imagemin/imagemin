@@ -13,17 +13,15 @@ $ npm install --save image-min
 ```js
 var Imagemin = require('image-min');
 var jpegtran = require('image-min').jpegtran;
-var optipng = require('image-min').optipng;
 
 var imagemin = new Imagemin()
-    .src(['foo.png', 'bar.jpg'])
-    .dest('dist')
+    .src('foo.jpg')
+    .dest('foo-optimized.jpg')
     .use(jpegtran({ progressive: true }))
-    .use(optipng({ optimizationLevel: 4 }))
 
-imagemin.optimize(function (err, files) {
-    console.log(files);
-    // => { 'foo.png': { contents: <Buffer ff d8 ff ...> }, 'bar.jpg': { contents: <Buffer 89 50 4e ...> }}
+imagemin.optimize(function (err, file) {
+    console.log(file);
+    // => { contents: <Buffer 89 50 4e ...>, mode: '0644', origSize: 50986, destSize: 46987 }
 });
 ```
 
@@ -37,21 +35,21 @@ Creates a new `Imagemin` instance.
 
 Add a `plugin` to the middleware stack.
 
-### .src(files)
+### .src(file)
 
-Set the files to be optimized.
+Set the file to be optimized. Could be a `Buffer` or the path to a file.
 
-### .dest(path)
+### .dest(file)
 
-Set the destination directory to where your files will be written.
+Set the destination to where your files will be written.
 
 ### .optimize(cb)
 
-Optimize your files with the given settings.
+Optimize your file with the given settings.
 
-### .run(files, cb)
+### .run(file, cb)
 
-Run all middleware plugins on an array of files.
+Run all middleware plugins on your file.
 
 ## License
 
