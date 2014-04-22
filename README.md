@@ -1,6 +1,7 @@
 # image-min [![Build Status](https://travis-ci.org/kevva/image-min.svg?branch=master)](https://travis-ci.org/kevva/image-min)
 
-> Minify images seamlessly with Node.js.
+> Minify images seamlessly with Node.js
+
 
 ## Install
 
@@ -8,22 +9,23 @@
 $ npm install --save image-min
 ```
 
+
 ## Usage
 
 ```js
 var Imagemin = require('image-min');
-var jpegtran = require('image-min').jpegtran;
 
 var imagemin = new Imagemin()
     .src('foo.jpg')
     .dest('foo-optimized.jpg')
-    .use(jpegtran({ progressive: true }));
+    .use(Imagemin.jpegtran({ progressive: true }));
 
 imagemin.optimize(function (err, file) {
     console.log(file);
-    // => { contents: <Buffer 89 50 4e ...>, mode: '0644', origSize: 50986, destSize: 46987 }
+    // => { contents: <Buffer 89 50 4e ...>, mode: '0644' }
 });
 ```
+
 
 ## API
 
@@ -37,7 +39,7 @@ Add a `plugin` to the middleware stack.
 
 ### .src(file)
 
-Set the file to be optimized. Could be a `Buffer` or the path to a file.
+Set the file to be optimized. Can be a `Buffer` or the path to a file.
 
 ### .dest(file)
 
@@ -67,10 +69,9 @@ Compress GIF images.
 
 ```js
 var Imagemin = require('image-min');
-var gifsicle = require('image-min').gifsicle;
 
 var imagemin = new Imagemin()
-    .use(gifsicle({ interlaced: true }));
+    .use(Imagemin.gifsicle({ interlaced: true }));
 ```
 
 ### .jpegtran()
@@ -79,10 +80,9 @@ Compress JPG images.
 
 ```js
 var Imagemin = require('image-min');
-var jpegtran = require('image-min').jpegtran;
 
 var imagemin = new Imagemin()
-    .use(jpegtran({ progressive: true }));
+    .use(Imagemin.jpegtran({ progressive: true }));
 ```
 
 ### .optipng()
@@ -91,10 +91,9 @@ Lossless compression of PNG images.
 
 ```js
 var Imagemin = require('image-min');
-var optipng = require('image-min').optipng;
 
 var imagemin = new Imagemin()
-    .use(optipng({ optimizationLevel: 3 }));
+    .use(Imagemin.optipng({ optimizationLevel: 3 }));
 ```
 
 ### .pngquant()
@@ -103,10 +102,9 @@ Lossy compression of PNG images.
 
 ```js
 var Imagemin = require('image-min');
-var pngquant = require('image-min').pngquant;
 
 var imagemin = new Imagemin()
-    .use(pngquant());
+    .use(Imagemin.pngquant());
 ```
 
 ## License
