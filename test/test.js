@@ -65,7 +65,6 @@ describe('Imagemin()', function () {
             .src(buf)
             .use(jpegtran())
             .optimize(function (err, file) {
-                console.log(file);
                 assert(file.contents.length < buf.length);
                 cb();
             });
