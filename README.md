@@ -56,7 +56,7 @@ Run all middleware plugins on your file.
 
 ## Plugins
 
-The follwing plugins are bundled with image-min:
+The follwing [plugins](https://www.npmjs.org/browse/keyword/imageminplugin) are bundled with image-min:
 
 * [gifsicle](#gifsicle) — Compress GIF images.
 * [jpegtran](#jpegtran) — Compress JPG images.
