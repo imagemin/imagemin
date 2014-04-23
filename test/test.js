@@ -2,11 +2,8 @@
 'use strict';
 
 var assert = require('assert');
-var gifsicle = require('../lib/').gifsicle;
 var fs = require('fs');
-var Imagemin = require('../lib/');
-var jpegtran = require('../lib/').jpegtran;
-var optipng = require('../lib/').optipng;
+var Imagemin = require('../');
 var path = require('path');
 var rm = require('rimraf');
 
@@ -21,7 +18,7 @@ describe('Imagemin()', function () {
         imagemin
             .src(path.join(__dirname, 'fixtures/test.gif'))
             .dest(path.join(__dirname, 'tmp/test.gif'))
-            .use(gifsicle())
+            .use(Imagemin.gifsicle())
             .optimize(function () {
                 assert(fs.statSync(imagemin.dest()).size < fs.statSync(imagemin.src()).size);
                 assert(fs.statSync(imagemin.dest()).size > 0);
@@ -35,7 +32,7 @@ describe('Imagemin()', function () {
         imagemin
             .src(path.join(__dirname, 'fixtures/test.jpg'))
             .dest(path.join(__dirname, 'tmp/test.jpg'))
-            .use(jpegtran())
+            .use(Imagemin.jpegtran())
             .optimize(function () {
                 assert(fs.statSync(imagemin.dest()).size < fs.statSync(imagemin.src()).size);
                 assert(fs.statSync(imagemin.dest()).size > 0);
@@ -49,7 +46,7 @@ describe('Imagemin()', function () {
         imagemin
             .src(path.join(__dirname, 'fixtures/test.png'))
             .dest(path.join(__dirname, 'tmp/test.png'))
-            .use(optipng())
+            .use(Imagemin.optipng())
             .optimize(function () {
                 assert(fs.statSync(imagemin.dest()).size < fs.statSync(imagemin.src()).size);
                 assert(fs.statSync(imagemin.dest()).size > 0);
@@ -63,7 +60,7 @@ describe('Imagemin()', function () {
 
         imagemin
             .src(buf)
-            .use(jpegtran())
+            .use(Imagemin.jpegtran())
             .optimize(function (err, file) {
                 assert(file.contents.length < buf.length);
                 cb();

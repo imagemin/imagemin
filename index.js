@@ -162,7 +162,7 @@ Imagemin.prototype.write = function (file, cb) {
  */
 
 module.exports = Imagemin;
-module.exports.gifsicle = require('./plugins/gifsicle');
-module.exports.jpegtran = require('./plugins/jpegtran');
-module.exports.optipng = require('./plugins/optipng');
-module.exports.pngquant = require('./plugins/pngquant');
+module.exports.gifsicle = require('imagemin-gifsicle');
+module.exports.jpegtran = require('imagemin-jpegtran');
+module.exports.optipng = require('imagemin-optipng');
+module.exports.pngquant = require('imagemin-pngquant');

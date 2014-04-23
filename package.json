@@ -12,12 +12,11 @@
   "engines": {
     "node": ">=0.10.0"
   },
-  "main": "lib",
   "scripts": {
     "test": "mocha --reporter list --timeout 0"
   },
   "files": [
-    "lib"
+    "index.js"
   ],
   "keywords": [
     "compress",
@@ -39,9 +38,9 @@
     "mocha": "^1.18.2"
   },
   "optionalDependencies": {
-    "gifsicle": "^0.1.0",
-    "jpegtran-bin": "^0.2.0",
-    "optipng-bin": "^0.3.2",
-    "pngquant-bin": "^0.1.6"
+    "imagemin-gifsicle": "^0.1.0",
+    "imagemin-jpegtran": "^0.1.0",
+    "imagemin-optipng": "^0.1.0",
+    "imagemin-pngquant": "^0.1.0"
   }
 }
