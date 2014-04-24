@@ -107,6 +107,34 @@ var imagemin = new Imagemin()
     .use(Imagemin.pngquant());
 ```
 
+## CLI
+
+You can also use it as a CLI app by installing it globally:
+
+```bash
+$ npm install --global image-min
+```
+
+### Usage
+
+```bash
+$ imagemin --help
+
+Usage
+  $ imagemin <file>
+  $ cat <file> | imagemin
+
+Example
+  $ imagemin --out foo-optimized.png foo.png
+  $ cat foo.png | imagemin --out foo-optimized.png
+
+Options
+  -i, --interlaced                    Interlace GIF for progressive rendering
+  -l, --optimizationLevel <number>    PNG optimization level (0-7)
+  -o, --out <file>                    Output file
+  -p, --progressive                   Lossless conversion to progressive
+```
+
 ## License
 
 [MIT License](http://en.wikipedia.org/wiki/MIT_License) © [Kevin Mårtensson](http://kevinmartensson.com)
