@@ -107,6 +107,33 @@ var imagemin = new Imagemin()
     .use(Imagemin.pngquant());
 ```
 
+## CLI
+
+You can also use it as a CLI app by installing it globally:
+
+```bash
+$ npm install --global image-min
+```
+
+### Usage
+
+```bash
+$ imagemin --help
+
+Usage
+  $ imagemin <file>
+  $ cat <file> | imagemin
+
+Example
+  $ imagemin foo.png > foo-optimized.png
+  $ cat foo.png | imagemin > foo-optimized.png
+
+Options
+  -i, --interlaced                    Extract archive files on download
+  -o, --optimizationLevel <number>    Path to download or extract the files to
+  -p, --progressive                   Strip path segments from root when extracting
+```
+
 ## License
 
 [MIT License](http://en.wikipedia.org/wiki/MIT_License) © [Kevin Mårtensson](http://kevinmartensson.com)

@@ -12,10 +12,14 @@
   "engines": {
     "node": ">=0.10.0"
   },
+  "bin": {
+    "imagemin": "cli.js"
+  },
   "scripts": {
     "test": "mocha --reporter list --timeout 0"
   },
   "files": [
+    "cli.js",
     "index.js"
   ],
   "keywords": [
@@ -28,7 +32,9 @@
   ],
   "dependencies": {
     "fs-extra": "^0.8.1",
+    "get-stdin": "^0.1.0",
     "image-type": "^0.1.0",
+    "nopt": "^2.2.0",
     "rimraf": "^2.2.6",
     "stat-mode": "^0.2.0",
     "tempfile": "^0.1.3",
