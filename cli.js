@@ -82,7 +82,8 @@ function run(input) {
         .dest(opts.out)
         .use(Imagemin.gifsicle(opts.interlaced))
         .use(Imagemin.jpegtran(opts.progressive))
-        .use(Imagemin.optipng(opts.optimizationLevel));
+        .use(Imagemin.optipng(opts.optimizationLevel))
+        .use(Imagemin.svgo());
 
     imagemin.optimize(function (err, file) {
         if (err) {
