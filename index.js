@@ -166,3 +166,4 @@ module.exports.gifsicle = require('imagemin-gifsicle');
 module.exports.jpegtran = require('imagemin-jpegtran');
 module.exports.optipng = require('imagemin-optipng');
 module.exports.pngquant = require('imagemin-pngquant');
+module.exports.svgo = require('imagemin-svgo');

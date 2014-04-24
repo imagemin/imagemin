@@ -54,6 +54,20 @@ describe('Imagemin()', function () {
             });
     });
 
+    it('should optimize a SVG', function (cb) {
+        var imagemin = new Imagemin();
+
+        imagemin
+            .src(path.join(__dirname, 'fixtures/test.svg'))
+            .dest(path.join(__dirname, 'tmp/test.svg'))
+            .use(Imagemin.svgo())
+            .optimize(function () {
+                assert(fs.statSync(imagemin.dest()).size < fs.statSync(imagemin.src()).size);
+                assert(fs.statSync(imagemin.dest()).size > 0);
+                cb();
+            });
+    });
+
     it('should optimize a image using Buffer', function (cb) {
         var buf = fs.readFileSync(path.join(__dirname, 'fixtures/test.jpg'));
         var imagemin = new Imagemin();
