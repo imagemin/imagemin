@@ -1,4 +1,4 @@
-# image-min [![Build Status](https://travis-ci.org/kevva/image-min.svg?branch=master)](https://travis-ci.org/kevva/image-min)
+# imagemin [![Build Status](https://travis-ci.org/kevva/imagemin.svg?branch=master)](https://travis-ci.org/kevva/imagemin)
 
 > Minify images seamlessly with Node.js
 
@@ -6,14 +6,14 @@
 ## Install
 
 ```bash
-$ npm install --save image-min
+$ npm install --save imagemin
 ```
 
 
 ## Usage
 
 ```js
-var Imagemin = require('image-min');
+var Imagemin = require('imagemin');
 
 var imagemin = new Imagemin()
     .src('foo.jpg')
@@ -56,7 +56,7 @@ Run all middleware plugins on your file.
 
 ## Plugins
 
-The follwing [plugins](https://www.npmjs.org/browse/keyword/imageminplugin) are bundled with image-min:
+The following [plugins](https://www.npmjs.org/browse/keyword/imageminplugin) are bundled with imagemin:
 
 * [gifsicle](#gifsicle) — Compress GIF images.
 * [jpegtran](#jpegtran) — Compress JPG images.
@@ -69,7 +69,7 @@ The follwing [plugins](https://www.npmjs.org/browse/keyword/imageminplugin) are 
 Compress GIF images.
 
 ```js
-var Imagemin = require('image-min');
+var Imagemin = require('imagemin');
 
 var imagemin = new Imagemin()
     .use(Imagemin.gifsicle({ interlaced: true }));
@@ -80,7 +80,7 @@ var imagemin = new Imagemin()
 Compress JPG images.
 
 ```js
-var Imagemin = require('image-min');
+var Imagemin = require('imagemin');
 
 var imagemin = new Imagemin()
     .use(Imagemin.jpegtran({ progressive: true }));
@@ -91,7 +91,7 @@ var imagemin = new Imagemin()
 Lossless compression of PNG images.
 
 ```js
-var Imagemin = require('image-min');
+var Imagemin = require('imagemin');
 
 var imagemin = new Imagemin()
     .use(Imagemin.optipng({ optimizationLevel: 3 }));
@@ -102,7 +102,7 @@ var imagemin = new Imagemin()
 Lossy compression of PNG images.
 
 ```js
-var Imagemin = require('image-min');
+var Imagemin = require('imagemin');
 
 var imagemin = new Imagemin()
     .use(Imagemin.pngquant());
@@ -113,7 +113,7 @@ var imagemin = new Imagemin()
 Lossy compression of SVG images.
 
 ```js
-var Imagemin = require('image-min');
+var Imagemin = require('imagemin');
 
 var imagemin = new Imagemin()
     .use(Imagemin.svgo());
@@ -121,13 +121,9 @@ var imagemin = new Imagemin()
 
 ## CLI
 
-You can also use it as a CLI app by installing it globally:
-
 ```bash
-$ npm install --global image-min
+$ npm install --global imagemin
 ```
-
-### Usage
 
 ```bash
 $ imagemin --help
@@ -148,4 +144,4 @@ Options
 
 ## License
 
-[MIT License](http://en.wikipedia.org/wiki/MIT_License) © [Kevin Mårtensson](http://kevinmartensson.com)
+MIT © [Kevin Mårtensson](http://kevinmartensson.com)

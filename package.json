@@ -1,9 +1,9 @@
 {
-  "name": "image-min",
+  "name": "imagemin",
   "version": "0.4.5",
-  "description": "Minify GIF, JPEG and PNG images",
+  "description": "Minify images",
   "license": "MIT",
-  "repository": "kevva/image-min",
+  "repository": "kevva/imagemin",
   "author": {
     "name": "Kevin Mårtensson",
     "email": "kevinmartensson@gmail.com",
