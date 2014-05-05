@@ -70,6 +70,10 @@ Imagemin.prototype.optimize = function (cb) {
     var self = this;
 
     this.read(function (err, file) {
+        if (!file || file.contents.length === 0) {
+            return cb();
+        }
+
         var buf = file.contents;
 
         self.run(file, function (err, file) {

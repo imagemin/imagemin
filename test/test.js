@@ -80,4 +80,16 @@ describe('Imagemin()', function () {
                 cb();
             });
     });
+
+    it('should ignore directories', function (cb) {
+        var imagemin = new Imagemin();
+
+        imagemin
+            .src(path.join(__dirname, 'fixtures/test'))
+            .use(Imagemin.jpegtran())
+            .optimize(function (err) {
+                assert(!err);
+                cb();
+            });
+    });
 });
