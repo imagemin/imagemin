@@ -142,6 +142,14 @@ Options
   -p, --progressive                   Strip path segments from root when extracting
 ```
 
+
+## Related
+
+- [imagemin-app](https://github.com/kevva/imagemin-app)
+- [gulp-imagemin](https://github.com/sindresorhus/gulp-imagemin)
+- [grunt-contrib-imagemin](https://github.com/gruntjs/grunt-contrib-imagemin)
+
+
 ## License
 
 MIT © [Kevin Mårtensson](http://kevinmartensson.com)
