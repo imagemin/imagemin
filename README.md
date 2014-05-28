@@ -110,7 +110,7 @@ var imagemin = new Imagemin()
 
 ### .svgo()
 
-Lossy compression of SVG images.
+Compress SVG images.
 
 ```js
 var Imagemin = require('imagemin');
