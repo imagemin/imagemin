@@ -95,7 +95,7 @@ Imagemin.prototype.optimize = function (cb) {
 /**
  * Run a file through the middleware
  *
- * @param {Array} file
+ * @param {Object} file
  * @param {Function} cb
  * @api public
  */
@@ -137,8 +137,6 @@ Imagemin.prototype.read = function (cb) {
             cb(null, file);
         });
     });
-
-
 };
 
 /**
