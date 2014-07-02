@@ -117,7 +117,6 @@ Imagemin.prototype.read = function (cb) {
 
     if (Buffer.isBuffer(src)) {
         file.contents = src;
-
         return cb(null, file);
     }
 
