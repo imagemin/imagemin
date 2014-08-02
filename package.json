@@ -32,23 +32,23 @@
     "svg"
   ],
   "dependencies": {
-    "fs-extra": "^0.8.1",
+    "fs-extra": "^0.10.0",
     "get-stdin": "^0.1.0",
-    "image-type": "^0.1.0",
-    "nopt": "^2.2.0",
+    "image-type": "^0.1.4",
+    "nopt": "^3.0.1",
     "rimraf": "^2.2.6",
     "stat-mode": "^0.2.0",
     "tempfile": "^0.1.3",
-    "ware": "^0.2.1"
+    "ware": "^0.3.0"
   },
   "devDependencies": {
     "mocha": "^1.18.2"
   },
   "optionalDependencies": {
-    "imagemin-gifsicle": "^0.1.0",
+    "imagemin-gifsicle": "^0.1.1",
     "imagemin-jpegtran": "^0.1.0",
     "imagemin-optipng": "^0.1.0",
-    "imagemin-pngquant": "^0.1.0",
+    "imagemin-pngquant": "^0.1.2",
     "imagemin-svgo": "^0.1.0"
   }
 }
