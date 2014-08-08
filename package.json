@@ -1,6 +1,6 @@
 {
   "name": "imagemin",
-  "version": "0.4.6",
+  "version": "0.4.7",
   "description": "Minify images",
   "license": "MIT",
   "repository": "kevva/imagemin",
