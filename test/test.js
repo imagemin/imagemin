@@ -81,6 +81,19 @@ describe('Imagemin()', function () {
             });
     });
 
+    it('should output error on corrupt images', function (cb) {
+        var imagemin = new Imagemin();
+
+        imagemin
+            .src(path.join(__dirname, 'fixtures/test-corrupt.jpg'))
+            .dest(path.join(__dirname, 'tmp/test-corrupt.jpg'))
+            .use(Imagemin.jpegtran())
+            .optimize(function (err) {
+                assert(err);
+                cb();
+            });
+    });
+
     it('should ignore directories', function (cb) {
         var imagemin = new Imagemin();
 

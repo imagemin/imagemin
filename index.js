@@ -74,6 +74,10 @@ Imagemin.prototype.optimize = function (cb) {
             return cb();
         }
 
+        if (err) {
+            return cb(err);
+        }
+
         var buf = file.contents;
 
         self.run(file, function (err, file) {
