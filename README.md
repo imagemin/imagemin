@@ -50,10 +50,6 @@ the file won't be written.
 
 Optimize your file with the given settings.
 
-### .run(file, cb)
-
-Run all middleware plugins on your file.
-
 ## Plugins
 
 The following [plugins](https://www.npmjs.org/browse/keyword/imageminplugin) are bundled with imagemin:
