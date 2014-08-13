@@ -40,9 +40,9 @@ function help() {
     console.log('  $ cat foo.png | imagemin > foo-optimized.png');
     console.log('');
     console.log('Options');
-    console.log('  -i, --interlaced                    Extract archive files on download');
-    console.log('  -o, --optimizationLevel <number>    Path to download or extract the files to');
-    console.log('  -p, --progressive                   Strip path segments from root when extracting');
+    console.log('  -i, --interlaced                    Interlace gif for progressive rendering');
+    console.log('  -o, --optimizationLevel <number>    Select an optimization level between 0 and 7');
+    console.log('  -p, --progressive                   Lossless conversion to progressive');
 }
 
 /**

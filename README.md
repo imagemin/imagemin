@@ -133,9 +133,9 @@ Example
   $ cat foo.png | imagemin > foo-optimized.png
 
 Options
-  -i, --interlaced                    Extract archive files on download
-  -o, --optimizationLevel <number>    Path to download or extract the files to
-  -p, --progressive                   Strip path segments from root when extracting
+  -i, --interlaced                    Interlace gif for progressive rendering
+  -o, --optimizationLevel <number>    Select an optimization level between 0 and 7
+  -p, --progressive                   Lossless conversion to progressive
 ```
 
 
