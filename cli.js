@@ -20,7 +20,6 @@ var opts = nopt({
     h: '--help',
     i: '--interlaced',
     l: '--optimizationLevel',
-    o: '--out',
     p: '--progressive',
     v: '--version'
 });
