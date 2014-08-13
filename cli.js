@@ -5,7 +5,6 @@ var fs = require('fs');
 var Imagemin = require('./');
 var nopt = require('nopt');
 var pkg = require('./package.json');
-var stdin = require('get-stdin');
 
 /**
  * Options
@@ -14,8 +13,7 @@ var stdin = require('get-stdin');
 var opts = nopt({
     help: Boolean,
     interlaced: Boolean,
-    optimizationLevel: String,
-    out: String,
+    optimizationLevel: Number,
     progressive: Boolean,
     version: Boolean
 }, {
@@ -35,8 +33,8 @@ function help() {
     console.log(pkg.description);
     console.log('');
     console.log('Usage');
-    console.log('  $ imagemin <file>');
-    console.log('  $ cat <file> | imagemin');
+    console.log('  $ imagemin <file> > <output>');
+    console.log('  $ cat <file> | imagemin > <output>');
     console.log('');
     console.log('Example');
     console.log('  $ imagemin foo.png > foo-optimized.png');
@@ -73,14 +71,15 @@ if (opts.version) {
 function run(input) {
     var imagemin = new Imagemin()
         .src(input)
-        .use(Imagemin.gifsicle(opts.interlaced))
-        .use(Imagemin.jpegtran(opts.progressive))
-        .use(Imagemin.optipng(opts.optimizationLevel))
+        .use(Imagemin.gifsicle(opts))
+        .use(Imagemin.jpegtran(opts))
+        .use(Imagemin.optipng(opts))
         .use(Imagemin.svgo());
 
     imagemin.optimize(function (err, file) {
         if (err) {
-            return console.log(err);
+            console.err(err);
+            process.exit(1);
         }
 
         process.stdout.write(file.contents);
@@ -94,19 +93,32 @@ function run(input) {
 if (process.stdin.isTTY) {
     var input = opts.argv.remain;
 
+    if (input.length === 0) {
+        help();
+        return;
+    }
+
     if (input.length > 1) {
-        return console.log('Only one input file allowed');
+        console.error('Only one input file allowed');
+        process.exit(1);
     }
 
     fs.readFile(input[0], function (err, data) {
         if (err) {
-            return console.log(err);
+            console.error(err);
+            process.exit(1);
         }
 
         run(data);
     });
 } else {
-    stdin(function (data) {
-        run(data);
+    var ret = [];
+
+    process.stdin.on('data', function (data) {
+        ret.push(data);
+    });
+
+    process.stdin.on('end', function () {
+        run(Buffer.concat(ret));
     });
 }

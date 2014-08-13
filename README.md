@@ -125,8 +125,8 @@ $ npm install --global imagemin
 $ imagemin --help
 
 Usage
-  $ imagemin <file>
-  $ cat <file> | imagemin
+  $ imagemin <file> > <output>
+  $ cat <file> | imagemin > <output>
 
 Example
   $ imagemin foo.png > foo-optimized.png
