@@ -71,18 +71,21 @@ Imagemin.prototype.optimize = function (cb) {
 
     this.read(function (err, file) {
         if (!file || file.contents.length === 0) {
-            return cb();
+            cb();
+            return;
         }
 
         if (err) {
-            return cb(err);
+            cb(err);
+            return;
         }
 
         var buf = file.contents;
 
         self.run(file, function (err, file) {
             if (err) {
-                return cb(err);
+                cb(err);
+                return;
             }
 
             if (file.contents.length >= buf.length) {
@@ -121,17 +124,20 @@ Imagemin.prototype.read = function (cb) {
 
     if (Buffer.isBuffer(src)) {
         file.contents = src;
-        return cb(null, file);
+        cb(null, file);
+        return;
     }
 
     fs.readFile(src, function (err, buf) {
         if (err) {
-            return cb(err);
+            cb(err);
+            return;
         }
 
         fs.stat(src, function (err, stats) {
             if (err) {
-                return cb(err);
+                cb(err);
+                return;
             }
 
             file.contents = buf;
@@ -154,7 +160,8 @@ Imagemin.prototype.write = function (file, cb) {
     var dest = this.dest();
 
     if (!dest) {
-        return cb();
+        cb();
+        return;
     }
 
     fs.outputFile(dest, file.contents, function (err) {

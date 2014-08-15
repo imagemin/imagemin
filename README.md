@@ -5,7 +5,7 @@
 
 ## Install
 
-```bash
+```sh
 $ npm install --save imagemin
 ```
 
@@ -115,13 +115,14 @@ var imagemin = new Imagemin()
     .use(Imagemin.svgo());
 ```
 
+
 ## CLI
 
 ```bash
 $ npm install --global imagemin
 ```
 
-```bash
+```sh
 $ imagemin --help
 
 Usage
