@@ -21,6 +21,10 @@ var imagemin = new Imagemin()
     .use(Imagemin.jpegtran({ progressive: true }));
 
 imagemin.optimize(function (err, file) {
+    if (err) {
+        throw err;
+    }
+    
     console.log(file);
     // => { contents: <Buffer 89 50 4e ...>, mode: '0644' }
 });

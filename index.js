@@ -93,7 +93,12 @@ Imagemin.prototype.optimize = function (cb) {
             }
 
             self.write(file, function (err) {
-                cb(err, file);
+                if (err) {
+                    cb(err);
+                    return;
+                }
+
+                cb(null, file);
             });
         });
     });
@@ -165,7 +170,12 @@ Imagemin.prototype.write = function (file, cb) {
     }
 
     fs.outputFile(dest, file.contents, function (err) {
-        cb(err);
+        if (err) {
+            cb(err);
+            return;
+        }
+
+        cb();
     });
 };
 
