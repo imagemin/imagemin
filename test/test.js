@@ -1,108 +1,111 @@
-/*global after, describe, it */
 'use strict';
 
-var assert = require('assert');
 var fs = require('fs');
 var Imagemin = require('../');
 var path = require('path');
-var rm = require('rimraf');
+var test = require('ava');
 
-describe('Imagemin()', function () {
-    after(function (cb) {
-        rm(path.join(__dirname, 'tmp'), cb);
-    });
+test('optimize a GIF', function (t) {
+    t.plan(5);
 
-    it('should optimize a GIF', function (cb) {
-        var imagemin = new Imagemin();
+    var imagemin = new Imagemin()
+        .src(path.join(__dirname, 'fixtures/test.gif'))
+        .dest(path.join(__dirname, 'tmp/test.gif'))
+        .use(Imagemin.gifsicle());
 
-        imagemin
-            .src(path.join(__dirname, 'fixtures/test.gif'))
-            .dest(path.join(__dirname, 'tmp/test.gif'))
-            .use(Imagemin.gifsicle())
-            .optimize(function () {
-                assert(fs.statSync(imagemin.dest()).size < fs.statSync(imagemin.src()).size);
-                assert(fs.statSync(imagemin.dest()).size > 0);
-                cb();
+    imagemin.optimize(function (err) {
+        t.assert(!err);
+
+        fs.stat(imagemin.dest(), function (err, a) {
+            t.assert(!err);
+            t.assert(a.size > 0);
+
+            fs.stat(imagemin.src(), function (err, b) {
+                t.assert(!err);
+                t.assert(a.size < b.size);
             });
+        });
     });
+});
 
-    it('should optimize a JPG', function (cb) {
-        var imagemin = new Imagemin();
+test('optimize a JPG', function (t) {
+    t.plan(5);
 
-        imagemin
-            .src(path.join(__dirname, 'fixtures/test.jpg'))
-            .dest(path.join(__dirname, 'tmp/test.jpg'))
-            .use(Imagemin.jpegtran())
-            .optimize(function () {
-                assert(fs.statSync(imagemin.dest()).size < fs.statSync(imagemin.src()).size);
-                assert(fs.statSync(imagemin.dest()).size > 0);
-                cb();
+    var imagemin = new Imagemin()
+        .src(path.join(__dirname, 'fixtures/test.jpg'))
+        .dest(path.join(__dirname, 'tmp/test.jpg'))
+        .use(Imagemin.jpegtran());
+
+    imagemin.optimize(function (err) {
+        t.assert(!err);
+
+        fs.stat(imagemin.dest(), function (err, a) {
+            t.assert(!err);
+            t.assert(a.size > 0);
+
+            fs.stat(imagemin.src(), function (err, b) {
+                t.assert(!err);
+                t.assert(a.size < b.size);
             });
+        });
     });
+});
 
-    it('should optimize a PNG', function (cb) {
-        var imagemin = new Imagemin();
+test('optimize a PNG', function (t) {
+    t.plan(5);
 
-        imagemin
-            .src(path.join(__dirname, 'fixtures/test.png'))
-            .dest(path.join(__dirname, 'tmp/test.png'))
-            .use(Imagemin.optipng())
-            .optimize(function () {
-                assert(fs.statSync(imagemin.dest()).size < fs.statSync(imagemin.src()).size);
-                assert(fs.statSync(imagemin.dest()).size > 0);
-                cb();
+    var imagemin = new Imagemin()
+        .src(path.join(__dirname, 'fixtures/test.png'))
+        .dest(path.join(__dirname, 'tmp/test.png'))
+        .use(Imagemin.optipng());
+
+    imagemin.optimize(function (err) {
+        t.assert(!err);
+
+        fs.stat(imagemin.dest(), function (err, a) {
+            t.assert(!err);
+            t.assert(a.size > 0);
+
+            fs.stat(imagemin.src(), function (err, b) {
+                t.assert(!err);
+                t.assert(a.size < b.size);
             });
+        });
     });
+});
 
-    it('should optimize a SVG', function (cb) {
-        var imagemin = new Imagemin();
+test('optimize a SVG', function (t) {
+    t.plan(5);
 
-        imagemin
-            .src(path.join(__dirname, 'fixtures/test.svg'))
-            .dest(path.join(__dirname, 'tmp/test.svg'))
-            .use(Imagemin.svgo())
-            .optimize(function () {
-                assert(fs.statSync(imagemin.dest()).size < fs.statSync(imagemin.src()).size);
-                assert(fs.statSync(imagemin.dest()).size > 0);
-                cb();
+    var imagemin = new Imagemin()
+        .src(path.join(__dirname, 'fixtures/test.svg'))
+        .dest(path.join(__dirname, 'tmp/test.svg'))
+        .use(Imagemin.svgo());
+
+    imagemin.optimize(function (err) {
+        t.assert(!err);
+
+        fs.stat(imagemin.dest(), function (err, a) {
+            t.assert(!err);
+            t.assert(a.size > 0);
+
+            fs.stat(imagemin.src(), function (err, b) {
+                t.assert(!err);
+                t.assert(a.size < b.size);
             });
+        });
     });
+});
 
-    it('should optimize a image using Buffer', function (cb) {
-        var buf = fs.readFileSync(path.join(__dirname, 'fixtures/test.jpg'));
-        var imagemin = new Imagemin();
+test('output error on corrupt images', function (t) {
+    t.plan(1);
 
-        imagemin
-            .src(buf)
-            .use(Imagemin.jpegtran())
-            .optimize(function (err, file) {
-                assert(file.contents.length < buf.length);
-                cb();
-            });
-    });
+    var imagemin = new Imagemin()
+        .src(path.join(__dirname, 'fixtures/test-corrupt.jpg'))
+        .dest(path.join(__dirname, 'tmp/test-corrupt.jpg'))
+        .use(Imagemin.jpegtran());
 
-    it('should output error on corrupt images', function (cb) {
-        var imagemin = new Imagemin();
-
-        imagemin
-            .src(path.join(__dirname, 'fixtures/test-corrupt.jpg'))
-            .dest(path.join(__dirname, 'tmp/test-corrupt.jpg'))
-            .use(Imagemin.jpegtran())
-            .optimize(function (err) {
-                assert(err);
-                cb();
-            });
-    });
-
-    it('should ignore directories', function (cb) {
-        var imagemin = new Imagemin();
-
-        imagemin
-            .src(path.join(__dirname, 'fixtures/test'))
-            .use(Imagemin.jpegtran())
-            .optimize(function (err) {
-                assert(!err);
-                cb();
-            });
+    imagemin.optimize(function (err) {
+        t.assert(err);
     });
 });
