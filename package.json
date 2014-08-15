@@ -33,6 +33,7 @@
   ],
   "dependencies": {
     "fs-extra": "^0.10.0",
+    "get-stdin": "^2.0.0",
     "image-type": "^0.1.4",
     "nopt": "^3.0.1",
     "rimraf": "^2.2.6",

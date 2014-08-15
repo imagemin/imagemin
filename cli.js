@@ -5,6 +5,7 @@ var fs = require('fs');
 var Imagemin = require('./');
 var nopt = require('nopt');
 var pkg = require('./package.json');
+var stdin = require('get-stdin');
 
 /**
  * Options
@@ -111,13 +112,7 @@ if (process.stdin.isTTY) {
         run(data);
     });
 } else {
-    var ret = [];
-
-    process.stdin.on('data', function (data) {
-        ret.push(data);
-    });
-
-    process.stdin.on('end', function () {
-        run(Buffer.concat(ret));
+    stdin(function (data) {
+        run(data);
     });
 }
