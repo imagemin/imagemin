@@ -142,7 +142,7 @@ if (process.stdin.isTTY) {
         });
     });
 } else {
-    stdin(function (data) {
+    stdin.buffer(function (data) {
         run(data);
     });
 }
