@@ -4,6 +4,7 @@
 var fs = require('fs');
 var Imagemin = require('./');
 var nopt = require('nopt');
+var path = require('path');
 var pkg = require('./package.json');
 var stdin = require('get-stdin');
 
@@ -33,10 +34,12 @@ function help() {
     console.log(pkg.description);
     console.log('');
     console.log('Usage');
+    console.log('  $ imagemin <file> <directory>');
     console.log('  $ imagemin <file> > <output>');
     console.log('  $ cat <file> | imagemin > <output>');
     console.log('');
     console.log('Example');
+    console.log('  $ imagemin *.{gif,jpg,png} build');
     console.log('  $ imagemin foo.png > foo-optimized.png');
     console.log('  $ cat foo.png | imagemin > foo-optimized.png');
     console.log('');
@@ -65,10 +68,25 @@ if (opts.version) {
 }
 
 /**
- * Run
+ * Check if path is a file
+ *
+ * @param {String} path
+ * @api private
  */
 
-function run(input) {
+function isFile(path) {
+    return path && path.indexOf('.') !== -1;
+}
+
+/**
+ * Run
+ *
+ * @param {Buffer} input
+ * @param {Object} opts
+ * @api private
+ */
+
+function run(input, opt) {
     var imagemin = new Imagemin()
         .src(input)
         .use(Imagemin.gifsicle(opts))
@@ -76,13 +94,22 @@ function run(input) {
         .use(Imagemin.optipng(opts))
         .use(Imagemin.svgo());
 
+    if (process.stdout.isTTY) {
+        var name = path.basename(opt.input);
+        var out = path.join(opt.output ? opt.output : 'build', name);
+
+        imagemin.dest(path.join(out));
+    }
+
     imagemin.optimize(function (err, file) {
         if (err) {
             console.err(err);
             process.exit(1);
         }
 
-        process.stdout.write(file.contents);
+        if (!process.stdout.isTTY) {
+            process.stdout.write(file.contents);
+        }
     });
 }
 
@@ -92,24 +119,27 @@ function run(input) {
 
 if (process.stdin.isTTY) {
     var input = opts.argv.remain;
+    var output;
 
     if (input.length === 0) {
         help();
         return;
     }
 
-    if (input.length > 1) {
-        console.error('Only one input file allowed');
-        process.exit(1);
+    if (input[input.length - 1] && !isFile(input[input.length - 1])) {
+        output = input[input.length - 1];
+        input.pop();
     }
 
-    fs.readFile(input[0], function (err, data) {
-        if (err) {
-            console.error(err);
-            process.exit(1);
-        }
+    input.forEach(function (file) {
+        fs.readFile(file, function (err, data) {
+            if (err) {
+                console.error(err);
+                process.exit(1);
+            }
 
-        run(data);
+            run(data, { input: file, output: output });
+        });
     });
 } else {
     stdin(function (data) {
