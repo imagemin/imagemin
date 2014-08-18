@@ -130,10 +130,12 @@ $ npm install --global imagemin
 $ imagemin --help
 
 Usage
+  $ imagemin <file> <directory>
   $ imagemin <file> > <output>
   $ cat <file> | imagemin > <output>
 
 Example
+  $ imagemin *.{gif,jpg,png,svg} build
   $ imagemin foo.png > foo-optimized.png
   $ cat foo.png | imagemin > foo-optimized.png
 
