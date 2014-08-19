@@ -40,7 +40,7 @@
     "ware": "^0.3.0"
   },
   "devDependencies": {
-    "ava": "0.0.3"
+    "ava": "0.0.4"
   },
   "optionalDependencies": {
     "imagemin-gifsicle": "^0.1.1",
