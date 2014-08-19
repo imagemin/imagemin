@@ -39,7 +39,7 @@ function help() {
     console.log('  $ cat <file> | imagemin > <output>');
     console.log('');
     console.log('Example');
-    console.log('  $ imagemin *.{gif,jpg,png} build');
+    console.log('  $ imagemin images/* build');
     console.log('  $ imagemin foo.png > foo-optimized.png');
     console.log('  $ cat foo.png | imagemin > foo-optimized.png');
     console.log('');
@@ -75,7 +75,11 @@ if (opts.version) {
  */
 
 function isFile(path) {
-    return path && path.indexOf('.') !== -1;
+    try {
+        return fs.statSync(path).isFile();
+    } catch (e) {
+        return false;
+    }
 }
 
 /**
@@ -103,7 +107,7 @@ function run(input, opt) {
 
     imagemin.optimize(function (err, file) {
         if (err) {
-            console.err(err);
+            console.error(err);
             process.exit(1);
         }
 
@@ -126,7 +130,7 @@ if (process.stdin.isTTY) {
         return;
     }
 
-    if (input[input.length - 1] && !isFile(input[input.length - 1])) {
+    if (input.length > 1 && !isFile(input[input.length - 1])) {
         output = input[input.length - 1];
         input.pop();
     }

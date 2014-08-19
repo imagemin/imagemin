@@ -135,7 +135,7 @@ Usage
   $ cat <file> | imagemin > <output>
 
 Example
-  $ imagemin *.{gif,jpg,png,svg} build
+  $ imagemin images/* build
   $ imagemin foo.png > foo-optimized.png
   $ cat foo.png | imagemin > foo-optimized.png
 
