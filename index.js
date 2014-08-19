@@ -11,7 +11,7 @@ var Ware = require('ware');
  */
 
 function Imagemin() {
-    this.ware = new Ware();
+	this.ware = new Ware();
 }
 
 /**
@@ -22,8 +22,8 @@ function Imagemin() {
  */
 
 Imagemin.prototype.use = function (plugin) {
-    this.ware.use(plugin);
-    return this;
+	this.ware.use(plugin);
+	return this;
 };
 
 /**
@@ -34,12 +34,12 @@ Imagemin.prototype.use = function (plugin) {
  */
 
 Imagemin.prototype.src = function (file) {
-    if (!arguments.length) {
-        return this._src;
-    }
+	if (!arguments.length) {
+		return this._src;
+	}
 
-    this._src = file;
-    return this;
+	this._src = file;
+	return this;
 };
 
 /**
@@ -50,12 +50,12 @@ Imagemin.prototype.src = function (file) {
  */
 
 Imagemin.prototype.dest = function (file) {
-    if (!arguments.length) {
-        return this._dest;
-    }
+	if (!arguments.length) {
+		return this._dest;
+	}
 
-    this._dest = file;
-    return this;
+	this._dest = file;
+	return this;
 };
 
 /**
@@ -66,42 +66,42 @@ Imagemin.prototype.dest = function (file) {
  */
 
 Imagemin.prototype.optimize = function (cb) {
-    cb = cb || function () {};
-    var self = this;
+	cb = cb || function () {};
+	var self = this;
 
-    this.read(function (err, file) {
-        if (!file || file.contents.length === 0) {
-            cb();
-            return;
-        }
+	this.read(function (err, file) {
+		if (!file || file.contents.length === 0) {
+			cb();
+			return;
+		}
 
-        if (err) {
-            cb(err);
-            return;
-        }
+		if (err) {
+			cb(err);
+			return;
+		}
 
-        var buf = file.contents;
+		var buf = file.contents;
 
-        self.run(file, function (err, file) {
-            if (err) {
-                cb(err);
-                return;
-            }
+		self.run(file, function (err, file) {
+			if (err) {
+				cb(err);
+				return;
+			}
 
-            if (file.contents.length >= buf.length) {
-                file.contents = buf;
-            }
+			if (file.contents.length >= buf.length) {
+				file.contents = buf;
+			}
 
-            self.write(file, function (err) {
-                if (err) {
-                    cb(err);
-                    return;
-                }
+			self.write(file, function (err) {
+				if (err) {
+					cb(err);
+					return;
+				}
 
-                cb(null, file);
-            });
-        });
-    });
+				cb(null, file);
+			});
+		});
+	});
 };
 
 /**
@@ -113,7 +113,7 @@ Imagemin.prototype.optimize = function (cb) {
  */
 
 Imagemin.prototype.run = function (file, cb) {
-    this.ware.run(file, this, cb);
+	this.ware.run(file, this, cb);
 };
 
 /**
@@ -124,33 +124,33 @@ Imagemin.prototype.run = function (file, cb) {
  */
 
 Imagemin.prototype.read = function (cb) {
-    var file = {};
-    var src = this.src();
+	var file = {};
+	var src = this.src();
 
-    if (Buffer.isBuffer(src)) {
-        file.contents = src;
-        cb(null, file);
-        return;
-    }
+	if (Buffer.isBuffer(src)) {
+		file.contents = src;
+		cb(null, file);
+		return;
+	}
 
-    fs.readFile(src, function (err, buf) {
-        if (err) {
-            cb(err);
-            return;
-        }
+	fs.readFile(src, function (err, buf) {
+		if (err) {
+			cb(err);
+			return;
+		}
 
-        fs.stat(src, function (err, stats) {
-            if (err) {
-                cb(err);
-                return;
-            }
+		fs.stat(src, function (err, stats) {
+			if (err) {
+				cb(err);
+				return;
+			}
 
-            file.contents = buf;
-            file.mode = mode(stats).toOctal();
+			file.contents = buf;
+			file.mode = mode(stats).toOctal();
 
-            cb(null, file);
-        });
-    });
+			cb(null, file);
+		});
+	});
 };
 
 /**
@@ -162,21 +162,21 @@ Imagemin.prototype.read = function (cb) {
  */
 
 Imagemin.prototype.write = function (file, cb) {
-    var dest = this.dest();
+	var dest = this.dest();
 
-    if (!dest) {
-        cb();
-        return;
-    }
+	if (!dest) {
+		cb();
+		return;
+	}
 
-    fs.outputFile(dest, file.contents, function (err) {
-        if (err) {
-            cb(err);
-            return;
-        }
+	fs.outputFile(dest, file.contents, function (err) {
+		if (err) {
+			cb(err);
+			return;
+		}
 
-        cb();
-    });
+		cb();
+	});
 };
 
 /**

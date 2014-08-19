@@ -3,7 +3,7 @@
   "version": "1.0.2",
   "description": "Minify images",
   "license": "MIT",
-  "repository": "kevva/imagemin",
+  "repository": "imagemin/imagemin",
   "author": {
     "name": "Kevin Mårtensson",
     "email": "kevinmartensson@gmail.com",

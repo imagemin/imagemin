@@ -1,4 +1,4 @@
-# imagemin [![Build Status](https://travis-ci.org/kevva/imagemin.svg?branch=master)](https://travis-ci.org/kevva/imagemin)
+# imagemin [![Build Status](https://travis-ci.org/imagemin/imagemin.svg?branch=master)](https://travis-ci.org/imagemin/imagemin)
 
 > Minify images seamlessly with Node.js
 
@@ -16,17 +16,17 @@ $ npm install --save imagemin
 var Imagemin = require('imagemin');
 
 var imagemin = new Imagemin()
-    .src('foo.jpg')
-    .dest('foo-optimized.jpg')
-    .use(Imagemin.jpegtran({ progressive: true }));
+	.src('foo.jpg')
+	.dest('foo-optimized.jpg')
+	.use(Imagemin.jpegtran({ progressive: true }));
 
 imagemin.optimize(function (err, file) {
-    if (err) {
-        throw err;
-    }
-    
-    console.log(file);
-    // => { contents: <Buffer 89 50 4e ...>, mode: '0644' }
+	if (err) {
+		throw err;
+	}
+	
+	console.log(file);
+	// => { contents: <Buffer 89 50 4e ...>, mode: '0644' }
 });
 ```
 
@@ -72,7 +72,7 @@ Compress GIF images.
 var Imagemin = require('imagemin');
 
 var imagemin = new Imagemin()
-    .use(Imagemin.gifsicle({ interlaced: true }));
+	.use(Imagemin.gifsicle({ interlaced: true }));
 ```
 
 ### .jpegtran()
@@ -83,7 +83,7 @@ Compress JPG images.
 var Imagemin = require('imagemin');
 
 var imagemin = new Imagemin()
-    .use(Imagemin.jpegtran({ progressive: true }));
+	.use(Imagemin.jpegtran({ progressive: true }));
 ```
 
 ### .optipng()
@@ -94,7 +94,7 @@ Lossless compression of PNG images.
 var Imagemin = require('imagemin');
 
 var imagemin = new Imagemin()
-    .use(Imagemin.optipng({ optimizationLevel: 3 }));
+	.use(Imagemin.optipng({ optimizationLevel: 3 }));
 ```
 
 ### .pngquant()
@@ -105,7 +105,7 @@ Lossy compression of PNG images.
 var Imagemin = require('imagemin');
 
 var imagemin = new Imagemin()
-    .use(Imagemin.pngquant());
+	.use(Imagemin.pngquant());
 ```
 
 ### .svgo()
@@ -116,7 +116,7 @@ Compress SVG images.
 var Imagemin = require('imagemin');
 
 var imagemin = new Imagemin()
-    .use(Imagemin.svgo());
+	.use(Imagemin.svgo());
 ```
 
 
@@ -155,4 +155,4 @@ Options
 
 ## License
 
-MIT © [Kevin Mårtensson](http://kevinmartensson.com)
+MIT © [imagemin](https://github.com/imagemin)

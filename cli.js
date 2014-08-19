@@ -13,17 +13,17 @@ var stdin = require('get-stdin');
  */
 
 var opts = nopt({
-    help: Boolean,
-    interlaced: Boolean,
-    optimizationLevel: Number,
-    progressive: Boolean,
-    version: Boolean
+	help: Boolean,
+	interlaced: Boolean,
+	optimizationLevel: Number,
+	progressive: Boolean,
+	version: Boolean
 }, {
-    h: '--help',
-    i: '--interlaced',
-    l: '--optimizationLevel',
-    p: '--progressive',
-    v: '--version'
+	h: '--help',
+	i: '--interlaced',
+	l: '--optimizationLevel',
+	p: '--progressive',
+	v: '--version'
 });
 
 /**
@@ -31,22 +31,22 @@ var opts = nopt({
  */
 
 function help() {
-    console.log(pkg.description);
-    console.log('');
-    console.log('Usage');
-    console.log('  $ imagemin <file> <directory>');
-    console.log('  $ imagemin <file> > <output>');
-    console.log('  $ cat <file> | imagemin > <output>');
-    console.log('');
-    console.log('Example');
-    console.log('  $ imagemin images/* build');
-    console.log('  $ imagemin foo.png > foo-optimized.png');
-    console.log('  $ cat foo.png | imagemin > foo-optimized.png');
-    console.log('');
-    console.log('Options');
-    console.log('  -i, --interlaced                    Interlace gif for progressive rendering');
-    console.log('  -o, --optimizationLevel <number>    Select an optimization level between 0 and 7');
-    console.log('  -p, --progressive                   Lossless conversion to progressive');
+	console.log(pkg.description);
+	console.log('');
+	console.log('Usage');
+	console.log('  $ imagemin <file> <directory>');
+	console.log('  $ imagemin <file> > <output>');
+	console.log('  $ cat <file> | imagemin > <output>');
+	console.log('');
+	console.log('Example');
+	console.log('  $ imagemin images/* build');
+	console.log('  $ imagemin foo.png > foo-optimized.png');
+	console.log('  $ cat foo.png | imagemin > foo-optimized.png');
+	console.log('');
+	console.log('Options');
+	console.log('  -i, --interlaced                    Interlace gif for progressive rendering');
+	console.log('  -o, --optimizationLevel <number>    Select an optimization level between 0 and 7');
+	console.log('  -p, --progressive                   Lossless conversion to progressive');
 }
 
 /**
@@ -54,8 +54,8 @@ function help() {
  */
 
 if (opts.help) {
-    help();
-    return;
+	help();
+	return;
 }
 
 /**
@@ -63,8 +63,8 @@ if (opts.help) {
  */
 
 if (opts.version) {
-    console.log(pkg.version);
-    return;
+	console.log(pkg.version);
+	return;
 }
 
 /**
@@ -75,11 +75,11 @@ if (opts.version) {
  */
 
 function isFile(path) {
-    try {
-        return fs.statSync(path).isFile();
-    } catch (e) {
-        return false;
-    }
+	try {
+		return fs.statSync(path).isFile();
+	} catch (e) {
+		return false;
+	}
 }
 
 /**
@@ -91,30 +91,30 @@ function isFile(path) {
  */
 
 function run(input, opt) {
-    var imagemin = new Imagemin()
-        .src(input)
-        .use(Imagemin.gifsicle(opts))
-        .use(Imagemin.jpegtran(opts))
-        .use(Imagemin.optipng(opts))
-        .use(Imagemin.svgo());
+	var imagemin = new Imagemin()
+		.src(input)
+		.use(Imagemin.gifsicle(opts))
+		.use(Imagemin.jpegtran(opts))
+		.use(Imagemin.optipng(opts))
+		.use(Imagemin.svgo());
 
-    if (process.stdout.isTTY) {
-        var name = path.basename(opt.input);
-        var out = path.join(opt.output ? opt.output : 'build', name);
+	if (process.stdout.isTTY) {
+		var name = path.basename(opt.input);
+		var out = path.join(opt.output ? opt.output : 'build', name);
 
-        imagemin.dest(path.join(out));
-    }
+		imagemin.dest(path.join(out));
+	}
 
-    imagemin.optimize(function (err, file) {
-        if (err) {
-            console.error(err);
-            process.exit(1);
-        }
+	imagemin.optimize(function (err, file) {
+		if (err) {
+			console.error(err);
+			process.exit(1);
+		}
 
-        if (!process.stdout.isTTY) {
-            process.stdout.write(file.contents);
-        }
-    });
+		if (!process.stdout.isTTY) {
+			process.stdout.write(file.contents);
+		}
+	});
 }
 
 /**
@@ -122,31 +122,31 @@ function run(input, opt) {
  */
 
 if (process.stdin.isTTY) {
-    var input = opts.argv.remain;
-    var output;
+	var input = opts.argv.remain;
+	var output;
 
-    if (input.length === 0) {
-        help();
-        return;
-    }
+	if (input.length === 0) {
+		help();
+		return;
+	}
 
-    if (input.length > 1 && !isFile(input[input.length - 1])) {
-        output = input[input.length - 1];
-        input.pop();
-    }
+	if (input.length > 1 && !isFile(input[input.length - 1])) {
+		output = input[input.length - 1];
+		input.pop();
+	}
 
-    input.forEach(function (file) {
-        fs.readFile(file, function (err, data) {
-            if (err) {
-                console.error(err);
-                process.exit(1);
-            }
+	input.forEach(function (file) {
+		fs.readFile(file, function (err, data) {
+			if (err) {
+				console.error(err);
+				process.exit(1);
+			}
 
-            run(data, { input: file, output: output });
-        });
-    });
+			run(data, { input: file, output: output });
+		});
+	});
 } else {
-    stdin.buffer(function (data) {
-        run(data);
-    });
+	stdin.buffer(function (data) {
+		run(data);
+	});
 }
