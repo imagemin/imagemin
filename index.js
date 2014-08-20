@@ -11,6 +11,10 @@ var Ware = require('ware');
  */
 
 function Imagemin() {
+	if (!(this instanceof Imagemin)) {
+		return new Imagemin();
+	}
+
 	this.ware = new Ware();
 }
 
@@ -69,20 +73,20 @@ Imagemin.prototype.optimize = function (cb) {
 	cb = cb || function () {};
 	var self = this;
 
-	this.read(function (err, file) {
-		if (!file || file.contents.length === 0) {
-			cb();
-			return;
-		}
-
+	this._read(function (err, file) {
 		if (err) {
 			cb(err);
 			return;
 		}
 
+		if (!file || !file.contents) {
+			cb();
+			return;
+		}
+
 		var buf = file.contents;
 
-		self.run(file, function (err, file) {
+		self._run(file, function (err, file) {
 			if (err) {
 				cb(err);
 				return;
@@ -92,7 +96,7 @@ Imagemin.prototype.optimize = function (cb) {
 				file.contents = buf;
 			}
 
-			self.write(file, function (err) {
+			self._write(file, function (err) {
 				if (err) {
 					cb(err);
 					return;
@@ -109,10 +113,10 @@ Imagemin.prototype.optimize = function (cb) {
  *
  * @param {Object} file
  * @param {Function} cb
- * @api public
+ * @api private
  */
 
-Imagemin.prototype.run = function (file, cb) {
+Imagemin.prototype._run = function (file, cb) {
 	this.ware.run(file, this, cb);
 };
 
@@ -120,10 +124,10 @@ Imagemin.prototype.run = function (file, cb) {
  * Read the source file
  *
  * @param {Function} cb
- * @api public
+ * @api private
  */
 
-Imagemin.prototype.read = function (cb) {
+Imagemin.prototype._read = function (cb) {
 	var file = {};
 	var src = this.src();
 
@@ -133,13 +137,18 @@ Imagemin.prototype.read = function (cb) {
 		return;
 	}
 
-	fs.readFile(src, function (err, buf) {
+	fs.stat(src, function (err, stats) {
 		if (err) {
 			cb(err);
 			return;
 		}
 
-		fs.stat(src, function (err, stats) {
+		if (!stats.isFile()) {
+			cb();
+			return;
+		}
+
+		fs.readFile(src, function (err, buf) {
 			if (err) {
 				cb(err);
 				return;
@@ -158,10 +167,10 @@ Imagemin.prototype.read = function (cb) {
  *
  * @param {Object} file
  * @param {Function} cb
- * @api public
+ * @api private
  */
 
-Imagemin.prototype.write = function (file, cb) {
+Imagemin.prototype._write = function (file, cb) {
 	var dest = this.dest();
 
 	if (!dest) {
