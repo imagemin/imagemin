@@ -47,6 +47,6 @@
     "imagemin-jpegtran": "^1.0.0",
     "imagemin-optipng": "^0.1.0",
     "imagemin-pngquant": "^1.0.1",
-    "imagemin-svgo": "^0.1.1"
+    "imagemin-svgo": "^1.0.2"
   }
 }
