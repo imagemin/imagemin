@@ -188,19 +188,23 @@ test('output error on corrupt images', function (t) {
 });
 
 test('ignore directories', function (t) {
-	t.plan(3);
+	t.plan(4);
 
 	var imagemin = new Imagemin()
 		.src(path.join(__dirname, 'fixtures/test'))
 		.dest(path.join(__dirname, 'tmp/test'))
 		.use(Imagemin.jpegtran());
 
-	imagemin.optimize(function (err) {
+	fs.mkdir(imagemin.src(), function (err) {
 		t.assert(!err);
 
-		fs.exists(imagemin.dest(), function (err, exists) {
+		imagemin.optimize(function (err) {
 			t.assert(!err);
-			t.assert(!exists);
+
+			fs.exists(imagemin.dest(), function (err, exists) {
+				t.assert(!err);
+				t.assert(!exists);
+			});
 		});
 	});
 });
