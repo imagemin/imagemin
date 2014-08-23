@@ -37,10 +37,6 @@ imagemin.optimize(function (err, file) {
 
 Creates a new `Imagemin` instance.
 
-### .use(plugin)
-
-Add a `plugin` to the middleware stack.
-
 ### .src(file)
 
 Set the file to be optimized. Can be a `Buffer` or the path to a file.
@@ -49,6 +45,10 @@ Set the file to be optimized. Can be a `Buffer` or the path to a file.
 
 Set the destination to where your file will be written. If you don't set any destination
 the file won't be written.
+
+### .use(plugin)
+
+Add a `plugin` to the middleware stack.
 
 ### .optimize(cb)
 
