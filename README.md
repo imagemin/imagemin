@@ -148,7 +148,7 @@ Options
 
 ## Related
 
-- [imagemin-app](https://github.com/kevva/imagemin-app)
+- [imagemin-app](https://github.com/imagemin/imagemin-app)
 - [gulp-imagemin](https://github.com/sindresorhus/gulp-imagemin)
 - [grunt-contrib-imagemin](https://github.com/gruntjs/grunt-contrib-imagemin)
 
