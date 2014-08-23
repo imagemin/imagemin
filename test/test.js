@@ -188,7 +188,7 @@ test('output error on corrupt images', function (t) {
 });
 
 test('ignore directories', function (t) {
-	t.plan(4);
+	t.plan(3);
 
 	var imagemin = new Imagemin()
 		.src(path.join(__dirname, 'fixtures/test'))
@@ -201,8 +201,7 @@ test('ignore directories', function (t) {
 		imagemin.optimize(function (err) {
 			t.assert(!err);
 
-			fs.exists(imagemin.dest(), function (err, exists) {
-				t.assert(!err);
+			fs.exists(imagemin.dest(), function (exists) {
 				t.assert(!exists);
 			});
 		});
