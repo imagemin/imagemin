@@ -11,9 +11,7 @@
 	"node": true,
 	"quotmark": "single",
 	"regexp": true,
-	"smarttabs": true,
 	"strict": true,
-	"trailing": true,
 	"undef": true,
 	"unused": true
 }
