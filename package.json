@@ -43,9 +43,9 @@
     "ava": "0.0.4"
   },
   "optionalDependencies": {
-    "imagemin-gifsicle": "^0.1.1",
+    "imagemin-gifsicle": "^1.0.0",
     "imagemin-jpegtran": "^1.0.0",
-    "imagemin-optipng": "^0.1.0",
+    "imagemin-optipng": "^1.0.0",
     "imagemin-pngquant": "^1.0.1",
     "imagemin-svgo": "^1.0.2"
   }
