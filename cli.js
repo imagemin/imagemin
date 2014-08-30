@@ -78,6 +78,10 @@ if (opts.version) {
  */
 
 function isFile(path) {
+	if (/^[^\s]+\.\w*$/g.test(path)) {
+		return true;
+	}
+
 	try {
 		return fs.statSync(path).isFile();
 	} catch (e) {
@@ -128,12 +132,12 @@ if (process.stdin.isTTY) {
 	var input = opts.argv.remain;
 	var output;
 
-	if (input.length === 0) {
+	if (!input.length) {
 		help();
 		return;
 	}
 
-	if (input.length > 1 && !isFile(input[input.length - 1])) {
+	if (!isFile(input[input.length - 1])) {
 		output = input[input.length - 1];
 		input.pop();
 	}
