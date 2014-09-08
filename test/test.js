@@ -45,7 +45,7 @@ test('optimize a GIF', function (t) {
 		.dest(path.join(__dirname, 'tmp/test.gif'))
 		.use(Imagemin.gifsicle());
 
-	imagemin.optimize(function (err) {
+	imagemin.run(function (err) {
 		t.assert(!err);
 
 		fs.stat(imagemin.dest(), function (err, a) {
@@ -68,7 +68,7 @@ test('optimize a JPG', function (t) {
 		.dest(path.join(__dirname, 'tmp/test.jpg'))
 		.use(Imagemin.jpegtran());
 
-	imagemin.optimize(function (err) {
+	imagemin.run(function (err) {
 		t.assert(!err);
 
 		fs.stat(imagemin.dest(), function (err, a) {
@@ -91,7 +91,7 @@ test('optimize a PNG', function (t) {
 		.dest(path.join(__dirname, 'tmp/test.png'))
 		.use(Imagemin.optipng());
 
-	imagemin.optimize(function (err) {
+	imagemin.run(function (err) {
 		t.assert(!err);
 
 		fs.stat(imagemin.dest(), function (err, a) {
@@ -114,7 +114,7 @@ test('optimize a nested image', function (t) {
 		.dest(path.join(__dirname, 'tmp/test-nested/test-nested.png'))
 		.use(Imagemin.jpegtran());
 
-	imagemin.optimize(function (err) {
+	imagemin.run(function (err) {
 		t.assert(!err);
 
 		fs.stat(imagemin.dest(), function (err, a) {
@@ -137,7 +137,7 @@ test('optimize a SVG', function (t) {
 		.dest(path.join(__dirname, 'tmp/test.svg'))
 		.use(Imagemin.svgo());
 
-	imagemin.optimize(function (err) {
+	imagemin.run(function (err) {
 		t.assert(!err);
 
 		fs.stat(imagemin.dest(), function (err, a) {
@@ -159,7 +159,7 @@ test('copy file if no middleware is added', function (t) {
 		.src(path.join(__dirname, 'fixtures/test.jpg'))
 		.dest(path.join(__dirname, 'tmp/test-copy.jpg'));
 
-	imagemin.optimize(function (err) {
+	imagemin.run(function (err) {
 		t.assert(!err);
 
 		fs.stat(imagemin.dest(), function (err, a) {
@@ -182,7 +182,7 @@ test('output error on corrupt images', function (t) {
 		.dest(path.join(__dirname, 'tmp/test-corrupt.jpg'))
 		.use(Imagemin.jpegtran());
 
-	imagemin.optimize(function (err) {
+	imagemin.run(function (err) {
 		t.assert(err);
 	});
 });
@@ -198,7 +198,7 @@ test('ignore directories', function (t) {
 	fs.mkdir(imagemin.src(), function (err) {
 		t.assert(!err);
 
-		imagemin.optimize(function (err) {
+		imagemin.run(function (err) {
 			t.assert(!err);
 
 			fs.exists(imagemin.dest(), function (exists) {

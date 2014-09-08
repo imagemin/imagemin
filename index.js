@@ -69,7 +69,7 @@ Imagemin.prototype.dest = function (file) {
  * @api public
  */
 
-Imagemin.prototype.optimize = function (cb) {
+Imagemin.prototype.run = function (cb) {
 	cb = cb || function () {};
 	var self = this;
 

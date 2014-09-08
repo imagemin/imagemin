@@ -20,7 +20,7 @@ var imagemin = new Imagemin()
 	.dest('foo-optimized.jpg')
 	.use(Imagemin.jpegtran({ progressive: true }));
 
-imagemin.optimize(function (err, file) {
+imagemin.run(function (err, file) {
 	if (err) {
 		throw err;
 	}
