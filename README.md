@@ -1,4 +1,4 @@
-# imagemin [![Build Status](https://travis-ci.org/imagemin/imagemin.svg?branch=master)](https://travis-ci.org/imagemin/imagemin)
+# imagemin [![Build Status](http://img.shields.io/travis/imagemin/imagemin.svg?style=flat)](https://travis-ci.org/imagemin/imagemin) [![Build status](https://ci.appveyor.com/api/projects/status/wlnem7wef63k4n1t)](https://ci.appveyor.com/project/ShinnosukeWatanabe/imagemin)
 
 > Minify images seamlessly with Node.js
 
