@@ -1,8 +1,10 @@
 'use strict';
 
-var fs = require('fs-extra');
-var mode = require('stat-mode');
-var Ware = require('ware');
+var combine = require('stream-combiner');
+var concat = require('concat-stream');
+var File = require('vinyl');
+var fs = require('vinyl-fs');
+var through = require('through2');
 
 /**
  * Initialize Imagemin
@@ -15,25 +17,13 @@ function Imagemin() {
 		return new Imagemin();
 	}
 
-	this.ware = new Ware();
+	this.streams = [];
 }
-
-/**
- * Add a plugin to the middleware stack
- *
- * @param {Function} plugin
- * @api public
- */
-
-Imagemin.prototype.use = function (plugin) {
-	this.ware.use(plugin);
-	return this;
-};
 
 /**
  * Get or set the source file
  *
- * @param {String|Buffer} file
+ * @param {Array|Buffer|String} file
  * @api public
  */
 
@@ -47,18 +37,30 @@ Imagemin.prototype.src = function (file) {
 };
 
 /**
- * Get or set the destination file
+ * Get or set the destination folder
  *
- * @param {String} file
+ * @param {String} dir
  * @api public
  */
 
-Imagemin.prototype.dest = function (file) {
+Imagemin.prototype.dest = function (dir) {
 	if (!arguments.length) {
 		return this._dest;
 	}
 
-	this._dest = file;
+	this._dest = dir;
+	return this;
+};
+
+/**
+ * Add a plugin to the middleware stack
+ *
+ * @param {Function} plugin
+ * @api public
+ */
+
+Imagemin.prototype.use = function (plugin) {
+	this.streams.push(plugin);
 	return this;
 };
 
@@ -71,121 +73,46 @@ Imagemin.prototype.dest = function (file) {
 
 Imagemin.prototype.run = function (cb) {
 	cb = cb || function () {};
-	var self = this;
+	this.streams.unshift(this.read(this.src()));
 
-	this._read(function (err, file) {
-		if (err) {
-			cb(err);
-			return;
-		}
+	if (this.dest()) {
+		this.streams.push(fs.dest(this.dest()));
+	}
 
-		if (!file || !file.contents) {
-			cb();
-			return;
-		}
-
-		var buf = file.contents;
-
-		self._run(file, function (err, file) {
-			if (err) {
-				cb(err);
-				return;
-			}
-
-			if (file.contents.length >= buf.length) {
-				file.contents = buf;
-			}
-
-			self._write(file, function (err) {
-				if (err) {
-					cb(err);
-					return;
-				}
-
-				cb(null, file);
-			});
-		});
+	var pipe = combine(this.streams);
+	var end = concat(function (file) {
+		cb(null, file);
 	});
-};
 
-/**
- * Run a file through the middleware
- *
- * @param {Object} file
- * @param {Function} cb
- * @api private
- */
+	pipe.on('error', function (err) {
+		cb(err);
+		return;
+	});
 
-Imagemin.prototype._run = function (file, cb) {
-	this.ware.run(file, this, cb);
+	pipe.pipe(end);
 };
 
 /**
  * Read the source file
  *
- * @param {Function} cb
+ * @param {Array|Buffer|String} src
  * @api private
  */
 
-Imagemin.prototype._read = function (cb) {
-	var file = {};
-	var src = this.src();
-
+Imagemin.prototype.read = function (src) {
 	if (Buffer.isBuffer(src)) {
-		file.contents = src;
-		cb(null, file);
-		return;
-	}
-
-	fs.stat(src, function (err, stats) {
-		if (err) {
-			cb(err);
-			return;
-		}
-
-		if (!stats.isFile()) {
-			cb();
-			return;
-		}
-
-		fs.readFile(src, function (err, buf) {
-			if (err) {
-				cb(err);
-				return;
-			}
-
-			file.contents = buf;
-			file.mode = mode(stats).toOctal();
-
+		var stream = through.obj(function (file, enc, cb) {
 			cb(null, file);
 		});
-	});
-};
 
-/**
- * Write file to destination
- *
- * @param {Object} file
- * @param {Function} cb
- * @api private
- */
+		stream.end(new File({
+			contents: src
+		}));
 
-Imagemin.prototype._write = function (file, cb) {
-	var dest = this.dest();
-
-	if (!dest) {
-		cb();
-		return;
+		return stream;
 	}
 
-	fs.outputFile(dest, file.contents, function (err) {
-		if (err) {
-			cb(err);
-			return;
-		}
-
-		cb();
-	});
+	return fs.src(src);
 };
 
 /**

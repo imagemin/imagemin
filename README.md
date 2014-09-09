@@ -16,17 +16,17 @@ $ npm install --save imagemin
 var Imagemin = require('imagemin');
 
 var imagemin = new Imagemin()
-	.src('foo.jpg')
-	.dest('foo-optimized.jpg')
+	.src('images/*.{gif,jpg,png,svg}')
+	.dest('build/images')
 	.use(Imagemin.jpegtran({ progressive: true }));
 
-imagemin.run(function (err, file) {
+imagemin.run(function (err, files) {
 	if (err) {
 		throw err;
 	}
 	
-	console.log(file);
-	// => { contents: <Buffer 89 50 4e ...>, mode: '0644' }
+	console.log(files[0]);
+	// => { contents: <Buffer 89 50 4e ...> }
 });
 ```
 
@@ -39,20 +39,21 @@ Creates a new `Imagemin` instance.
 
 ### .src(file)
 
-Set the file to be optimized. Can be a `Buffer` or the path to a file.
+Set the files to be optimized. Takes a buffer, glob string or an array of glob strings 
+as argument.
 
-### .dest(file)
+### .dest(folder)
 
-Set the destination to where your file will be written. If you don't set any destination
-the file won't be written.
+Set the destination folder to where your file will be written. If you don't set 
+any destination no files will be written.
 
 ### .use(plugin)
 
 Add a `plugin` to the middleware stack.
 
-### .optimize(cb)
+### .run(cb)
 
-Optimize your file with the given settings.
+Optimize your files with the given settings.
 
 ## Plugins
 

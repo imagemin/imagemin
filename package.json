@@ -32,15 +32,16 @@
     "svg"
   ],
   "dependencies": {
-    "fs-extra": "^0.11.0",
+    "concat-stream": "^1.4.6",
     "get-stdin": "^3.0.0",
     "nopt": "^3.0.1",
-    "stat-mode": "^0.2.0",
-    "tempfile": "^1.0.0",
-    "ware": "^0.3.0"
+    "stream-combiner": "^0.2.1",
+    "through2": "^0.6.1",
+    "vinyl": "^0.4.3",
+    "vinyl-fs": "^0.3.7"
   },
   "devDependencies": {
-    "ava": "0.0.4"
+    "ava": "^0.0.4"
   },
   "optionalDependencies": {
     "imagemin-gifsicle": "^1.0.0",
