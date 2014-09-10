@@ -16,7 +16,7 @@ test('add a plugin to the middleware stack', function (t) {
 	var imagemin = new Imagemin()
 		.use(function () {});
 
-	t.assert(imagemin.plugins.length === 1);
+	t.assert(imagemin.streams.length === 1);
 });
 
 test('set source file', function (t) {
@@ -105,28 +105,6 @@ test('optimize a SVG', function (t) {
 		fs.stat(imagemin.src(), function (err, b) {
 			t.assert(!err);
 			t.assert(files[0].contents.length < b.size);
-		});
-	});
-});
-
-test('copy file if no middleware is added', function (t) {
-	t.plan(5);
-
-	var imagemin = new Imagemin()
-		.src(path.join(__dirname, 'fixtures/test-copy.jpg'))
-		.dest(path.join(__dirname, 'tmp'));
-
-	imagemin.run(function (err) {
-		t.assert(!err);
-
-		fs.stat(path.join(imagemin.dest(), 'test-copy.jpg'), function (err, a) {
-			t.assert(!err);
-			t.assert(a.size > 0);
-
-			fs.stat(imagemin.src(), function (err, b) {
-				t.assert(!err);
-				t.assert(a.size === b.size);
-			});
 		});
 	});
 });

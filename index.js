@@ -21,7 +21,7 @@ function Imagemin() {
 }
 
 /**
- * Get or set the source file
+ * Get or set the source files
  *
  * @param {Array|Buffer|String} file
  * @api public
@@ -65,7 +65,7 @@ Imagemin.prototype.use = function (plugin) {
 };
 
 /**
- * Optimize file
+ * Optimize files
  *
  * @param {Function} cb
  * @api public
@@ -80,8 +80,8 @@ Imagemin.prototype.run = function (cb) {
 	}
 
 	var pipe = combine(this.streams);
-	var end = concat(function (file) {
-		cb(null, file);
+	var end = concat(function (files) {
+		cb(null, files);
 	});
 
 	pipe.on('error', function (err) {
