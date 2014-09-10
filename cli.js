@@ -92,34 +92,34 @@ function isFile(path) {
 /**
  * Run
  *
- * @param {Buffer} input
- * @param {Object} opts
+ * @param {Array|Buffer|String} src
+ * @param {String} dest
  * @api private
  */
 
-function run(input, opt) {
+function run(src, dest) {
 	var imagemin = new Imagemin()
-		.src(input)
+		.src(src)
 		.use(Imagemin.gifsicle(opts))
 		.use(Imagemin.jpegtran(opts))
 		.use(Imagemin.optipng(opts))
+		.use(Imagemin.pngquant(opts))
 		.use(Imagemin.svgo());
 
 	if (process.stdout.isTTY) {
-		var name = path.basename(opt.input);
-		var out = path.join(opt.output ? opt.output : 'build', name);
-
-		imagemin.dest(path.join(out));
+		imagemin.dest(dest ? dest : 'build');
 	}
 
-	imagemin.optimize(function (err, file) {
+	imagemin.run(function (err, files) {
 		if (err) {
 			console.error(err);
 			process.exit(1);
 		}
 
 		if (!process.stdout.isTTY) {
-			process.stdout.write(file.contents);
+			files.forEach(function (file) {
+				process.stdout.write(file.contents);
+			});
 		}
 	});
 }
@@ -129,29 +129,20 @@ function run(input, opt) {
  */
 
 if (process.stdin.isTTY) {
-	var input = opts.argv.remain;
-	var output;
+	var src = opts.argv.remain;
+	var dest;
 
-	if (!input.length) {
+	if (!src.length) {
 		help();
 		return;
 	}
 
-	if (!isFile(input[input.length - 1])) {
-		output = input[input.length - 1];
-		input.pop();
+	if (!isFile(src[src.length - 1])) {
+		dest = src[src.length - 1];
+		src.pop();
 	}
 
-	input.forEach(function (file) {
-		fs.readFile(file, function (err, data) {
-			if (err) {
-				console.error(err);
-				process.exit(1);
-			}
-
-			run(data, { input: file, output: output });
-		});
-	});
+	run(src, dest);
 } else {
 	stdin.buffer(run);
 }
