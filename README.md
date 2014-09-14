@@ -30,6 +30,17 @@ imagemin.run(function (err, files) {
 });
 ```
 
+You can use [gulp-rename](https://github.com/hparra/gulp-rename) to rename your files:
+
+```js
+var Imagemin = require('imagemin');
+var rename = require('gulp-rename');
+
+var imagemin = new Imagemin()
+	.src('images/foo.png')
+	.use(rename('bar.png'));
+```
+
 
 ## API
 
