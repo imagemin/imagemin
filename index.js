@@ -81,7 +81,7 @@ Imagemin.prototype.run = function (cb) {
 
 	var pipe = combine(this.streams);
 	var end = concat(function (files) {
-		cb(null, files);
+		cb(null, files, pipe);
 	});
 
 	pipe.on('error', function (err) {
