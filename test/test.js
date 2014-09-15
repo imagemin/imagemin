@@ -109,6 +109,23 @@ test('optimize a SVG', function (t) {
 	});
 });
 
+test('optimize a JPG using buffers', function (t) {
+	t.plan(3);
+
+	fs.readFile(path.join(__dirname, 'fixtures/test.jpg'), function (err, buf) {
+		t.assert(!err);
+
+		var imagemin = new Imagemin()
+			.src(buf)
+			.use(Imagemin.jpegtran());
+
+		imagemin.run(function (err, files) {
+			t.assert(!err);
+			t.assert(files[0].contents.length < buf.length);
+		});
+	});
+});
+
 test('output error on corrupt images', function (t) {
 	t.plan(1);
 

@@ -101,9 +101,7 @@ Imagemin.prototype.run = function (cb) {
 
 Imagemin.prototype.read = function (src) {
 	if (Buffer.isBuffer(src)) {
-		var stream = through.obj(function (file, enc, cb) {
-			cb(null, file);
-		});
+		var stream = through.obj();
 
 		stream.end(new File({
 			contents: src
