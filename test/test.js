@@ -42,7 +42,6 @@ test('optimize a GIF', function (t) {
 
 	var imagemin = new Imagemin()
 		.src(path.join(__dirname, 'fixtures/test.gif'))
-		.dest(path.join(__dirname, 'tmp'))
 		.use(Imagemin.gifsicle());
 
 	imagemin.run(function (err, files) {
@@ -60,7 +59,6 @@ test('optimize a JPG', function (t) {
 
 	var imagemin = new Imagemin()
 		.src(path.join(__dirname, 'fixtures/test.jpg'))
-		.dest(path.join(__dirname, 'tmp'))
 		.use(Imagemin.jpegtran());
 
 	imagemin.run(function (err, files) {
@@ -78,7 +76,6 @@ test('optimize a PNG', function (t) {
 
 	var imagemin = new Imagemin()
 		.src(path.join(__dirname, 'fixtures/test.png'))
-		.dest(path.join(__dirname, 'tmp'))
 		.use(Imagemin.optipng());
 
 	imagemin.run(function (err, files) {
@@ -96,7 +93,6 @@ test('optimize a SVG', function (t) {
 
 	var imagemin = new Imagemin()
 		.src(path.join(__dirname, 'fixtures/test.svg'))
-		.dest(path.join(__dirname, 'tmp'))
 		.use(Imagemin.svgo());
 
 	imagemin.run(function (err, files) {
@@ -131,7 +127,6 @@ test('output error on corrupt images', function (t) {
 
 	var imagemin = new Imagemin()
 		.src(path.join(__dirname, 'fixtures/test-corrupt.jpg'))
-		.dest(path.join(__dirname, 'tmp'))
 		.use(Imagemin.jpegtran());
 
 	imagemin.run(function (err) {
