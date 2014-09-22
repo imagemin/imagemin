@@ -29,27 +29,27 @@ var opts = nopt({
  * Help screen
  */
 
- function help() {
- 	console.log([
- 		'',
- 		'  ' + pkg.description,
- 		'',
- 		'  Usage',
- 		'    imagemin <file> <directory>',
- 		'    imagemin <file> > <output>',
- 		'    cat <file> | imagemin > <output>',
- 		'',
- 		'  Example',
- 		'    imagemin images/* build',
- 		'    imagemin foo.png > foo-optimized.png',
- 		'    cat foo.png | imagemin > foo-optimized.png',
- 		'',
- 		'  Options',
- 		'    -i, --interlaced                    Interlace gif for progressive rendering',
- 		'    -o, --optimizationLevel <number>    Select an optimization level between 0 and 7',
- 		'    -p, --progressive                   Lossless conversion to progressive'
- 	].join('\n'));
- }
+function help() {
+	console.log([
+		'',
+		'  ' + pkg.description,
+		'',
+		'  Usage',
+		'    imagemin <file> <directory>',
+		'    imagemin <file> > <output>',
+		'    cat <file> | imagemin > <output>',
+		'',
+		'  Example',
+		'    imagemin images/* build',
+		'    imagemin foo.png > foo-optimized.png',
+		'    cat foo.png | imagemin > foo-optimized.png',
+		'',
+		'  Options',
+		'    -i, --interlaced                    Interlace gif for progressive rendering',
+		'    -o, --optimizationLevel <number>    Select an optimization level between 0 and 7',
+		'    -p, --progressive                   Lossless conversion to progressive'
+	].join('\n'));
+}
 
 /**
  * Show help
