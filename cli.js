@@ -2,7 +2,6 @@
 'use strict';
 
 var fs = require('fs');
-var path = require('path');
 var nopt = require('nopt');
 var stdin = require('get-stdin');
 var pkg = require('./package.json');
