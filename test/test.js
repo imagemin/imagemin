@@ -3,6 +3,7 @@
 var fs = require('fs');
 var Imagemin = require('../');
 var path = require('path');
+var spawn = require('child_process').spawn;
 var test = require('ava');
 
 test('expose a constructor', function (t) {
@@ -120,6 +121,32 @@ test('optimize a JPG using buffers', function (t) {
 			t.assert(files[0].contents.length < buf.length);
 		});
 	});
+});
+
+test('optimize a JPG using the CLI', function (t) {
+	t.plan(2);
+
+	var cli = spawn(path.join(__dirname, '../cli.js'));
+	var src = fs.createReadStream(path.join(__dirname, 'fixtures/test.jpg'));
+	var len = {
+		src: 0,
+		dest: 0
+	};
+
+	src.on('data', function (data) {
+		len.src += data.length;
+	});
+
+	cli.stdout.on('data', function (data) {
+		len.dest += data.length;
+	});
+
+	cli.on('close', function (code) {
+		t.assert(!code);
+		t.assert(len.dest < len.src);
+	});
+
+	src.pipe(cli.stdin);
 });
 
 test('output error on corrupt images', function (t) {
