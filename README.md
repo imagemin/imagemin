@@ -142,14 +142,14 @@ $ npm install --global imagemin
 $ imagemin --help
 
 Usage
-  $ imagemin <file> <directory>
-  $ imagemin <file> > <output>
-  $ cat <file> | imagemin > <output>
+  imagemin <file> <directory>
+  imagemin <file> > <output>
+  cat <file> | imagemin > <output>
 
 Example
-  $ imagemin images/* build
-  $ imagemin foo.png > foo-optimized.png
-  $ cat foo.png | imagemin > foo-optimized.png
+  imagemin images/* build
+  imagemin foo.png > foo-optimized.png
+  cat foo.png | imagemin > foo-optimized.png
 
 Options
   -i, --interlaced                    Interlace gif for progressive rendering
