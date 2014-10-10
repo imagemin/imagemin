@@ -101,8 +101,8 @@ function run(src, dest) {
 		.src(src)
 		.use(Imagemin.gifsicle(opts))
 		.use(Imagemin.jpegtran(opts))
-		.use(Imagemin.optipng(opts))
 		.use(Imagemin.pngquant(opts))
+		.use(Imagemin.optipng(opts))
 		.use(Imagemin.svgo());
 
 	if (process.stdout.isTTY) {
