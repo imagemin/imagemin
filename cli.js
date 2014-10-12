@@ -2,38 +2,17 @@
 'use strict';
 
 var fs = require('fs');
-var nopt = require('nopt');
+var meow = require('meow');
 var stdin = require('get-stdin');
-var pkg = require('./package.json');
 var Imagemin = require('./');
 
 /**
- * Options
+ * Initialize CLI
  */
 
-var opts = nopt({
-	help: Boolean,
-	interlaced: Boolean,
-	optimizationLevel: Number,
-	progressive: Boolean,
-	version: Boolean
-}, {
-	h: '--help',
-	i: '--interlaced',
-	o: '--optimizationLevel',
-	p: '--progressive',
-	v: '--version'
-});
-
-/**
- * Help screen
- */
-
-function help() {
-	console.log([
-		'',
-		'  ' + pkg.description,
-		'',
+var cli = meow({
+	requireInput: process.stdin.isTTY,
+	help: [
 		'  Usage',
 		'    imagemin <file> <directory>',
 		'    imagemin <file> > <output>',
@@ -48,26 +27,21 @@ function help() {
 		'    -i, --interlaced                    Interlace gif for progressive rendering',
 		'    -o, --optimizationLevel <number>    Select an optimization level between 0 and 7',
 		'    -p, --progressive                   Lossless conversion to progressive'
-	].join('\n'));
-}
-
-/**
- * Show help
- */
-
-if (opts.help) {
-	help();
-	return;
-}
-
-/**
- * Show package version
- */
-
-if (opts.version) {
-	console.log(pkg.version);
-	return;
-}
+	].join('\n')
+}, {
+	boolean: [
+		'interlaced',
+		'progressive'
+	],
+	string: [
+		'optimizationLevel'
+	],
+	alias: {
+		i: 'interlaced',
+		o: 'optimizationLevel',
+		p: 'progressive'
+	}
+});
 
 /**
  * Check if path is a file
@@ -83,7 +57,7 @@ function isFile(path) {
 
 	try {
 		return fs.statSync(path).isFile();
-	} catch (e) {
+	} catch (err) {
 		return false;
 	}
 }
@@ -99,10 +73,10 @@ function isFile(path) {
 function run(src, dest) {
 	var imagemin = new Imagemin()
 		.src(src)
-		.use(Imagemin.gifsicle(opts))
-		.use(Imagemin.jpegtran(opts))
-		.use(Imagemin.pngquant(opts))
-		.use(Imagemin.optipng(opts))
+		.use(Imagemin.gifsicle(cli.flags))
+		.use(Imagemin.jpegtran(cli.flags))
+		.use(Imagemin.pngquant(cli.flags))
+		.use(Imagemin.optipng(cli.flags))
 		.use(Imagemin.svgo());
 
 	if (process.stdout.isTTY) {
@@ -128,13 +102,8 @@ function run(src, dest) {
  */
 
 if (process.stdin.isTTY) {
-	var src = opts.argv.remain;
+	var src = cli.input;
 	var dest;
-
-	if (!src.length) {
-		help();
-		return;
-	}
 
 	if (!isFile(src[src.length - 1])) {
 		dest = src[src.length - 1];
