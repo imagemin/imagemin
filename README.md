@@ -1,6 +1,6 @@
 # imagemin [![Build Status](http://img.shields.io/travis/imagemin/imagemin.svg?style=flat)](https://travis-ci.org/imagemin/imagemin) [![Build status](https://ci.appveyor.com/api/projects/status/wlnem7wef63k4n1t)](https://ci.appveyor.com/project/ShinnosukeWatanabe/imagemin)
 
-> Minify images seamlessly with Node.js
+> Minify images seamlessly
 
 
 ## Install
@@ -50,21 +50,35 @@ Creates a new `Imagemin` instance.
 
 ### .src(file)
 
+Type: `Array|Buffer|String`
+
 Set the files to be optimized. Takes a buffer, glob string or an array of glob strings 
 as argument.
 
 ### .dest(folder)
 
-Set the destination folder to where your file will be written. If you don't set 
+Type: `String`
+
+Set the destination folder to where your files will be written. If you don't set 
 any destination no files will be written.
 
 ### .use(plugin)
+
+Type: `Function`
 
 Add a `plugin` to the middleware stack.
 
 ### .run(cb)
 
+Type: `Function`
+
 Optimize your files with the given settings.
+
+#### cb(err, files, stream)
+
+The callback will return an array of vinyl files in `files` and a Readable/Writable 
+stream in `stream`.
+
 
 ## Plugins
 
