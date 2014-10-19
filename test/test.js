@@ -46,10 +46,10 @@ test('optimize a GIF', function (t) {
 		.use(Imagemin.gifsicle());
 
 	imagemin.run(function (err, files) {
-		t.assert(!err);
+		t.assert(!err, err);
 
 		fs.stat(imagemin.src(), function (err, b) {
-			t.assert(!err);
+			t.assert(!err, err);
 			t.assert(files[0].contents.length < b.size);
 		});
 	});
@@ -63,10 +63,10 @@ test('optimize a JPG', function (t) {
 		.use(Imagemin.jpegtran());
 
 	imagemin.run(function (err, files) {
-		t.assert(!err);
+		t.assert(!err, err);
 
 		fs.stat(imagemin.src(), function (err, b) {
-			t.assert(!err);
+			t.assert(!err, err);
 			t.assert(files[0].contents.length < b.size);
 		});
 	});
@@ -80,10 +80,10 @@ test('optimize a PNG', function (t) {
 		.use(Imagemin.optipng());
 
 	imagemin.run(function (err, files) {
-		t.assert(!err);
+		t.assert(!err, err);
 
 		fs.stat(imagemin.src(), function (err, b) {
-			t.assert(!err);
+			t.assert(!err, err);
 			t.assert(files[0].contents.length < b.size);
 		});
 	});
@@ -97,10 +97,10 @@ test('optimize a SVG', function (t) {
 		.use(Imagemin.svgo());
 
 	imagemin.run(function (err, files) {
-		t.assert(!err);
+		t.assert(!err, err);
 
 		fs.stat(imagemin.src(), function (err, b) {
-			t.assert(!err);
+			t.assert(!err, err);
 			t.assert(files[0].contents.length < b.size);
 		});
 	});
@@ -110,14 +110,14 @@ test('optimize a JPG using buffers', function (t) {
 	t.plan(3);
 
 	fs.readFile(path.join(__dirname, 'fixtures/test.jpg'), function (err, buf) {
-		t.assert(!err);
+		t.assert(!err, err);
 
 		var imagemin = new Imagemin()
 			.src(buf)
 			.use(Imagemin.jpegtran());
 
 		imagemin.run(function (err, files) {
-			t.assert(!err);
+			t.assert(!err, err);
 			t.assert(files[0].contents.length < buf.length);
 		});
 	});
