@@ -25,21 +25,18 @@ var cli = meow({
 		'',
 		'  Options',
 		'    -i, --interlaced                    Interlace gif for progressive rendering',
-		'    -o, --optimizationLevel <number>    Select an optimization level between 0 and 7',
-		'    -p, --progressive                   Lossless conversion to progressive'
+		'    -o, --optimizationLevel <number>    Select an optimization level between 0 and 7'
 	].join('\n')
 }, {
 	boolean: [
-		'interlaced',
-		'progressive'
+		'interlaced'
 	],
 	string: [
 		'optimizationLevel'
 	],
 	alias: {
 		i: 'interlaced',
-		o: 'optimizationLevel',
-		p: 'progressive'
+		o: 'optimizationLevel'
 	}
 });
 
@@ -74,7 +71,7 @@ function run(src, dest) {
 	var imagemin = new Imagemin()
 		.src(src)
 		.use(Imagemin.gifsicle(cli.flags))
-		.use(Imagemin.jpegtran(cli.flags))
+		.use(Imagemin.mozjpeg(cli.flags))
 		.use(Imagemin.pngquant(cli.flags))
 		.use(Imagemin.optipng(cli.flags))
 		.use(Imagemin.svgo());

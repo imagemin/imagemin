@@ -18,7 +18,7 @@ var Imagemin = require('imagemin');
 var imagemin = new Imagemin()
 	.src('images/*.{gif,jpg,png,svg}')
 	.dest('build/images')
-	.use(Imagemin.jpegtran({ progressive: true }));
+	.use(Imagemin.mozjpeg());
 
 imagemin.run(function (err, files) {
 	if (err) {
@@ -85,7 +85,7 @@ stream in `stream`.
 The following [plugins](https://www.npmjs.org/browse/keyword/imageminplugin) are bundled with imagemin:
 
 * [gifsicle](#gifsicle) — Compress GIF images.
-* [jpegtran](#jpegtran) — Compress JPG images.
+* [mozjpeg](#mozjpeg) — Compress JPG images.
 * [optipng](#optipng) — Lossless compression of PNG images.
 * [pngquant](#pngquant) — Lossy compression of PNG images.
 * [svgo](#svgo) — Compress SVG images.
@@ -101,7 +101,7 @@ var imagemin = new Imagemin()
 	.use(Imagemin.gifsicle({ interlaced: true }));
 ```
 
-### .jpegtran()
+### .mozjpeg()
 
 Compress JPG images.
 
@@ -109,7 +109,7 @@ Compress JPG images.
 var Imagemin = require('imagemin');
 
 var imagemin = new Imagemin()
-	.use(Imagemin.jpegtran({ progressive: true }));
+	.use(Imagemin.mozjpeg());
 ```
 
 ### .optipng()
@@ -168,7 +168,6 @@ Example
 Options
   -i, --interlaced                    Interlace gif for progressive rendering
   -o, --optimizationLevel <number>    Select an optimization level between 0 and 7
-  -p, --progressive                   Lossless conversion to progressive
 ```
 
 

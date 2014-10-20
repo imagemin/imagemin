@@ -115,7 +115,8 @@ Imagemin.prototype.read = function (src) {
 
 module.exports = Imagemin;
 module.exports.gifsicle = require('imagemin-gifsicle');
-module.exports.jpegtran = require('imagemin-jpegtran');
+module.exports.jpegtran = require('imagemin-mozjpeg');
+module.exports.mozjpeg = require('imagemin-mozjpeg');
 module.exports.optipng = require('imagemin-optipng');
 module.exports.pngquant = require('imagemin-pngquant');
 module.exports.svgo = require('imagemin-svgo');
