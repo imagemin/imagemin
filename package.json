@@ -10,7 +10,8 @@
     "url": "https://github.com/kevva"
   },
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=0.10.0",
+    "npm": ">=2.1.5"
   },
   "bin": {
     "imagemin": "cli.js"
