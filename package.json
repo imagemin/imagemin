@@ -35,6 +35,7 @@
     "concat-stream": "^1.4.6",
     "get-stdin": "^3.0.0",
     "meow": "^1.0.0",
+    "optional": "^0.1.0",
     "stream-combiner": "^0.2.1",
     "through2": "^0.6.1",
     "vinyl": "^0.4.3",
