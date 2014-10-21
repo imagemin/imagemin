@@ -5,6 +5,7 @@ var concat = require('concat-stream');
 var File = require('vinyl');
 var fs = require('vinyl-fs');
 var through = require('through2');
+var optional = require('optional');
 
 /**
  * Initialize Imagemin
@@ -114,9 +115,9 @@ Imagemin.prototype.read = function (src) {
  */
 
 module.exports = Imagemin;
-module.exports.gifsicle = require('imagemin-gifsicle');
-module.exports.jpegtran = require('imagemin-mozjpeg');
-module.exports.mozjpeg = require('imagemin-mozjpeg');
-module.exports.optipng = require('imagemin-optipng');
-module.exports.pngquant = require('imagemin-pngquant');
-module.exports.svgo = require('imagemin-svgo');
+module.exports.gifsicle = optional('imagemin-gifsicle');
+module.exports.jpegtran = optional('imagemin-mozjpeg');
+module.exports.mozjpeg = optional('imagemin-mozjpeg');
+module.exports.optipng = optional('imagemin-optipng');
+module.exports.pngquant = optional('imagemin-pngquant');
+module.exports.svgo = optional('imagemin-svgo');
