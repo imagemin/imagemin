@@ -115,8 +115,15 @@ Imagemin.prototype.read = function (src) {
  */
 
 module.exports = Imagemin;
-module.exports.gifsicle = optional('imagemin-gifsicle');
-module.exports.jpegtran = optional('imagemin-jpegtran');
-module.exports.optipng = optional('imagemin-optipng');
-module.exports.pngquant = optional('imagemin-pngquant');
-module.exports.svgo = optional('imagemin-svgo');
+
+[
+	'gifsicle',
+	'jpegtran',
+	'optipng',
+	'pngquant',
+	'svgo'
+].forEach(function (plugin) {
+	module.exports[plugin] = optional('imagemin-' + plugin) || function () {
+		return through.obj();
+	};
+});
