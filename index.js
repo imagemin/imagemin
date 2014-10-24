@@ -61,7 +61,7 @@ Imagemin.prototype.dest = function (dir) {
  */
 
 Imagemin.prototype.use = function (plugin) {
-	this.streams.push(plugin);
+	this.streams.push(typeof plugin === 'function' ? plugin() : plugin);
 	return this;
 };
 
@@ -124,6 +124,6 @@ module.exports = Imagemin;
 	'svgo'
 ].forEach(function (plugin) {
 	module.exports[plugin] = optional('imagemin-' + plugin) || function () {
-		return through.obj();
+		return through.ctor({ objectMode: true });
 	};
 });
