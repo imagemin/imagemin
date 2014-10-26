@@ -74,6 +74,15 @@ Imagemin.prototype.use = function (plugin) {
 
 Imagemin.prototype.run = function (cb) {
 	cb = cb || function () {};
+
+	if (!this.streams.length) {
+		this.use(Imagemin.gifsicle());
+		this.use(Imagemin.jpegtran());
+		this.use(Imagemin.pngquant());
+		this.use(Imagemin.optipng());
+		this.use(Imagemin.svgo());
+	}
+
 	this.streams.unshift(this.read(this.src()));
 
 	if (this.dest()) {
