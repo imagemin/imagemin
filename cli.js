@@ -12,20 +12,20 @@ var Imagemin = require('./');
 
 var cli = meow({
 	help: [
-		'  Usage',
-		'    imagemin <file> <directory>',
-		'    imagemin <file> > <output>',
-		'    cat <file> | imagemin > <output>',
+		'Usage',
+		'  imagemin <file> <directory>',
+		'  imagemin <file> > <output>',
+		'  cat <file> | imagemin > <output>',
 		'',
-		'  Example',
-		'    imagemin images/* build',
-		'    imagemin foo.png > foo-optimized.png',
-		'    cat foo.png | imagemin > foo-optimized.png',
+		'Example',
+		'  imagemin images/* build',
+		'  imagemin foo.png > foo-optimized.png',
+		'  cat foo.png | imagemin > foo-optimized.png',
 		'',
-		'  Options',
-		'    -i, --interlaced                    Interlace gif for progressive rendering',
-		'    -o, --optimizationLevel <number>    Select an optimization level between 0 and 7',
-		'    -p, --progressive                   Lossless conversion to progressive'
+		'Options',
+		'  -i, --interlaced                    Interlace gif for progressive rendering',
+		'  -o, --optimizationLevel <number>    Select an optimization level between 0 and 7',
+		'  -p, --progressive                   Lossless conversion to progressive'
 	].join('\n')
 }, {
 	boolean: [
@@ -108,10 +108,10 @@ if (process.stdin.isTTY) {
 		console.error([
 			'Provide at least one file to optimize',
 			'',
-			'  Example',
-			'    imagemin images/* build',
-			'    imagemin foo.png > foo-optimized.png',
-			'    cat foo.png | imagemin > foo-optimized.png'
+			'Example',
+			'  imagemin images/* build',
+			'  imagemin foo.png > foo-optimized.png',
+			'  cat foo.png | imagemin > foo-optimized.png'
 		].join('\n'));
 
 		process.exit(1);
