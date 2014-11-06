@@ -14,5 +14,6 @@ install:
 build: off
 
 test_script:
-  - ps: 'node test\test.js # PowerShell'
-  - cmd: node test\test.js
+  - node --version
+  - npm --version
+  - npm test
