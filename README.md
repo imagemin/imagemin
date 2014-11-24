@@ -167,7 +167,7 @@ Example
 
 Options
   -i, --interlaced                    Interlace gif for progressive rendering
-  -o, --optimizationLevel <number>    Select an optimization level between 0 and 7
+  -o, --optimizationLevel <number>    Optimization level between 0 and 7
   -p, --progressive                   Lossless conversion to progressive
 ```
 
