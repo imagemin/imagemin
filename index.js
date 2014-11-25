@@ -2,8 +2,10 @@
 
 var combine = require('stream-combiner');
 var concat = require('concat-stream');
+var EventEmitter = require('events').EventEmitter;
 var File = require('vinyl');
 var fs = require('vinyl-fs');
+var inherits = require('util').inherits;
 var optional = require('optional');
 var through = require('through2');
 
@@ -18,8 +20,15 @@ function Imagemin() {
 		return new Imagemin();
 	}
 
+	EventEmitter.call(this);
 	this.streams = [];
 }
+
+/**
+ * Inherit from `EventEmitter`
+ */
+
+inherits(Imagemin, EventEmitter);
 
 /**
  * Get or set the source files
@@ -73,6 +82,7 @@ Imagemin.prototype.use = function (plugin) {
  */
 
 Imagemin.prototype.run = function (cb) {
+	var self = this;
 	cb = cb || function () {};
 
 	if (!this.streams.length) {
@@ -94,6 +104,8 @@ Imagemin.prototype.run = function (cb) {
 		cb(null, files, pipe);
 	});
 
+	pipe.on('data', this.emit.bind(this, 'data'));
+	pipe.on('end', this.emit.bind(this, 'end'));
 	pipe.on('error', cb);
 	pipe.pipe(end);
 };

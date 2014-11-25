@@ -123,6 +123,28 @@ test('optimize a JPG using buffers', function (t) {
 	});
 });
 
+test('emit events', function (t) {
+	t.plan(3);
+
+	fs.readFile(path.join(__dirname, 'fixtures/test.jpg'), function (err, buf) {
+		t.assert(!err, err);
+
+		var imagemin = new Imagemin()
+			.src(buf)
+			.use(Imagemin.jpegtran());
+
+		imagemin.on('data', function (data) {
+			t.assert(data);
+		});
+
+		imagemin.on('end', function () {
+			t.assert(true);
+		});
+
+		imagemin.run();
+	});
+});
+
 test('optimize a JPG using the CLI', function (t) {
 	t.plan(2);
 
