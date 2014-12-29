@@ -3,6 +3,7 @@
 
 var fs = require('fs');
 var meow = require('meow');
+var path = require('path');
 var stdin = require('get-stdin');
 var Imagemin = require('./');
 
@@ -14,11 +15,13 @@ var cli = meow({
 	help: [
 		'Usage',
 		'  imagemin <file> <directory>',
+		'  imagemin <directory> <output>',
 		'  imagemin <file> > <output>',
 		'  cat <file> | imagemin > <output>',
 		'',
 		'Example',
 		'  imagemin images/* build',
+		'  imagemin images build',
 		'  imagemin foo.png > foo-optimized.png',
 		'  cat foo.png | imagemin > foo-optimized.png',
 		'',
@@ -117,10 +120,18 @@ if (process.stdin.isTTY) {
 		process.exit(1);
 	}
 
-	if (!isFile(src[src.length - 1])) {
+	if (src.length > 1 && !isFile(src[src.length - 1])) {
 		dest = src[src.length - 1];
 		src.pop();
 	}
+
+	src = src.map(function (s) {
+		if (!isFile(s) && fs.existsSync(s)) {
+			return path.join(s, '**/*');
+		}
+
+		return s;
+	});
 
 	run(src, dest);
 } else {
