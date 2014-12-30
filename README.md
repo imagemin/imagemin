@@ -157,11 +157,13 @@ $ imagemin --help
 
 Usage
   imagemin <file> <directory>
+  imagemin <directory> <output>
   imagemin <file> > <output>
   cat <file> | imagemin > <output>
 
 Example
   imagemin images/* build
+  imagemin images build
   imagemin foo.png > foo-optimized.png
   cat foo.png | imagemin > foo-optimized.png
 
