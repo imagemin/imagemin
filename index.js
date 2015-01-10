@@ -82,7 +82,6 @@ Imagemin.prototype.use = function (plugin) {
  */
 
 Imagemin.prototype.run = function (cb) {
-	var self = this;
 	cb = cb || function () {};
 
 	if (!this.streams.length) {
