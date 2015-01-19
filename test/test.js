@@ -1,5 +1,6 @@
 'use strict';
 
+var concat = require('concat-stream');
 var fs = require('fs');
 var Imagemin = require('../');
 var path = require('path');
@@ -181,4 +182,16 @@ test('output error on corrupt images', function (t) {
 	imagemin.run(function (err) {
 		t.assert(err);
 	});
+});
+
+test('optimize a JPG and pipe it', function (t) {
+	t.plan(1);
+
+	var imagemin = new Imagemin()
+		.src(path.join(__dirname, 'fixtures/test.jpg'))
+		.use(Imagemin.jpegtran());
+
+	imagemin.run().pipe(concat(function (files) {
+		t.assert(files);
+	}));
 });

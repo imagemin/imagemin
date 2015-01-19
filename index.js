@@ -107,6 +107,8 @@ Imagemin.prototype.run = function (cb) {
 	pipe.on('end', this.emit.bind(this, 'end'));
 	pipe.on('error', cb);
 	pipe.pipe(end);
+
+	return pipe;
 };
 
 /**
