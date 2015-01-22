@@ -2,16 +2,12 @@
 	"bitwise": true,
 	"camelcase": true,
 	"curly": true,
-	"eqeqeq": true,
 	"esnext": true,
 	"immed": true,
-	"latedef": true,
 	"newcap": true,
 	"noarg": true,
 	"node": true,
-	"quotmark": "single",
-	"regexp": true,
 	"strict": true,
 	"undef": true,
-	"unused": true
+	"unused": "vars"
 }
