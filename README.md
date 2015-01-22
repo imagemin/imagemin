@@ -86,8 +86,7 @@ The following [plugins](https://www.npmjs.org/browse/keyword/imageminplugin) are
 
 * [gifsicle](#gifsicle) — Compress GIF images.
 * [jpegtran](#jpegtran) — Compress JPG images.
-* [optipng](#optipng) — Lossless compression of PNG images.
-* [pngquant](#pngquant) — Lossy compression of PNG images.
+* [optipng](#optipng) — Compress PNG images losslessly.
 * [svgo](#svgo) — Compress SVG images.
 
 ### .gifsicle()
@@ -121,17 +120,6 @@ var Imagemin = require('imagemin');
 
 var imagemin = new Imagemin()
 	.use(Imagemin.optipng({ optimizationLevel: 3 }));
-```
-
-### .pngquant()
-
-Lossy compression of PNG images.
-
-```js
-var Imagemin = require('imagemin');
-
-var imagemin = new Imagemin()
-	.use(Imagemin.pngquant());
 ```
 
 ### .svgo()

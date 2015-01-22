@@ -87,7 +87,6 @@ Imagemin.prototype.run = function (cb) {
 	if (!this.streams.length) {
 		this.use(Imagemin.gifsicle());
 		this.use(Imagemin.jpegtran());
-		this.use(Imagemin.pngquant());
 		this.use(Imagemin.optipng());
 		this.use(Imagemin.svgo());
 	}
@@ -142,7 +141,6 @@ module.exports = Imagemin;
 	'gifsicle',
 	'jpegtran',
 	'optipng',
-	'pngquant',
 	'svgo'
 ].forEach(function (plugin) {
 	module.exports[plugin] = optional('imagemin-' + plugin) || function () {

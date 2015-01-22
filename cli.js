@@ -77,7 +77,6 @@ function run(src, dest) {
 		.src(src)
 		.use(Imagemin.gifsicle(cli.flags))
 		.use(Imagemin.jpegtran(cli.flags))
-		.use(Imagemin.pngquant(cli.flags))
 		.use(Imagemin.optipng(cli.flags))
 		.use(Imagemin.svgo());
 
