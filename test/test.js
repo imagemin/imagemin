@@ -149,7 +149,7 @@ test('emit events', function (t) {
 test('optimize a JPG using the CLI', function (t) {
 	t.plan(2);
 
-	var cli = spawn(path.join(__dirname, '../cli.js'));
+	var cli = spawn('node', [path.join(__dirname, '../cli.js')]);
 	var src = fs.createReadStream(path.join(__dirname, 'fixtures/test.jpg'));
 	var len = {
 		src: 0,
