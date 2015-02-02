@@ -37,7 +37,7 @@
     "get-stdin": "^3.0.0",
     "meow": "^2.0.0",
     "optional": "^0.1.0",
-    "stream-combiner": "^0.2.1",
+    "stream-combiner2": "^1.0.2",
     "through2": "^0.6.1",
     "vinyl": "^0.4.3",
     "vinyl-fs": "^0.3.7"

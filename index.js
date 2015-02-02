@@ -1,6 +1,6 @@
 'use strict';
 
-var combine = require('stream-combiner');
+var combine = require('stream-combiner2');
 var concat = require('concat-stream');
 var EventEmitter = require('events').EventEmitter;
 var File = require('vinyl');
@@ -97,7 +97,7 @@ Imagemin.prototype.run = function (cb) {
 		this.streams.push(fs.dest(this.dest()));
 	}
 
-	var pipe = combine(this.streams);
+	var pipe = combine.obj(this.streams);
 	var end = concat(function (files) {
 		cb(null, files, pipe);
 	});
