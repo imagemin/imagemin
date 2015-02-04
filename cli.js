@@ -7,10 +7,6 @@ var path = require('path');
 var stdin = require('get-stdin');
 var Imagemin = require('./');
 
-/**
- * Initialize CLI
- */
-
 var cli = meow({
 	help: [
 		'Usage',
@@ -45,13 +41,6 @@ var cli = meow({
 	}
 });
 
-/**
- * Check if path is a file
- *
- * @param {String} path
- * @api private
- */
-
 function isFile(path) {
 	if (/^[^\s]+\.\w*$/g.test(path)) {
 		return true;
@@ -63,14 +52,6 @@ function isFile(path) {
 		return false;
 	}
 }
-
-/**
- * Run
- *
- * @param {Array|Buffer|String} src
- * @param {String} dest
- * @api private
- */
 
 function run(src, dest) {
 	var imagemin = new Imagemin()
@@ -97,10 +78,6 @@ function run(src, dest) {
 		}
 	});
 }
-
-/**
- * Apply arguments
- */
 
 if (process.stdin.isTTY) {
 	var src = cli.input;

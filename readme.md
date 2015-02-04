@@ -74,10 +74,9 @@ Type: `Function`
 
 Optimize your files with the given settings.
 
-#### cb(err, files, stream)
+#### cb(err, files)
 
-The callback will return an array of vinyl files in `files` and a Readable/Writable 
-stream in `stream`.
+The callback will return an array of vinyl files in `files`.
 
 
 ## Plugins
