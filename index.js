@@ -1,13 +1,11 @@
 'use strict';
 
+var bufferToVinyl = require('buffer-to-vinyl');
 var combine = require('stream-combiner2');
 var concat = require('concat-stream');
-var EventEmitter = require('events').EventEmitter;
-var File = require('vinyl');
-var fs = require('vinyl-fs');
-var inherits = require('util').inherits;
 var optional = require('optional');
 var through = require('through2');
+var vfs = require('vinyl-fs');
 
 /**
  * Initialize Imagemin
@@ -20,15 +18,8 @@ function Imagemin() {
 		return new Imagemin();
 	}
 
-	EventEmitter.call(this);
 	this.streams = [];
 }
-
-/**
- * Inherit from `EventEmitter`
- */
-
-inherits(Imagemin, EventEmitter);
 
 /**
  * Get or set the source files
@@ -84,51 +75,47 @@ Imagemin.prototype.use = function (plugin) {
 Imagemin.prototype.run = function (cb) {
 	cb = cb || function () {};
 
-	if (!this.streams.length) {
+	var stream = this.createStream();
+
+	stream.on('error', cb);
+	stream.pipe(concat(cb.bind(null, null)));
+};
+
+/**
+ * Create stream
+ *
+ * @api private
+ */
+
+Imagemin.prototype.createStream = function () {
+	this.streams.unshift(this.getFiles());
+
+	if (this.streams.length === 1) {
 		this.use(Imagemin.gifsicle());
 		this.use(Imagemin.jpegtran());
 		this.use(Imagemin.optipng());
 		this.use(Imagemin.svgo());
 	}
 
-	this.streams.unshift(this.read(this.src()));
-
 	if (this.dest()) {
-		this.streams.push(fs.dest(this.dest()));
+		this.streams.push(vfs.dest(this.dest()));
 	}
 
-	var pipe = combine.obj(this.streams);
-	var end = concat(function (files) {
-		cb(null, files, pipe);
-	});
-
-	pipe.on('data', this.emit.bind(this, 'data'));
-	pipe.on('end', this.emit.bind(this, 'end'));
-	pipe.on('error', cb);
-	pipe.pipe(end);
-
-	return pipe;
+	return combine(this.streams);
 };
 
 /**
- * Read the source file
+ * Get files
  *
- * @param {Array|Buffer|String} src
  * @api private
  */
 
-Imagemin.prototype.read = function (src) {
-	if (Buffer.isBuffer(src)) {
-		var stream = through.obj();
-
-		stream.end(new File({
-			contents: src
-		}));
-
-		return stream;
+Imagemin.prototype.getFiles = function () {
+	if (Buffer.isBuffer(this.src())) {
+		return bufferToVinyl.stream(this.src());
 	}
 
-	return fs.src(src);
+	return vfs.src(this.src());
 };
 
 /**

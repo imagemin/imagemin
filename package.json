@@ -33,13 +33,13 @@
     "svg"
   ],
   "dependencies": {
+    "buffer-to-vinyl": "^1.0.0",
     "concat-stream": "^1.4.6",
     "get-stdin": "^4.0.1",
     "meow": "^3.0.0",
     "optional": "^0.1.0",
     "stream-combiner2": "^1.0.2",
     "through2": "^0.6.1",
-    "vinyl": "^0.4.3",
     "vinyl-fs": "^0.3.7"
   },
   "devDependencies": {
