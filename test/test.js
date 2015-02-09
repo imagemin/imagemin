@@ -1,10 +1,8 @@
 'use strict';
 
-var concat = require('concat-stream');
 var fs = require('fs');
 var Imagemin = require('../');
 var path = require('path');
-var spawn = require('child_process').spawn;
 var test = require('ava');
 
 test('expose a constructor', function (t) {

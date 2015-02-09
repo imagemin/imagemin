@@ -131,6 +131,6 @@ module.exports = Imagemin;
 	'svgo'
 ].forEach(function (plugin) {
 	module.exports[plugin] = optional('imagemin-' + plugin) || function () {
-		return through.ctor({ objectMode: true });
+		return through.ctor({objectMode: true});
 	};
 });

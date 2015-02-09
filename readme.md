@@ -18,7 +18,7 @@ var Imagemin = require('imagemin');
 var imagemin = new Imagemin()
 	.src('images/*.{gif,jpg,png,svg}')
 	.dest('build/images')
-	.use(Imagemin.jpegtran({ progressive: true }));
+	.use(Imagemin.jpegtran({progressive: true}));
 
 imagemin.run(function (err, files) {
 	if (err) {
@@ -26,7 +26,7 @@ imagemin.run(function (err, files) {
 	}
 	
 	console.log(files[0]);
-	// => { contents: <Buffer 89 50 4e ...> }
+	// => {path: 'build/images/foo.jpg', contents: <Buffer 89 50 4e ...>}
 });
 ```
 
@@ -96,7 +96,7 @@ Compress GIF images.
 var Imagemin = require('imagemin');
 
 var imagemin = new Imagemin()
-	.use(Imagemin.gifsicle({ interlaced: true }));
+	.use(Imagemin.gifsicle({interlaced: true}));
 ```
 
 ### .jpegtran()
@@ -107,7 +107,7 @@ Compress JPG images.
 var Imagemin = require('imagemin');
 
 var imagemin = new Imagemin()
-	.use(Imagemin.jpegtran({ progressive: true }));
+	.use(Imagemin.jpegtran({progressive: true}));
 ```
 
 ### .optipng()
@@ -118,7 +118,7 @@ Lossless compression of PNG images.
 var Imagemin = require('imagemin');
 
 var imagemin = new Imagemin()
-	.use(Imagemin.optipng({ optimizationLevel: 3 }));
+	.use(Imagemin.optipng({optimizationLevel: 3}));
 ```
 
 ### .svgo()
