@@ -42,7 +42,7 @@ var cli = meow({
 });
 
 function isFile(path) {
-	if (/^[^\s]+\.\w*$/g.test(path)) {
+	if (/^[^\s]+\.\w*$/.test(path)) {
 		return true;
 	}
 
