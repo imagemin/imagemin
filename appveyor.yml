@@ -1,11 +1,13 @@
 init:
   - git config --global core.autocrlf input
 
+shallow_clone: true
 version: '{build}'
+skip_tags: true
 
 environment:
   matrix:
-    - nodejs_version: '0.10'
+    - nodejs_version: '0.12'
 
 install:
   - ps: Install-Product node $env:nodejs_version
