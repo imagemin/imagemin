@@ -5,7 +5,7 @@
 
 ## Install
 
-```sh
+```
 $ npm install --save imagemin
 ```
 
@@ -16,17 +16,13 @@ $ npm install --save imagemin
 var Imagemin = require('imagemin');
 
 var imagemin = new Imagemin()
-	.src('images/*.{gif,jpg,png,svg}')
-	.dest('build/images')
-	.use(Imagemin.jpegtran({progressive: true}));
+    .src('images/*.{gif,jpg,png,svg}')
+    .dest('build/images')
+    .use(Imagemin.jpegtran({progressive: true}));
 
 imagemin.run(function (err, files) {
-	if (err) {
-		throw err;
-	}
-	
-	console.log(files[0]);
-	// => {path: 'build/images/foo.jpg', contents: <Buffer 89 50 4e ...>}
+    console.log(files[0]);
+    // => {path: 'build/images/foo.jpg', contents: <Buffer 89 50 4e ...>}
 });
 ```
 
@@ -37,8 +33,8 @@ var Imagemin = require('imagemin');
 var rename = require('gulp-rename');
 
 var imagemin = new Imagemin()
-	.src('images/foo.png')
-	.use(rename('bar.png'));
+    .src('images/foo.png')
+    .use(rename('bar.png'));
 ```
 
 
@@ -50,31 +46,31 @@ Creates a new `Imagemin` instance.
 
 ### .src(file)
 
-Type: `Array|Buffer|String`
+Type: `array`, `buffer` or `string`
 
 Set the files to be optimized. Takes a buffer, glob string or an array of glob strings 
 as argument.
 
 ### .dest(folder)
 
-Type: `String`
+Type: `string`
 
 Set the destination folder to where your files will be written. If you don't set 
 any destination no files will be written.
 
 ### .use(plugin)
 
-Type: `Function`
+Type: `function`
 
 Add a `plugin` to the middleware stack.
 
-### .run(cb)
+### .run(callback)
 
-Type: `Function`
+Type: `function`
 
 Optimize your files with the given settings.
 
-#### cb(err, files)
+#### callback(err, files)
 
 The callback will return an array of vinyl files in `files`.
 
@@ -96,7 +92,7 @@ Compress GIF images.
 var Imagemin = require('imagemin');
 
 var imagemin = new Imagemin()
-	.use(Imagemin.gifsicle({interlaced: true}));
+    .use(Imagemin.gifsicle({interlaced: true}));
 ```
 
 ### .jpegtran()
@@ -107,7 +103,7 @@ Compress JPG images.
 var Imagemin = require('imagemin');
 
 var imagemin = new Imagemin()
-	.use(Imagemin.jpegtran({progressive: true}));
+    .use(Imagemin.jpegtran({progressive: true}));
 ```
 
 ### .optipng()
@@ -118,7 +114,7 @@ Lossless compression of PNG images.
 var Imagemin = require('imagemin');
 
 var imagemin = new Imagemin()
-	.use(Imagemin.optipng({optimizationLevel: 3}));
+    .use(Imagemin.optipng({optimizationLevel: 3}));
 ```
 
 ### .svgo()
@@ -129,35 +125,35 @@ Compress SVG images.
 var Imagemin = require('imagemin');
 
 var imagemin = new Imagemin()
-	.use(Imagemin.svgo());
+    .use(Imagemin.svgo());
 ```
 
 
 ## CLI
 
-```bash
+```
 $ npm install --global imagemin
 ```
 
-```sh
+```
 $ imagemin --help
 
-Usage
-  $ imagemin <file> <directory>
-  $ imagemin <directory> <output>
-  $ imagemin <file> > <output>
-  $ cat <file> | imagemin > <output>
+  Usage
+    $ imagemin <file> <directory>
+    $ imagemin <directory> <output>
+    $ imagemin <file> > <output>
+    $ cat <file> | imagemin > <output>
 
-Example
-  $ imagemin images/* build
-  $ imagemin images build
-  $ imagemin foo.png > foo-optimized.png
-  $ cat foo.png | imagemin > foo-optimized.png
+  Example
+    $ imagemin images/* build
+    $ imagemin images build
+    $ imagemin foo.png > foo-optimized.png
+    $ cat foo.png | imagemin > foo-optimized.png
 
-Options
-  -i, --interlaced                    Interlace gif for progressive rendering
-  -o, --optimizationLevel <number>    Optimization level between 0 and 7
-  -p, --progressive                   Lossless conversion to progressive
+  Options
+    -i, --interlaced                    Interlace gif for progressive rendering
+    -o, --optimizationLevel <number>    Optimization level between 0 and 7
+    -p, --progressive                   Lossless conversion to progressive
 ```
 
 
