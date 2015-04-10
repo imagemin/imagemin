@@ -1,6 +1,5 @@
 {
 	"bitwise": true,
-	"camelcase": true,
 	"curly": true,
 	"esnext": true,
 	"immed": true,

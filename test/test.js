@@ -1,9 +1,9 @@
 'use strict';
 
 var fs = require('fs');
-var Imagemin = require('../');
 var path = require('path');
 var test = require('ava');
+var Imagemin = require('../');
 
 test('expose a constructor', function (t) {
 	t.plan(1);
@@ -16,7 +16,7 @@ test('add a plugin to the middleware stack', function (t) {
 	var imagemin = new Imagemin()
 		.use(function () {});
 
-	t.assert(imagemin.streams.length === 1);
+	t.assert(imagemin.streams.length === 1, imagemin.streams.length);
 });
 
 test('set source file', function (t) {
@@ -25,7 +25,7 @@ test('set source file', function (t) {
 	var imagemin = new Imagemin()
 		.src('test.jpg');
 
-	t.assert(imagemin._src === 'test.jpg');
+	t.assert(imagemin._src === 'test.jpg', imagemin._src);
 });
 
 test('set destination folder', function (t) {
@@ -34,7 +34,7 @@ test('set destination folder', function (t) {
 	var imagemin = new Imagemin()
 		.dest('tmp');
 
-	t.assert(imagemin._dest === 'tmp');
+	t.assert(imagemin._dest === 'tmp', imagemin._dest);
 });
 
 test('optimize a GIF', function (t) {
@@ -47,7 +47,7 @@ test('optimize a GIF', function (t) {
 
 	imagemin.run(function (err, files) {
 		t.assert(!err, err);
-		t.assert(files[0].contents.length < src.length);
+		t.assert(files[0].contents.length < src.length, files[0].contents.length);
 	});
 });
 
@@ -61,7 +61,7 @@ test('optimize a JPG', function (t) {
 
 	imagemin.run(function (err, files) {
 		t.assert(!err, err);
-		t.assert(files[0].contents.length < src.length);
+		t.assert(files[0].contents.length < src.length, files[0].contents.length);
 	});
 });
 
@@ -75,7 +75,7 @@ test('optimize a PNG', function (t) {
 
 	imagemin.run(function (err, files) {
 		t.assert(!err, err);
-		t.assert(files[0].contents.length < src.length);
+		t.assert(files[0].contents.length < src.length, files[0].contents.length);
 	});
 });
 
@@ -89,7 +89,7 @@ test('optimize a SVG', function (t) {
 
 	imagemin.run(function (err, files) {
 		t.assert(!err, err);
-		t.assert(files[0].contents.length < src.length);
+		t.assert(files[0].contents.length < src.length, files[0].contents.length);
 	});
 });
 
@@ -103,7 +103,7 @@ test('optimize a JPG using buffers', function (t) {
 
 	imagemin.run(function (err, files) {
 		t.assert(!err, err);
-		t.assert(files[0].contents.length < src.length);
+		t.assert(files[0].contents.length < src.length, files[0].contents.length);
 	});
 });
 

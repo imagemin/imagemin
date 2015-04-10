@@ -2,9 +2,9 @@
 'use strict';
 
 var fs = require('fs');
-var meow = require('meow');
 var path = require('path');
-var stdin = require('get-stdin');
+var meow = require('meow');
+var getStdin = require('get-stdin');
 var Imagemin = require('./');
 
 var cli = meow({
@@ -111,5 +111,5 @@ if (process.stdin.isTTY) {
 
 	run(src, dest);
 } else {
-	stdin.buffer(run);
+	getStdin.buffer(run);
 }

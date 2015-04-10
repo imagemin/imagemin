@@ -15,15 +15,14 @@ $ npm install --save imagemin
 ```js
 var Imagemin = require('imagemin');
 
-var imagemin = new Imagemin()
-    .src('images/*.{gif,jpg,png,svg}')
-    .dest('build/images')
-    .use(Imagemin.jpegtran({progressive: true}));
-
-imagemin.run(function (err, files) {
-    console.log(files[0]);
-    // => {path: 'build/images/foo.jpg', contents: <Buffer 89 50 4e ...>}
-});
+new Imagemin()
+	.src('images/*.{gif,jpg,png,svg}')
+	.dest('build/images')
+	.use(Imagemin.jpegtran({progressive: true}));
+	.run(function (err, files) {
+		console.log(files[0]);
+		// => {path: 'build/images/foo.jpg', contents: <Buffer 89 50 4e ...>}
+	});
 ```
 
 You can use [gulp-rename](https://github.com/hparra/gulp-rename) to rename your files:
@@ -32,9 +31,9 @@ You can use [gulp-rename](https://github.com/hparra/gulp-rename) to rename your 
 var Imagemin = require('imagemin');
 var rename = require('gulp-rename');
 
-var imagemin = new Imagemin()
-    .src('images/foo.png')
-    .use(rename('bar.png'));
+new Imagemin()
+	.src('images/foo.png')
+	.use(rename('bar.png'));
 ```
 
 
@@ -84,48 +83,48 @@ The following [plugins](https://www.npmjs.org/browse/keyword/imageminplugin) are
 * [optipng](#optipng) — Compress PNG images losslessly.
 * [svgo](#svgo) — Compress SVG images.
 
-### .gifsicle()
+### .gifsicle(options)
 
 Compress GIF images.
 
 ```js
 var Imagemin = require('imagemin');
 
-var imagemin = new Imagemin()
-    .use(Imagemin.gifsicle({interlaced: true}));
+new Imagemin()
+	.use(Imagemin.gifsicle({interlaced: true}));
 ```
 
-### .jpegtran()
+### .jpegtran(options)
 
 Compress JPG images.
 
 ```js
 var Imagemin = require('imagemin');
 
-var imagemin = new Imagemin()
-    .use(Imagemin.jpegtran({progressive: true}));
+new Imagemin()
+	.use(Imagemin.jpegtran({progressive: true}));
 ```
 
-### .optipng()
+### .optipng(options)
 
 Lossless compression of PNG images.
 
 ```js
 var Imagemin = require('imagemin');
 
-var imagemin = new Imagemin()
-    .use(Imagemin.optipng({optimizationLevel: 3}));
+new Imagemin()
+	.use(Imagemin.optipng({optimizationLevel: 3}));
 ```
 
-### .svgo()
+### .svgo(options)
 
 Compress SVG images.
 
 ```js
 var Imagemin = require('imagemin');
 
-var imagemin = new Imagemin()
-    .use(Imagemin.svgo());
+new Imagemin()
+	.use(Imagemin.svgo());
 ```
 
 
