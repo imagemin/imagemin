@@ -82,6 +82,21 @@ Imagemin.prototype.run = function (cb) {
 };
 
 /**
+ * Set filename
+ *
+ * @param {String} filename
+ * @api public
+ */
+Imagemin.prototype.name = function(filename) {
+	if (!arguments.length) {
+		return this._name;
+	}
+
+	this._name = filename;
+	return this;
+};
+
+/**
  * Create stream
  *
  * @api private
@@ -112,7 +127,7 @@ Imagemin.prototype.createStream = function () {
 
 Imagemin.prototype.getFiles = function () {
 	if (Buffer.isBuffer(this.src())) {
-		return bufferToVinyl.stream(this.src());
+		return bufferToVinyl.stream(this.src(), this.name());
 	}
 
 	return vinylFs.src(this.src());
