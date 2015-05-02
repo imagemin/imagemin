@@ -41,7 +41,7 @@
     "path-exists": "^1.0.0",
     "stream-combiner2": "^1.0.2",
     "through2": "^0.6.1",
-    "vinyl-fs": "^0.3.7"
+    "vinyl-fs": "^1.0.0"
   },
   "devDependencies": {
     "ava": "^0.0.4"
