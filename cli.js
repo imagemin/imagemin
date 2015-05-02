@@ -5,6 +5,7 @@ var fs = require('fs');
 var path = require('path');
 var meow = require('meow');
 var getStdin = require('get-stdin');
+var pathExists = require('path-exists');
 var Imagemin = require('./');
 
 var cli = meow({
@@ -102,7 +103,7 @@ if (process.stdin.isTTY) {
 	}
 
 	src = src.map(function (s) {
-		if (!isFile(s) && fs.existsSync(s)) {
+		if (!isFile(s) && pathExists.sync(s)) {
 			return path.join(s, '**/*');
 		}
 

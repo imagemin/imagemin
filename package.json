@@ -38,6 +38,7 @@
     "get-stdin": "^4.0.1",
     "meow": "^3.0.0",
     "optional": "^0.1.0",
+    "path-exists": "^1.0.0",
     "stream-combiner2": "^1.0.2",
     "through2": "^0.6.1",
     "vinyl-fs": "^0.3.7"
