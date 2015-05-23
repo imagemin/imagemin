@@ -80,22 +80,22 @@ function run(src, dest) {
 	});
 }
 
-if (process.stdin.isTTY) {
+if (!cli.input.length && process.stdin.isTTY) {
+	console.error([
+		'Provide at least one file to optimize',
+		'',
+		'Example',
+		'  imagemin images/* build',
+		'  imagemin foo.png > foo-optimized.png',
+		'  cat foo.png | imagemin > foo-optimized.png'
+	].join('\n'));
+
+	process.exit(1);
+}
+
+if (cli.input.length) {
 	var src = cli.input;
 	var dest;
-
-	if (!cli.input.length) {
-		console.error([
-			'Provide at least one file to optimize',
-			'',
-			'Example',
-			'  imagemin images/* build',
-			'  imagemin foo.png > foo-optimized.png',
-			'  cat foo.png | imagemin > foo-optimized.png'
-		].join('\n'));
-
-		process.exit(1);
-	}
 
 	if (src.length > 1 && !isFile(src[src.length - 1])) {
 		dest = src[src.length - 1];
