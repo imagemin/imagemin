@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 'use strict';
-
 var fs = require('fs');
 var path = require('path');
 var meow = require('meow');
@@ -26,7 +25,7 @@ var cli = meow({
 		'  -i, --interlaced                    Interlace gif for progressive rendering',
 		'  -o, --optimizationLevel <number>    Optimization level between 0 and 7',
 		'  -p, --progressive                   Lossless conversion to progressive'
-	].join('\n')
+	]
 }, {
 	boolean: [
 		'interlaced',

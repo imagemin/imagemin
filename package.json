@@ -34,7 +34,7 @@
     "buffer-to-vinyl": "^1.0.0",
     "concat-stream": "^1.4.6",
     "get-stdin": "^4.0.1",
-    "meow": "^3.0.0",
+    "meow": "^3.3.0",
     "optional": "^0.1.0",
     "path-exists": "^1.0.0",
     "stream-combiner2": "^1.0.2",
