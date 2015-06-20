@@ -3,8 +3,8 @@
 var bufferToVinyl = require('buffer-to-vinyl');
 var concatStream = require('concat-stream');
 var optional = require('optional');
+var PassThrough = require('readable-stream/passthrough');
 var streamCombiner = require('stream-combiner2');
-var through = require('through2');
 var vinylFs = require('vinyl-fs');
 
 /**
@@ -131,6 +131,8 @@ module.exports = Imagemin;
 	'svgo'
 ].forEach(function (plugin) {
 	module.exports[plugin] = optional('imagemin-' + plugin) || function () {
-		return through.ctor({objectMode: true});
+		return function () {
+			new PassThrough({objectMode: true});
+		};
 	};
 });

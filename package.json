@@ -37,8 +37,8 @@
     "meow": "^3.3.0",
     "optional": "^0.1.0",
     "path-exists": "^1.0.0",
+    "readable-stream": "^2.0.0",
     "stream-combiner2": "^1.0.2",
-    "through2": "^0.6.1",
     "vinyl-fs": "^1.0.0"
   },
   "devDependencies": {
