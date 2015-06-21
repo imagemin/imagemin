@@ -13,13 +13,11 @@
     "node": ">=0.10.0",
     "npm": ">=2.1.5"
   },
-  "bin": "cli.js",
   "scripts": {
     "test": "node test/test.js"
   },
   "files": [
-    "index.js",
-    "cli.js"
+    "index.js"
   ],
   "keywords": [
     "compress",
@@ -33,10 +31,7 @@
   "dependencies": {
     "buffer-to-vinyl": "^1.0.0",
     "concat-stream": "^1.4.6",
-    "get-stdin": "^4.0.1",
-    "meow": "^3.3.0",
     "optional": "^0.1.0",
-    "path-exists": "^1.0.0",
     "readable-stream": "^2.0.0",
     "stream-combiner2": "^1.0.2",
     "vinyl-fs": "^1.0.0"

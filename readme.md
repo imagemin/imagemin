@@ -128,39 +128,12 @@ new Imagemin()
 ```
 
 
-## CLI
-
-```
-$ npm install --global imagemin
-```
-
-```
-$ imagemin --help
-
-  Usage
-    $ imagemin <file> <directory>
-    $ imagemin <directory> <output>
-    $ imagemin <file> > <output>
-    $ cat <file> | imagemin > <output>
-
-  Example
-    $ imagemin images/* build
-    $ imagemin images build
-    $ imagemin foo.png > foo-optimized.png
-    $ cat foo.png | imagemin > foo-optimized.png
-
-  Options
-    -i, --interlaced                    Interlace gif for progressive rendering
-    -o, --optimizationLevel <number>    Optimization level between 0 and 7
-    -p, --progressive                   Lossless conversion to progressive
-```
-
-
 ## Related
 
-- [imagemin-app](https://github.com/imagemin/imagemin-app)
-- [gulp-imagemin](https://github.com/sindresorhus/gulp-imagemin)
-- [grunt-contrib-imagemin](https://github.com/gruntjs/grunt-contrib-imagemin)
+- [imagemin-cli](https://github.com/imagemin/imagemin-cli) - CLI for this module
+- [imagemin-app](https://github.com/imagemin/imagemin-app) - GUI app for this module.
+- [gulp-imagemin](https://github.com/sindresorhus/gulp-imagemin) - Gulp plugin.
+- [grunt-contrib-imagemin](https://github.com/gruntjs/grunt-contrib-imagemin) - Grunt plugin.
 
 
 ## License
