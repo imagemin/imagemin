@@ -78,10 +78,10 @@ The callback will return an array of vinyl files in `files`.
 
 The following [plugins](https://www.npmjs.org/browse/keyword/imageminplugin) are bundled with imagemin:
 
-* [gifsicle](#gifsicle) — Compress GIF images.
-* [jpegtran](#jpegtran) — Compress JPG images.
-* [optipng](#optipng) — Compress PNG images losslessly.
-* [svgo](#svgo) — Compress SVG images.
+* [gifsicle](#gifsicleoptions) — Compress GIF images.
+* [jpegtran](#jpegtranoptions) — Compress JPG images.
+* [optipng](#optipngoptions) — Compress PNG images losslessly.
+* [svgo](#svgooptions) — Compress SVG images.
 
 ### .gifsicle(options)
 
