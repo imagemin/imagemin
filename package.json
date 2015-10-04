@@ -34,7 +34,7 @@
     "optional": "^0.1.0",
     "readable-stream": "^2.0.0",
     "stream-combiner2": "^1.0.2",
-    "vinyl-fs": "^1.0.0"
+    "vinyl-fs": "^2.1.1"
   },
   "devDependencies": {
     "ava": "^0.0.4"
