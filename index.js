@@ -78,7 +78,7 @@ Imagemin.prototype.run = function (cb) {
 	var stream = this.createStream();
 
 	stream.on('error', cb);
-	stream.pipe(concatStream(cb.bind(null, null)));
+	stream.pipe(concatStream({objectMode: true}, cb.bind(null, null)));
 };
 
 /**
@@ -101,7 +101,7 @@ Imagemin.prototype.createStream = function () {
 		this.streams.push(vinylFs.dest(this.dest()));
 	}
 
-	return streamCombiner(this.streams);
+	return streamCombiner.obj(this.streams);
 };
 
 /**
