@@ -33,7 +33,7 @@
     "concat-stream": "^1.4.6",
     "optional": "^0.1.0",
     "readable-stream": "^2.0.0",
-    "stream-combiner2": "^1.0.2",
+    "stream-combiner2": "^1.1.1",
     "vinyl-fs": "^2.1.1"
   },
   "devDependencies": {
