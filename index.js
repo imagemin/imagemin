@@ -131,7 +131,7 @@ module.exports = Imagemin;
 ].forEach(function (plugin) {
 	module.exports[plugin] = optional('imagemin-' + plugin) || function () {
 		return function () {
-			new PassThrough({objectMode: true});
+			return new PassThrough({objectMode: true});
 		};
 	};
 });
