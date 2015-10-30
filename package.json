@@ -9,23 +9,35 @@
     "email": "kevinmartensson@gmail.com",
     "url": "github.com/kevva"
   },
+  "maintainers": [
+    {
+      "name": "Sindre Sorhus",
+      "email": "sindresorhus@gmail.com",
+      "url": "sindresorhus.com"
+    },
+    {
+      "name": "Shinnosuke Watanabe",
+      "url": "github.com/shinnn"
+    }
+  ],
   "engines": {
-    "node": ">=0.10.0",
-    "npm": ">=2.1.5"
+    "node": ">=0.10.0"
   },
   "scripts": {
-    "test": "node test/test.js"
+    "test": "xo && ava"
   },
   "files": [
     "index.js"
   ],
   "keywords": [
-    "compress",
-    "gif",
-    "image",
-    "jpeg",
     "minify",
+    "compress",
+    "image",
+    "images",
+    "jpeg",
+    "jpg",
     "png",
+    "gif",
     "svg"
   ],
   "dependencies": {
@@ -37,7 +49,8 @@
     "vinyl-fs": "^2.1.1"
   },
   "devDependencies": {
-    "ava": "^0.0.4"
+    "ava": "*",
+    "xo": "*"
   },
   "optionalDependencies": {
     "imagemin-gifsicle": "^4.0.0",

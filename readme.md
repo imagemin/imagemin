@@ -13,23 +13,23 @@ $ npm install --save imagemin
 ## Usage
 
 ```js
-var Imagemin = require('imagemin');
+const Imagemin = require('imagemin');
 
 new Imagemin()
 	.src('images/*.{gif,jpg,png,svg}')
 	.dest('build/images')
 	.use(Imagemin.jpegtran({progressive: true}))
-	.run(function (err, files) {
+	.run((err, files) => {
 		console.log(files[0]);
-		// => {path: 'build/images/foo.jpg', contents: <Buffer 89 50 4e ...>}
+		//=> {path: 'build/images/foo.jpg', contents: <Buffer 89 50 4e ...>}
 	});
 ```
 
 You can use [gulp-rename](https://github.com/hparra/gulp-rename) to rename your files:
 
 ```js
-var Imagemin = require('imagemin');
-var rename = require('gulp-rename');
+const Imagemin = require('imagemin');
+const rename = require('gulp-rename');
 
 new Imagemin()
 	.src('images/foo.png')
@@ -47,15 +47,13 @@ Creates a new `Imagemin` instance.
 
 Type: `array`, `buffer` or `string`
 
-Set the files to be optimized. Takes a buffer, glob string or an array of glob strings 
-as argument.
+Set the files to be optimized. Takes a buffer, glob string or an array of glob strings as argument.
 
 ### .dest(folder)
 
 Type: `string`
 
-Set the destination folder to where your files will be written. If you don't set 
-any destination no files will be written.
+Set the destination folder to where your files will be written. If you don't set any destination no files will be written.
 
 ### .use(plugin)
 
@@ -88,7 +86,7 @@ The following [plugins](https://www.npmjs.org/browse/keyword/imageminplugin) are
 Compress GIF images.
 
 ```js
-var Imagemin = require('imagemin');
+const Imagemin = require('imagemin');
 
 new Imagemin()
 	.use(Imagemin.gifsicle({interlaced: true}));
@@ -99,7 +97,7 @@ new Imagemin()
 Compress JPG images.
 
 ```js
-var Imagemin = require('imagemin');
+const Imagemin = require('imagemin');
 
 new Imagemin()
 	.use(Imagemin.jpegtran({progressive: true}));
@@ -110,7 +108,7 @@ new Imagemin()
 Lossless compression of PNG images.
 
 ```js
-var Imagemin = require('imagemin');
+const Imagemin = require('imagemin');
 
 new Imagemin()
 	.use(Imagemin.optipng({optimizationLevel: 3}));
@@ -121,7 +119,7 @@ new Imagemin()
 Compress SVG images.
 
 ```js
-var Imagemin = require('imagemin');
+const Imagemin = require('imagemin');
 
 new Imagemin()
 	.use(Imagemin.svgo());
