@@ -1,7 +1,6 @@
 'use strict';
 var bufferToVinyl = require('buffer-to-vinyl');
 var concatStream = require('concat-stream');
-var optional = require('optional');
 var PassThrough = require('readable-stream/passthrough');
 var streamCombiner = require('stream-combiner2');
 var vinylFs = require('vinyl-fs');
@@ -121,17 +120,14 @@ Imagemin.prototype.getFiles = function () {
  * Module exports
  */
 
-module.exports = Imagemin;
-
-[
-	'gifsicle',
-	'jpegtran',
-	'optipng',
-	'svgo'
-].forEach(function (plugin) {
-	module.exports[plugin] = optional('imagemin-' + plugin) || function () {
-		return function () {
-			return new PassThrough({objectMode: true});
-		};
+function stub () {
+	return function () {
+		return new PassThrough({objectMode: true});
 	};
-});
+};
+
+module.exports = Imagemin;
+module.exports.gifsicle = try {require("imagemin-gifsicle")} catch (e) {stub};
+module.exports.jpegtran = try {require("imagemin-jpegtran")} catch (e) {stub};
+module.exports.optipng = try {require("imagemin-optipng")} catch (e) {stub};
+module.exports.svgo = try {require("imagemin-svgo")} catch (e) {stub};
