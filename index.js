@@ -127,7 +127,7 @@ function stub () {
 };
 
 module.exports = Imagemin;
-module.exports.gifsicle = try {require("imagemin-gifsicle")} catch (e) {stub};
-module.exports.jpegtran = try {require("imagemin-jpegtran")} catch (e) {stub};
-module.exports.optipng = try {require("imagemin-optipng")} catch (e) {stub};
-module.exports.svgo = try {require("imagemin-svgo")} catch (e) {stub};
+module.exports.gifsicle = try {require("imagemin-gifsicle")} catch (e) {stub}
+module.exports.jpegtran = try {require("imagemin-jpegtran")} catch (e) {stub}
+module.exports.optipng = try {require("imagemin-optipng")} catch (e) {stub}
+module.exports.svgo = try {require("imagemin-svgo")} catch (e) {stub}
