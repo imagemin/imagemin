@@ -120,22 +120,38 @@ Imagemin.prototype.getFiles = function () {
  * Module exports
  */
 
-function stub () {
+function stub() {
 	return function () {
 		return new PassThrough({objectMode: true});
 	};
-};
+}
 
 module.exports = Imagemin;
 module.exports.gifsicle = (function () {
-	try {return require("imagemin-gifsicle")} catch (e) {return stub}
+	try {
+		return require('imagemin-gifsicle');
+	} catch (e) {
+		return stub;
+	}
 })();
 module.exports.jpegtran = (function () {
-	try {return require("imagemin-jpegtran")} catch (e) {return stub}
+	try {
+		return require('imagemin-jpegtran');
+	} catch (e) {
+		return stub;
+	}
 })();
 module.exports.optipng = (function () {
-	try {return require("imagemin-optipng")} catch (e) {return stub}
+	try {
+		return require('imagemin-optipng');
+	} catch (e) {
+		return stub;
+	}
 })();
 module.exports.svgo = (function () {
-	try {return require("imagemin-svgo")} catch (e) {return stub}
+	try {
+		return require('imagemin-svgo');
+	} catch (e) {
+		return stub;
+	}
 })();
