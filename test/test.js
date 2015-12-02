@@ -1,119 +1,117 @@
-'use strict';
-var fs = require('fs');
-var path = require('path');
-var test = require('ava');
-var Imagemin = require('../');
+import fs from 'fs';
+import path from 'path';
+import test from 'ava';
+import Imagemin from '../';
 
-test('expose a constructor', function (t) {
-	t.plan(1);
+test('expose a constructor', t => {
 	t.assert(typeof Imagemin === 'function');
 });
 
-test('add a plugin to the middleware stack', function (t) {
-	t.plan(1);
+test('add a plugin to the middleware stack', t => {
+	const imagemin = new Imagemin()
+		.use(function noop() {});
 
-	var imagemin = new Imagemin()
-		.use(function () {});
-
-	t.assert(imagemin.streams.length === 1, imagemin.streams.length);
+	t.is(imagemin.streams.length, 1);
 });
 
-test('set source file', function (t) {
-	t.plan(1);
-
-	var imagemin = new Imagemin()
+test('set source file', t => {
+	const imagemin = new Imagemin()
 		.src('test.jpg');
 
-	t.assert(imagemin._src === 'test.jpg', imagemin._src);
+	t.is(imagemin._src, 'test.jpg');
 });
 
-test('set destination folder', function (t) {
-	t.plan(1);
-
-	var imagemin = new Imagemin()
+test('set destination folder', t => {
+	const imagemin = new Imagemin()
 		.dest('tmp');
 
 	t.assert(imagemin._dest === 'tmp', imagemin._dest);
 });
 
-test('optimize a GIF', function (t) {
+test.cb('optimize a GIF', t => {
 	t.plan(2);
 
-	var src = fs.readFileSync(path.join(__dirname, 'fixtures/test.gif'), null);
-	var imagemin = new Imagemin()
+	const src = fs.readFileSync(path.join(__dirname, 'fixtures/test.gif'));
+	const imagemin = new Imagemin()
 		.src(path.join(__dirname, 'fixtures/test.gif'))
 		.use(Imagemin.gifsicle());
 
-	imagemin.run(function (err, files) {
-		t.assert(!err, err);
-		t.assert(files[0].contents.length < src.length, files[0].contents.length);
+	imagemin.run((err, files) => {
+		t.is(err, null);
+		t.true(files[0].contents.length < src.length);
+		t.end();
 	});
 });
 
-test('optimize a JPG', function (t) {
+test.cb('optimize a JPG', t => {
 	t.plan(2);
 
-	var src = fs.readFileSync(path.join(__dirname, 'fixtures/test.jpg'), null);
-	var imagemin = new Imagemin()
+	const src = fs.readFileSync(path.join(__dirname, 'fixtures/test.jpg'));
+	const imagemin = new Imagemin()
 		.src(path.join(__dirname, 'fixtures/test.jpg'))
 		.use(Imagemin.jpegtran());
 
-	imagemin.run(function (err, files) {
-		t.assert(!err, err);
-		t.assert(files[0].contents.length < src.length, files[0].contents.length);
+	imagemin.run((err, files) => {
+		t.is(err, null);
+		t.true(files[0].contents.length < src.length);
+		t.end();
 	});
 });
 
-test('optimize a PNG', function (t) {
+test.cb('optimize a PNG', t => {
 	t.plan(2);
 
-	var src = fs.readFileSync(path.join(__dirname, 'fixtures/test.png'), null);
-	var imagemin = new Imagemin()
+	const src = fs.readFileSync(path.join(__dirname, 'fixtures/test.png'));
+	const imagemin = new Imagemin()
 		.src(path.join(__dirname, 'fixtures/test.png'))
 		.use(Imagemin.optipng());
 
-	imagemin.run(function (err, files) {
-		t.assert(!err, err);
-		t.assert(files[0].contents.length < src.length, files[0].contents.length);
+	imagemin.run((err, files) => {
+		t.is(err, null);
+		t.true(files[0].contents.length < src.length);
+		t.end();
 	});
 });
 
-test('optimize a SVG', function (t) {
+test.cb('optimize a SVG', t => {
 	t.plan(2);
 
-	var src = fs.readFileSync(path.join(__dirname, 'fixtures/test.svg'), null);
-	var imagemin = new Imagemin()
+	const src = fs.readFileSync(path.join(__dirname, 'fixtures/test.svg'));
+	const imagemin = new Imagemin()
 		.src(path.join(__dirname, 'fixtures/test.svg'))
 		.use(Imagemin.svgo());
 
-	imagemin.run(function (err, files) {
-		t.assert(!err, err);
-		t.assert(files[0].contents.length < src.length, files[0].contents.length);
+	imagemin.run((err, files) => {
+		t.is(err, null);
+		t.true(files[0].contents.length < src.length);
+		t.end();
 	});
 });
 
-test('optimize a JPG using buffers', function (t) {
+test.cb('optimize a JPG using buffers', t => {
 	t.plan(2);
 
-	var src = fs.readFileSync(path.join(__dirname, 'fixtures/test.jpg'), null);
-	var imagemin = new Imagemin()
+	const src = fs.readFileSync(path.join(__dirname, 'fixtures/test.jpg'));
+	const imagemin = new Imagemin()
 		.src(src)
 		.use(Imagemin.jpegtran());
 
-	imagemin.run(function (err, files) {
-		t.assert(!err, err);
-		t.assert(files[0].contents.length < src.length, files[0].contents.length);
+	imagemin.run((err, files) => {
+		t.is(err, null);
+		t.true(files[0].contents.length < src.length);
+		t.end();
 	});
 });
 
-test('output error on corrupt images', function (t) {
+test.cb('output error on corrupt images', function (t) {
 	t.plan(1);
 
-	var imagemin = new Imagemin()
+	const imagemin = new Imagemin()
 		.src(path.join(__dirname, 'fixtures/test-corrupt.jpg'))
 		.use(Imagemin.jpegtran());
 
 	imagemin.run(function (err) {
-		t.assert(err);
+		t.ok(err);
+		t.end();
 	});
 });
