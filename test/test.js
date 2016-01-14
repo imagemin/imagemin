@@ -4,7 +4,7 @@ import test from 'ava';
 import Imagemin from '../';
 
 test('expose a constructor', t => {
-	t.assert(typeof Imagemin === 'function');
+	t.is(typeof Imagemin, 'function');
 });
 
 test('add a plugin to the middleware stack', t => {
@@ -25,7 +25,7 @@ test('set destination folder', t => {
 	const imagemin = new Imagemin()
 		.dest('tmp');
 
-	t.assert(imagemin._dest === 'tmp', imagemin._dest);
+	t.is(imagemin._dest, 'tmp', imagemin._dest);
 });
 
 test.cb('optimize a GIF', t => {
