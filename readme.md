@@ -13,117 +13,65 @@ $ npm install --save imagemin
 ## Usage
 
 ```js
-const Imagemin = require('imagemin');
+const imagemin = require('imagemin');
+const imageminMozjpeg = require('imagemin-mozjpeg');
+const imageminPngquant = require('imagemin-pngquant');
 
-new Imagemin()
-	.src('images/*.{gif,jpg,png,svg}')
-	.dest('build/images')
-	.use(Imagemin.jpegtran({progressive: true}))
-	.run((err, files) => {
-		console.log(files[0]);
-		//=> {path: 'build/images/foo.jpg', contents: <Buffer 89 50 4e ...>}
-	});
-```
-
-You can use [gulp-rename](https://github.com/hparra/gulp-rename) to rename your files:
-
-```js
-const Imagemin = require('imagemin');
-const rename = require('gulp-rename');
-
-new Imagemin()
-	.src('images/foo.png')
-	.use(rename('bar.png'));
+imagemin('images/*.{jpg,png}', 'build/images', {
+	use: [
+		imageminMozjpeg({targa: true}),
+		imageminPngquant({quality: '65-80'})
+	]
+}).then(files => {
+	console.log(files);
+	//=> [{data: <Buffer 89 50 4e ...>, path: 'build/images/foo.jpg'}, ...]
+});
 ```
 
 
 ## API
 
-### new Imagemin()
+### imagemin(input, output, [options])
 
-Creates a new `Imagemin` instance.
+Returns a promise for an array of objects in the format `{data: Buffer, path: String}`.
 
-### .src(file)
+#### input
 
-Type: `array`, `buffer` or `string`
+Type: `string`, `array`
 
-Set the files to be optimized. Takes a buffer, glob string or an array of glob strings as argument.
+Files to be optimized. See supported `minimatch` [patterns](https://github.com/isaacs/minimatch#usage).
 
-### .dest(folder)
+#### output
 
 Type: `string`
 
-Set the destination folder to where your files will be written. If you don't set any destination no files will be written.
+Set the destination folder to where your files will be written. If no destination is specified no files will be written.
 
-### .use(plugin)
+#### options
 
-Type: `function`
+##### use
 
-Add a `plugin` to the middleware stack.
+Type: `array`
 
-### .run(callback)
+Array of [plugins](https://www.npmjs.com/browse/keyword/imageminplugin) to use.
 
-Type: `function`
+### imagemin.buffer(buffer, [options])
 
-Optimize your files with the given settings.
+Returns a promise for a buffer.
 
-#### callback(err, files)
+#### buffer
 
-The callback will return an array of vinyl files in `files`.
+Type: `buffer`
 
+The buffer to optimize.
 
-## Plugins
+#### options
 
-The following [plugins](https://www.npmjs.org/browse/keyword/imageminplugin) are bundled with imagemin:
+##### use
 
-* [gifsicle](#gifsicleoptions) — Compress GIF images.
-* [jpegtran](#jpegtranoptions) — Compress JPG images.
-* [optipng](#optipngoptions) — Compress PNG images losslessly.
-* [svgo](#svgooptions) — Compress SVG images.
+Type: `array`
 
-### .gifsicle(options)
-
-Compress GIF images.
-
-```js
-const Imagemin = require('imagemin');
-
-new Imagemin()
-	.use(Imagemin.gifsicle({interlaced: true}));
-```
-
-### .jpegtran(options)
-
-Compress JPG images.
-
-```js
-const Imagemin = require('imagemin');
-
-new Imagemin()
-	.use(Imagemin.jpegtran({progressive: true}));
-```
-
-### .optipng(options)
-
-Lossless compression of PNG images.
-
-```js
-const Imagemin = require('imagemin');
-
-new Imagemin()
-	.use(Imagemin.optipng({optimizationLevel: 3}));
-```
-
-### .svgo(options)
-
-Compress SVG images.
-
-```js
-const Imagemin = require('imagemin');
-
-new Imagemin()
-	.use(Imagemin.svgo());
-```
+Array of [plugins](https://www.npmjs.com/browse/keyword/imageminplugin) to use.
 
 
 ## Related
