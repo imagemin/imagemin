@@ -1,36 +1,30 @@
 import fs from 'fs';
 import path from 'path';
-import test from 'ava';
 import imageminJpegtran from 'imagemin-jpegtran';
-import imagemin from '../';
+import isJpg from 'is-jpg';
+import pify from 'pify';
+import test from 'ava';
+import m from '../';
 
-test.cb('optimize a file', t => {
-	t.plan(1);
+const fsP = pify(fs);
 
-	const buf = fs.readFileSync(path.join(__dirname, 'fixtures/test.jpg'));
+test('optimize a file', async t => {
+	const buf = await fsP.readFile(path.join(__dirname, 'fixtures/test.jpg'));
+	const files = await m('fixtures/test.jpg', {use: imageminJpegtran()});
 
-	imagemin(path.join(__dirname, 'fixtures/test.jpg'), {use: imageminJpegtran()}).then(files => {
-		t.true(files[0].data.length < buf.length);
-		t.end();
-	});
+	t.is(files[0].path, null);
+	t.true(files[0].data.length < buf.length);
+	t.true(isJpg(files[0].data));
 });
 
-test.cb('#buffer optimize a file', t => {
-	t.plan(1);
+test('optimize a buffer', async t => {
+	const buf = await fsP.readFile(path.join(__dirname, 'fixtures/test.jpg'));
+	const data = await m.buffer(buf, {use: imageminJpegtran()});
 
-	const buf = fs.readFileSync(path.join(__dirname, 'fixtures/test.jpg'));
-
-	imagemin.buffer(buf, {use: imageminJpegtran()}).then(data => {
-		t.true(data.length < buf.length);
-		t.end();
-	});
+	t.true(data.length < buf.length);
+	t.true(isJpg(data));
 });
 
-test.cb('output error on corrupt images', t => {
-	t.plan(1);
-
-	imagemin(path.join(__dirname, 'fixtures/test-corrupt.jpg'), {use: imageminJpegtran()}).catch(err => {
-		t.regex(err.message, /Corrupt JPEG data/);
-		t.end();
-	});
+test('output error on corrupt images', async t => {
+	t.throws(m('fixtures/test-corrupt.jpg', {use: imageminJpegtran()}), /Corrupt JPEG data/);
 });
