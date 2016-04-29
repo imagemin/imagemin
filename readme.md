@@ -17,7 +17,7 @@ const imagemin = require('imagemin');
 const imageminMozjpeg = require('imagemin-mozjpeg');
 const imageminPngquant = require('imagemin-pngquant');
 
-imagemin('images/*.{jpg,png}', 'build/images', {
+imagemin(['images/*.{jpg,png}'], 'build/images', {
 	use: [
 		imageminMozjpeg({targa: true}),
 		imageminPngquant({quality: '65-80'})
@@ -37,7 +37,7 @@ Returns a promise for an array of objects in the format `{data: Buffer, path: St
 
 #### input
 
-Type: `string`, `array`
+Type: `array`
 
 Files to be optimized. See supported `minimatch` [patterns](https://github.com/isaacs/minimatch#usage).
 

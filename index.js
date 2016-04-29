@@ -29,6 +29,10 @@ const handleFile = (input, output, opts) => fsP.readFile(input).then(data => {
 });
 
 module.exports = (input, output, opts) => {
+	if (!Array.isArray(input)) {
+		return Promise.reject(new TypeError('Expected an array'));
+	}
+
 	if (typeof output === 'object') {
 		opts = output;
 		output = null;
@@ -40,6 +44,10 @@ module.exports = (input, output, opts) => {
 };
 
 module.exports.buffer = (input, opts) => {
+	if (!Buffer.isBuffer(input)) {
+		return Promise.reject(new TypeError('Expected a buffer'));
+	}
+
 	opts = Object.assign({use: []}, opts);
 	return promisePipe(opts.use)(input, opts);
 };
