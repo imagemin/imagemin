@@ -28,3 +28,8 @@ test('optimize a buffer', async t => {
 test('output error on corrupt images', async t => {
 	t.throws(m(['fixture-corrupt.jpg'], {use: imageminJpegtran()}), /Corrupt JPEG data/);
 });
+
+test('throw on wrong input', async t => {
+	t.throws(m('foo'), /Expected an array/);
+	t.throws(m.buffer('foo'), /Expected a buffer/);
+});
