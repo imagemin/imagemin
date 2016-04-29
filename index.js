@@ -10,22 +10,27 @@ const fsP = pify(fs);
 const handleFile = (input, output, opts) => fsP.readFile(input).then(data => {
 	const dest = output ? path.resolve(output, input) : null;
 
-	return promisePipe(opts.use)(data, opts).then(buf => {
-		buf = buf.length < data.length ? buf : data;
+	return promisePipe(opts.use)(data, opts)
+		.then(buf => {
+			buf = buf.length < data.length ? buf : data;
 
-		const ret = {
-			data: buf,
-			path: dest
-		};
+			const ret = {
+				data: buf,
+				path: dest
+			};
 
-		if (!dest) {
-			return ret;
-		}
+			if (!dest) {
+				return ret;
+			}
 
-		return pify(mkdirp)(path.dirname(dest))
-			.then(() => fsP.writeFile(dest, buf))
-			.then(() => ret);
-	});
+			return pify(mkdirp)(path.dirname(dest))
+				.then(() => fsP.writeFile(dest, buf))
+				.then(() => ret);
+		})
+		.catch(err => {
+			err.message = `Error in file: ${input}\n\n${err.message}`;
+			throw err;
+		});
 });
 
 module.exports = (input, output, opts) => {
