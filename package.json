@@ -48,7 +48,7 @@
   },
   "devDependencies": {
     "ava": "*",
-    "imagemin-jpegtran": "imagemin/imagemin-jpegtran#rewrite",
+    "imagemin-jpegtran": "^5.0.0",
     "is-jpg": "^1.0.0",
     "xo": "*"
   }
