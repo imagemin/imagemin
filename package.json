@@ -21,7 +21,7 @@
     }
   ],
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=4"
   },
   "scripts": {
     "test": "xo && ava"
@@ -41,21 +41,15 @@
     "svg"
   ],
   "dependencies": {
-    "buffer-to-vinyl": "^1.0.0",
-    "concat-stream": "^1.4.6",
-    "optional": "^0.1.0",
-    "readable-stream": "^2.0.0",
-    "stream-combiner2": "^1.1.1",
-    "vinyl-fs": "^2.1.1"
+    "globby": "^4.0.0",
+    "mkdirp": "^0.5.1",
+    "pify": "^2.3.0",
+    "promise.pipe": "^3.0.0"
   },
   "devDependencies": {
     "ava": "*",
+    "imagemin-jpegtran": "^5.0.0",
+    "is-jpg": "^1.0.0",
     "xo": "*"
-  },
-  "optionalDependencies": {
-    "imagemin-gifsicle": "^4.0.0",
-    "imagemin-jpegtran": "^4.0.0",
-    "imagemin-optipng": "^4.0.0",
-    "imagemin-svgo": "^4.0.0"
   }
 }
