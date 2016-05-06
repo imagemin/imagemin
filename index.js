@@ -10,6 +10,19 @@ const fsP = pify(fs);
 const handleFile = (input, output, opts) => fsP.readFile(input).then(data => {
 	const dest = output ? path.resolve(output, input) : null;
 
+	if (opts.use.length === 0) {
+		const ret = {
+			data,
+			path: dest
+		};
+
+		if (!dest) {
+			return ret;
+		}
+
+		return fsP.writeFile(dest, data).then(() => ret);
+	}
+
 	return promisePipe(opts.use)(data, opts)
 		.then(buf => {
 			buf = buf.length < data.length ? buf : data;
@@ -54,5 +67,10 @@ module.exports.buffer = (input, opts) => {
 	}
 
 	opts = Object.assign({use: []}, opts);
+
+	if (opts.use.length === 0) {
+		return Promise.resolve(input);
+	}
+
 	return promisePipe(opts.use)(input, opts);
 };

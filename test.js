@@ -33,3 +33,20 @@ test('throw on wrong input', async t => {
 	t.throws(m('foo'), /Expected an array/);
 	t.throws(m.buffer('foo'), /Expected a buffer/);
 });
+
+test('return original file if no plugins are defined', async t => {
+	const buf = await fsP.readFile(path.join(__dirname, 'fixture.jpg'));
+	const files = await m(['fixture.jpg']);
+
+	t.is(files[0].path, null);
+	t.deepEqual(files[0].data, buf);
+	t.true(isJpg(files[0].data));
+});
+
+test('return original buffer if no plugins are defined', async t => {
+	const buf = await fsP.readFile(path.join(__dirname, 'fixture.jpg'));
+	const data = await m.buffer(buf);
+
+	t.deepEqual(data, buf);
+	t.true(isJpg(data));
+});
