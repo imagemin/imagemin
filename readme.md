@@ -18,7 +18,7 @@ const imageminMozjpeg = require('imagemin-mozjpeg');
 const imageminPngquant = require('imagemin-pngquant');
 
 imagemin(['images/*.{jpg,png}'], 'build/images', {
-	use: [
+	plugins: [
 		imageminMozjpeg({targa: true}),
 		imageminPngquant({quality: '65-80'})
 	]
@@ -49,7 +49,7 @@ Set the destination folder to where your files will be written. If no destinatio
 
 #### options
 
-##### use
+##### plugins
 
 Type: `array`
 
@@ -67,7 +67,7 @@ The buffer to optimize.
 
 #### options
 
-##### use
+##### plugins
 
 Type: `array`
 

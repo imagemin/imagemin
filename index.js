@@ -9,7 +9,7 @@ const fsP = pify(fs);
 
 const handleFile = (input, output, opts) => fsP.readFile(input).then(data => {
 	const dest = output ? path.resolve(output, input) : null;
-	const pipe = opts.use.length > 0 ? promisePipe(opts.use)(data, opts) : Promise.resolve(data);
+	const pipe = opts.plugins.length > 0 ? promisePipe(opts.plugins)(data) : Promise.resolve(data);
 
 	return pipe
 		.then(buf => {
@@ -44,7 +44,8 @@ module.exports = (input, output, opts) => {
 		output = null;
 	}
 
-	opts = Object.assign({use: []}, opts);
+	opts = Object.assign({plugins: []}, opts);
+	opts.plugins = opts.use || opts.plugins;
 
 	return globby(input).then(paths => Promise.all(paths.map(x => handleFile(x, output, opts))));
 };
@@ -54,7 +55,8 @@ module.exports.buffer = (input, opts) => {
 		return Promise.reject(new TypeError('Expected a buffer'));
 	}
 
-	opts = Object.assign({use: []}, opts);
+	opts = Object.assign({plugins: []}, opts);
+	opts.plugins = opts.use || opts.plugins;
 
-	return opts.use.length > 0 ? promisePipe(opts.use)(input, opts) : Promise.resolve(input);
+	return opts.plugins.length > 0 ? promisePipe(opts.plugins)(input) : Promise.resolve(input);
 };
