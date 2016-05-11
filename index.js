@@ -58,5 +58,7 @@ module.exports.buffer = (input, opts) => {
 	opts = Object.assign({plugins: []}, opts);
 	opts.plugins = opts.use || opts.plugins;
 
-	return opts.plugins.length > 0 ? promisePipe(opts.plugins)(input) : Promise.resolve(input);
+	const pipe = opts.plugins.length > 0 ? promisePipe(opts.plugins)(input) : Promise.resolve(input);
+
+	return pipe.then(buf => buf.length < input.length ? buf : input);
 };
