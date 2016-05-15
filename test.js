@@ -50,3 +50,15 @@ test('return original buffer if no plugins are defined', async t => {
 	t.deepEqual(data, buf);
 	t.true(isJpg(data));
 });
+
+test('show stats for optimized file', async t => {
+	const buf = await fsP.readFile(path.join(__dirname, 'fixture.jpg'));
+	const data = await m.buffer(buf, {plugins: imageminJpegtran()});
+
+	t.deepEqual(m.stats(buf, data), {
+		difference: 3999,
+		max: 50986,
+		min: 46987,
+		percent: 7.843329541442749
+	});
+});

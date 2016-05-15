@@ -62,3 +62,14 @@ module.exports.buffer = (input, opts) => {
 
 	return pipe.then(buf => buf.length < input.length ? buf : input);
 };
+
+module.exports.stats = (max, min) => {
+	const difference = Math.abs(max.length - min.length);
+
+	return {
+		difference,
+		max: max.length,
+		min: min.length,
+		percent: (difference / max.length) * 100
+	};
+};

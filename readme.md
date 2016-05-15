@@ -73,6 +73,22 @@ Type: `array`
 
 Array of [plugins](https://www.npmjs.com/browse/keyword/imageminplugin) to use.
 
+### imagemin.stats(max, min)
+
+Get stats for a minified file.
+
+#### max
+
+Type: `buffer`
+
+Original file buffer.
+
+#### min
+
+Type: `buffer`
+
+Minified file buffer.
+
 
 ## Related
 
