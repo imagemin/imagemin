@@ -47,7 +47,7 @@ module.exports = (input, output, opts) => {
 	opts = Object.assign({plugins: []}, opts);
 	opts.plugins = opts.use || opts.plugins;
 
-	return globby(input).then(paths => Promise.all(paths.map(x => handleFile(x, output, opts))));
+	return globby(input, {nodir: true}).then(paths => Promise.all(paths.map(x => handleFile(x, output, opts))));
 };
 
 module.exports.buffer = (input, opts) => {
