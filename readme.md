@@ -75,7 +75,17 @@ Array of [plugins](https://www.npmjs.com/browse/keyword/imageminplugin) to use.
 
 ### imagemin.stats(max, min)
 
-Get stats for a minified file.
+Get stats for a minified file. Returns an object with the following data:
+
+```js
+{
+	difference: 3999,
+	max: 50986,
+	min: 46987,
+	percent: 7.843329541442749,
+	message: 'saved 4 kB - 7.8%'
+}
+```
 
 #### max
 

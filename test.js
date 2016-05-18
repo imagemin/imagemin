@@ -59,6 +59,7 @@ test('show stats for optimized file', async t => {
 		difference: 3999,
 		max: 50986,
 		min: 46987,
-		percent: 7.843329541442749
+		percent: 7.843329541442749,
+		message: 'saved 4 kB - 7.8%'
 	});
 });

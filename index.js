@@ -4,6 +4,7 @@ const path = require('path');
 const globby = require('globby');
 const mkdirp = require('mkdirp');
 const pify = require('pify');
+const prettyBytes = require('pretty-bytes');
 const promisePipe = require('promise.pipe');
 const fsP = pify(fs);
 
@@ -65,11 +66,14 @@ module.exports.buffer = (input, opts) => {
 
 module.exports.stats = (max, min) => {
 	const difference = Math.abs(max.length - min.length);
+	const percent = (difference / max.length) * 100;
+	const msg = `saved ${prettyBytes(difference)} - ${percent.toFixed(1).replace(/\.0$/, '')}%`;
 
 	return {
 		difference,
+		percent,
 		max: max.length,
 		min: min.length,
-		percent: (difference / max.length) * 100
+		message: msg
 	};
 };
