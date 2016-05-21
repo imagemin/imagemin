@@ -8,7 +8,7 @@ const promisePipe = require('promise.pipe');
 const fsP = pify(fs);
 
 const handleFile = (input, output, opts) => fsP.readFile(input).then(data => {
-	const dest = output ? path.resolve(output, input) : null;
+	const dest = output ? path.join(output, path.basename(input)) : null;
 	const pipe = opts.plugins.length > 0 ? promisePipe(opts.plugins)(data) : Promise.resolve(data);
 
 	return pipe

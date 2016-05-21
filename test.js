@@ -1,8 +1,11 @@
 import fs from 'fs';
 import path from 'path';
+import del from 'del';
 import imageminJpegtran from 'imagemin-jpegtran';
 import isJpg from 'is-jpg';
+import mkdirp from 'mkdirp';
 import pify from 'pify';
+import tempfile from 'tempfile';
 import test from 'ava';
 import m from './';
 
@@ -49,4 +52,19 @@ test('return original buffer if no plugins are defined', async t => {
 
 	t.deepEqual(data, buf);
 	t.true(isJpg(data));
+});
+
+test('output at the specified location', async t => {
+	const tmp = path.join(tempfile(), 'cwd');
+	const buf = await fsP.readFile(path.join(__dirname, 'fixture.jpg'));
+
+	await pify(mkdirp)(tmp);
+	await fsP.writeFile(path.join(tmp, 'fixture.jpg'), buf);
+
+	const files = await m(['fixture.jpg', `${tmp}/*.jpg`], 'output');
+
+	t.is(path.relative(__dirname, files[0].path), path.join('output', 'fixture.jpg'));
+	t.is(path.relative(__dirname, files[1].path), path.join('output', 'fixture.jpg'));
+
+	await del([tmp, 'output'], {force: true});
 });
