@@ -56,13 +56,13 @@ test('return original buffer if no plugins are defined', async t => {
 });
 
 test('output at the specified location', async t => {
-	const tmp = path.join(tempfile(), 'cwd');
+	const tmp = tempfile();
 	const buf = await fsP.readFile(path.join(__dirname, 'fixture.jpg'));
 
 	await pify(mkdirp)(tmp);
 	await fsP.writeFile(path.join(tmp, 'fixture.jpg'), buf);
 
-	const files = await m(['fixture.jpg', `${tmp}/*.jpg`], 'output');
+	const files = await m(['fixture.jpg', `${tmp}/*.jpg`], 'output', {plugins: imageminJpegtran()});
 
 	t.is(path.relative(__dirname, files[0].path), path.join('output', 'fixture.jpg'));
 	t.is(path.relative(__dirname, files[1].path), path.join('output', 'fixture.jpg'));
@@ -71,6 +71,9 @@ test('output at the specified location', async t => {
 });
 
 test('set webp ext', async t => {
-	const files = await m(['fixture.jpg'], tempfile(), {plugins: imageminWebp()});
+	const tmp = tempfile();
+	const files = await m(['fixture.jpg'], tmp, {plugins: imageminWebp()});
+
 	t.is(path.extname(files[0].path), '.webp');
+	await del(tmp, {force: true});
 });
