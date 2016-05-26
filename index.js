@@ -1,10 +1,12 @@
 'use strict';
 const fs = require('fs');
 const path = require('path');
+const fileType = require('file-type');
 const globby = require('globby');
 const mkdirp = require('mkdirp');
 const pify = require('pify');
 const promisePipe = require('promise.pipe');
+const replaceExt = require('replace-ext');
 const fsP = pify(fs);
 
 const handleFile = (input, output, opts) => fsP.readFile(input).then(data => {
@@ -17,7 +19,7 @@ const handleFile = (input, output, opts) => fsP.readFile(input).then(data => {
 
 			const ret = {
 				data: buf,
-				path: dest
+				path: (fileType(buf) && fileType(buf).ext === 'webp') ? replaceExt(dest, '.webp') : dest
 			};
 
 			if (!dest) {

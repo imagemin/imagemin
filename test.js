@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import del from 'del';
 import imageminJpegtran from 'imagemin-jpegtran';
+import imageminWebp from 'imagemin-webp';
 import isJpg from 'is-jpg';
 import mkdirp from 'mkdirp';
 import pify from 'pify';
@@ -67,4 +68,9 @@ test('output at the specified location', async t => {
 	t.is(path.relative(__dirname, files[1].path), path.join('output', 'fixture.jpg'));
 
 	await del([tmp, 'output'], {force: true});
+});
+
+test('set webp ext', async t => {
+	const files = await m(['fixture.jpg'], tempfile(), {plugins: imageminWebp()});
+	t.is(path.extname(files[0].path), '.webp');
 });
