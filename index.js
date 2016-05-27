@@ -26,8 +26,8 @@ const handleFile = (input, output, opts) => fsP.readFile(input).then(data => {
 				return ret;
 			}
 
-			return pify(mkdirp)(path.dirname(dest))
-				.then(() => fsP.writeFile(dest, buf))
+			return pify(mkdirp)(path.dirname(ret.path))
+				.then(() => fsP.writeFile(ret.path, ret.data))
 				.then(() => ret);
 		})
 		.catch(err => {
