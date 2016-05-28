@@ -77,9 +77,9 @@ Array of [plugins](https://www.npmjs.com/browse/keyword/imageminplugin) to use.
 ## Related
 
 - [imagemin-cli](https://github.com/imagemin/imagemin-cli) - CLI for this module
-- [imagemin-app](https://github.com/imagemin/imagemin-app) - GUI app for this module.
-- [gulp-imagemin](https://github.com/sindresorhus/gulp-imagemin) - Gulp plugin.
-- [grunt-contrib-imagemin](https://github.com/gruntjs/grunt-contrib-imagemin) - Grunt plugin.
+- [imagemin-app](https://github.com/imagemin/imagemin-app) - GUI app for this module
+- [gulp-imagemin](https://github.com/sindresorhus/gulp-imagemin) - Gulp plugin
+- [grunt-contrib-imagemin](https://github.com/gruntjs/grunt-contrib-imagemin) - Grunt plugin
 
 
 ## License
