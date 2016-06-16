@@ -14,11 +14,13 @@ $ npm install --save imagemin
 
 ```js
 const imagemin = require('imagemin');
+// you also need to do `npm install --save imagemin-mozjpeg imagemin-pngquant`
+// if you want to use these plugins
 const imageminMozjpeg = require('imagemin-mozjpeg');
 const imageminPngquant = require('imagemin-pngquant');
 
 imagemin(['images/*.{jpg,png}'], 'build/images', {
-	plugins: [
+	use: [
 		imageminMozjpeg({targa: true}),
 		imageminPngquant({quality: '65-80'})
 	]
