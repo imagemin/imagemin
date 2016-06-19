@@ -7,6 +7,7 @@ const mkdirp = require('mkdirp');
 const pify = require('pify');
 const promisePipe = require('promise.pipe');
 const replaceExt = require('replace-ext');
+
 const fsP = pify(fs);
 
 const handleFile = (input, output, opts) => fsP.readFile(input).then(data => {
