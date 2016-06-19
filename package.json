@@ -42,7 +42,7 @@
   ],
   "dependencies": {
     "file-type": "^3.8.0",
-    "globby": "^4.0.0",
+    "globby": "^5.0.0",
     "mkdirp": "^0.5.1",
     "pify": "^2.3.0",
     "promise.pipe": "^3.0.0",
