@@ -19,7 +19,7 @@ const imageminPngquant = require('imagemin-pngquant');
 
 imagemin(['images/*.{jpg,png}'], 'build/images', {
 	plugins: [
-		imageminMozjpeg({targa: true}),
+		imageminMozjpeg(),
 		imageminPngquant({quality: '65-80'})
 	]
 }).then(files => {
