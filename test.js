@@ -78,11 +78,10 @@ test('output at the specified folder location', async t => {
 
 	await fsP.writeFile(path.join(tmp, 'bar', 'fixture.jpg'), buf);
 	await fsP.writeFile(path.join(tmp, 'bar', 'foo', 'fixture.jpg'), buf);
-	const files = await m(['fixture.jpg', `${tmp}/**/*.jpg`], testfolder, {plugins: imageminJpegtran()});
+	const files = await m([`${tmp}/**/*.jpg`], testfolder, {plugins: imageminJpegtran()});
 
-	t.is(path.relative(__dirname, files[0].path), path.join(testfolder, 'fixture.jpg'));
-	t.is(path.relative(__dirname, files[1].path), path.join(testfolder, 'bar', 'fixture.jpg'));
-	t.is(path.relative(__dirname, files[2].path), path.join(testfolder, 'bar', 'foo', 'fixture.jpg'));
+	t.is(path.relative(__dirname, files[0].path), path.join(testfolder, 'bar', 'fixture.jpg'));
+	t.is(path.relative(__dirname, files[1].path), path.join(testfolder, 'bar', 'foo', 'fixture.jpg'));
 
 	await del([tmp, testfolder], {force: true});
 });

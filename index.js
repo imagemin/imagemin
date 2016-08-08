@@ -24,7 +24,7 @@ function hasFolders(globs) {
 
 	return function (input) {
 		// Returns filename if no matchers
-		if (matchers.length < 0) {
+		if (matchers.length < 1) {
 			return path.basename(input);
 		}
 
