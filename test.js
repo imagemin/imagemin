@@ -74,7 +74,10 @@ test('output at the specified folder location', async t => {
 	let testfolder = 'output2';
 	const tmp = tempfile();
 	const buf = await fsP.readFile(path.join(__dirname, 'fixture.jpg'));
-	await pify(mkdirp)(path.join(tmp, 'bar', 'foo'));
+	await pify(mkdirp)(tmp)
+					.then(data => {
+						mkdirp.sync(path.join(data, 'bar'));
+					});
 
 	await fsP.writeFile(path.join(tmp, 'bar', 'fixture.jpg'), buf);
 	// await fsP.writeFile(path.join(tmp, 'bar', 'foo', 'fixture.jpg'), buf);
