@@ -10,10 +10,9 @@ const replaceExt = require('replace-ext');
 
 const fsP = pify(fs);
 
-const handleFile = (input, output, opts) => fsP.readFile(input).then(data => {
-	const dest = output ? path.join(output, path.basename(input)) : null;
+const handleFile = (input, output, opts) => fsP.readFile(path.join(opts.cwd, input)).then(data => {
+	const dest = output ? path.join(output, input) : null;
 	const pipe = opts.plugins.length > 0 ? promisePipe(opts.plugins)(data) : Promise.resolve(data);
-
 	return pipe
 		.then(buf => {
 			buf = buf.length < data.length ? buf : data;
@@ -42,15 +41,17 @@ module.exports = (input, output, opts) => {
 		return Promise.reject(new TypeError('Expected an array'));
 	}
 
-	if (typeof output === 'object') {
+	if (output && typeof output === 'object') {
 		opts = output;
 		output = null;
 	}
 
 	opts = Object.assign({plugins: []}, opts);
+	opts.cwd = opts.cwd ? opts.cwd : process.cwd();
 	opts.plugins = opts.use || opts.plugins;
 
-	return globby(input, {nodir: true}).then(paths => Promise.all(paths.map(x => handleFile(x, output, opts))));
+	return globby(input, {nodir: true, cwd: opts.cwd}).then(paths => Promise.all(paths.map(x => handleFile(x, output, opts)))
+	);
 };
 
 module.exports.buffer = (input, opts) => {
