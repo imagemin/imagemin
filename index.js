@@ -12,7 +12,7 @@ const fsP = pify(fs);
 
 const handleFile = (input, output, modifier, opts) => fsP.readFile(input).then(data => {
 	const filename = modifier ? path.basename(input).replace(/(\.\w+)$/,
-		(match) => '-' + modifier + match
+		match => '-' + modifier + match
 	) : path.basename(input);
 	const dest = output ? path.join(output, filename) : null;
 	const pipe = opts.plugins.length > 0 ? promisePipe(opts.plugins)(data) : Promise.resolve(data);
