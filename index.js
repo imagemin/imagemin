@@ -10,8 +10,11 @@ const replaceExt = require('replace-ext');
 
 const fsP = pify(fs);
 
-const handleFile = (input, output, opts) => fsP.readFile(input).then(data => {
-	const dest = output ? path.join(output, path.basename(input)) : null;
+const handleFile = (input, output, modifier, opts) => fsP.readFile(input).then(data => {
+	const filename = modifier ? path.basename(input).replace(/(\.\w+)$/,
+		(match) => '-' + modifier + match
+	) : path.basename(input);
+	const dest = output ? path.join(output, filename) : null;
 	const pipe = opts.plugins.length > 0 ? promisePipe(opts.plugins)(data) : Promise.resolve(data);
 
 	return pipe
@@ -37,7 +40,7 @@ const handleFile = (input, output, opts) => fsP.readFile(input).then(data => {
 		});
 });
 
-module.exports = (input, output, opts) => {
+module.exports = (input, output, modifier, opts) => {
 	if (!Array.isArray(input)) {
 		return Promise.reject(new TypeError('Expected an array'));
 	}
@@ -47,10 +50,15 @@ module.exports = (input, output, opts) => {
 		output = null;
 	}
 
+	if (typeof modifier === 'object') {
+		opts = modifier;
+		modifier = null;
+	}
+
 	opts = Object.assign({plugins: []}, opts);
 	opts.plugins = opts.use || opts.plugins;
 
-	return globby(input, {nodir: true}).then(paths => Promise.all(paths.map(x => handleFile(x, output, opts))));
+	return globby(input, {nodir: true}).then(paths => Promise.all(paths.map(x => handleFile(x, output, modifier, opts))));
 };
 
 module.exports.buffer = (input, opts) => {

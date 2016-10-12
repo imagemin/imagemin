@@ -14,24 +14,26 @@ $ npm install --save imagemin
 
 ```js
 const imagemin = require('imagemin');
+const imageminGm = require('imagemin-gm');
 const imageminMozjpeg = require('imagemin-mozjpeg');
 const imageminPngquant = require('imagemin-pngquant');
 
-imagemin(['images/*.{jpg,png}'], 'build/images', {
+imagemin(['images/*.{jpg,png}'], 'build/images', 'small', {
 	plugins: [
+		imageminGm.resize({width: 600, height: 400}),
 		imageminMozjpeg(),
 		imageminPngquant({quality: '65-80'})
 	]
 }).then(files => {
 	console.log(files);
-	//=> [{data: <Buffer 89 50 4e …>, path: 'build/images/foo.jpg'}, …]
+	//=> [{data: <Buffer 89 50 4e …>, path: 'build/images/foo-small.jpg'}, …]
 });
 ```
 
 
 ## API
 
-### imagemin(input, output, [options])
+### imagemin(input, output, [output-modifier], [options])
 
 Returns a promise for an array of objects in the format `{data: Buffer, path: String}`.
 
@@ -46,6 +48,12 @@ Files to be optimized. See supported `minimatch` [patterns](https://github.com/i
 Type: `string`
 
 Set the destination folder to where your files will be written. If no destination is specified no files will be written.
+
+#### output-modifier
+
+Type: `string`
+
+A description modifier that is added to output files. The modifier will be appended to the end of the file name, preceded by a dash, and succeeded by the extension.
 
 #### options
 
