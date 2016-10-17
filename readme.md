@@ -55,6 +55,32 @@ Type: `array`
 
 Array of [plugins](https://www.npmjs.com/browse/keyword/imageminplugin) to use.
 
+##### map
+
+Type: `Function`
+
+Map files before minification: E.g:
+
+```js
+const imagemin = require('imagemin');
+const imageminMozjpeg = require('imagemin-mozjpeg');
+const imageminPngquant = require('imagemin-pngquant');
+
+imagemin(['images/*.{jpg,png}'], 'build/images', {
+	plugins: [
+		imageminMozjpeg(),
+		imageminPngquant({quality: '65-80'})
+	],
+	map: file => {
+		file.name = `minified-${file.name}`;
+		return file;
+	}
+}).then(files => {
+	console.log(files);
+	//=> [{data: <Buffer 89 50 4e …>, path: 'build/images/minified-foo.jpg'}, …]
+});
+```
+
 ### imagemin.buffer(buffer, [options])
 
 Returns a promise for a buffer.

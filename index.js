@@ -11,7 +11,7 @@ const replaceExt = require('replace-ext');
 const fsP = pify(fs);
 
 const handleFile = (input, output, opts) => fsP.readFile(input).then(data => {
-	const dest = output ? path.join(output, path.basename(input)) : null;
+	const dest = output ? output : null;
 	const pipe = opts.plugins.length > 0 ? promisePipe(opts.plugins)(data) : Promise.resolve(data);
 
 	return pipe
@@ -50,7 +50,26 @@ module.exports = (input, output, opts) => {
 	opts = Object.assign({plugins: []}, opts);
 	opts.plugins = opts.use || opts.plugins;
 
-	return globby(input, {nodir: true}).then(paths => Promise.all(paths.map(x => handleFile(x, output, opts))));
+	return globby(input, {nodir: true}).then(files => {
+
+		files = files.map(file =>{
+			return {
+				'input': file,
+				'name': path.basename(file)
+			};
+		});
+
+		if (typeof opts.map === 'function') {
+			files = files.map(opts.map);
+		}
+
+		files = files.map(file => {
+			file.output = path.join(output, file.name);
+			return file;
+		});
+
+		return Promise.all(files.map(file => handleFile(file.input, file.output, opts)));
+	});
 };
 
 module.exports.buffer = (input, opts) => {
