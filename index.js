@@ -51,11 +51,10 @@ module.exports = (input, output, opts) => {
 	opts.plugins = opts.use || opts.plugins;
 
 	return globby(input, {nodir: true}).then(files => {
-
-		files = files.map(file =>{
+		files = files.map(file => {
 			return {
-				'input': file,
-				'name': path.basename(file)
+				input: file,
+				name: path.basename(file)
 			};
 		});
 
