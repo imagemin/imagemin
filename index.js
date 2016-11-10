@@ -11,10 +11,10 @@ const replaceExt = require('replace-ext');
 const fsP = pify(fs);
 
 const handleFile = (input, output, opts) => fsP.readFile(input).then(data => {
-
 	let dirname = '';
-	if(opts.useFolderStructure ) {
-		if(opts.removePath) {
+
+	if (opts.useFolderStructure) {
+		if (opts.removePath) {
 			dirname = path.dirname(input).split(opts.removePath)[1];
 		} else {
 			dirname = path.dirname(input);
