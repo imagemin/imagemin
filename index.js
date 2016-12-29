@@ -11,7 +11,8 @@ const replaceExt = require('replace-ext');
 const fsP = pify(fs);
 
 const handleFile = (input, output, opts) => fsP.readFile(input).then(data => {
-	const dest = output ? path.join(output, path.basename(input)) : null;
+	const inputSrc = opts.cwd ? path.dirname(input).replace(opts.cwd, '') + path.basename(input) : path.basename(input);
+	const dest = output ? path.join(output, inputSrc) : null;
 	const pipe = opts.plugins.length > 0 ? promisePipe(opts.plugins)(data) : Promise.resolve(data);
 
 	return pipe
