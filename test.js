@@ -8,7 +8,7 @@ import mkdirp from 'mkdirp';
 import pify from 'pify';
 import tempfile from 'tempfile';
 import test from 'ava';
-import m from './';
+import m from '.';
 
 const fsP = pify(fs);
 
@@ -29,11 +29,11 @@ test('optimize a buffer', async t => {
 	t.true(isJpg(data));
 });
 
-test('output error on corrupt images', async t => {
+test('output error on corrupt images', t => {
 	t.throws(m(['fixture-corrupt.jpg'], {plugins: imageminJpegtran()}), /Corrupt JPEG data/);
 });
 
-test('throw on wrong input', async t => {
+test('throw on wrong input', t => {
 	t.throws(m('foo'), /Expected an array/);
 	t.throws(m.buffer('foo'), /Expected a buffer/);
 });

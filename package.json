@@ -41,12 +41,12 @@
     "svg"
   ],
   "dependencies": {
-    "file-type": "^3.8.0",
-    "globby": "^5.0.0",
+    "file-type": "^4.1.0",
+    "globby": "^6.1.0",
     "mkdirp": "^0.5.1",
     "pify": "^2.3.0",
     "promise.pipe": "^3.0.0",
-    "replace-ext": "0.0.1"
+    "replace-ext": "^1.0.0"
   },
   "devDependencies": {
     "ava": "*",

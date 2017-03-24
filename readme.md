@@ -33,11 +33,11 @@ imagemin(['images/*.{jpg,png}'], 'build/images', {
 
 ### imagemin(input, output, [options])
 
-Returns a promise for an array of objects in the format `{data: Buffer, path: String}`.
+Returns `Promise<Object[]>` in the format `{data: Buffer, path: String}`.
 
 #### input
 
-Type: `array`
+Type: `Array`
 
 Files to be optimized. See supported `minimatch` [patterns](https://github.com/isaacs/minimatch#usage).
 
@@ -49,29 +49,33 @@ Set the destination folder to where your files will be written. If no destinatio
 
 #### options
 
+Type: `Object`
+
 ##### plugins
 
-Type: `array`
+Type: `Array`
 
-Array of [plugins](https://www.npmjs.com/browse/keyword/imageminplugin) to use.
+[Plugins](https://www.npmjs.com/browse/keyword/imageminplugin) to use.
 
 ### imagemin.buffer(buffer, [options])
 
-Returns a promise for a buffer.
+Returns `Promise<Buffer>`.
 
 #### buffer
 
-Type: `buffer`
+Type: `Buffer`
 
-The buffer to optimize.
+Buffer to optimize.
 
 #### options
 
+Type: `Object`
+
 ##### plugins
 
-Type: `array`
+Type: `Array`
 
-Array of [plugins](https://www.npmjs.com/browse/keyword/imageminplugin) to use.
+[Plugins](https://www.npmjs.com/browse/keyword/imageminplugin) to use.
 
 
 ## Related
