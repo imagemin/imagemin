@@ -49,6 +49,17 @@ Set the destination folder to where your files will be written. If no destinatio
 
 #### options
 
+##### useFolderStructure
+
+Type: `boolean`
+Whether or not to keep the folder structure of where the files sit
+
+#### removePath
+Type `string`
+Use together with `useFolderStructure` to remove a part of the path not needed when copying the files to the output folder.
+
+For example, if your origin folder is `/src/assets/image/level1/level2/` and when copying to your destination you want to keep `outputFolder/level1/level2`, just set `removePath` to `/src/assets/image/`
+
 ##### plugins
 
 Type: `array`
