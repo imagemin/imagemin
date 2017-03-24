@@ -14,12 +14,12 @@ $ npm install --save imagemin
 
 ```js
 const imagemin = require('imagemin');
-const imageminMozjpeg = require('imagemin-mozjpeg');
+const imageminJpegtran = require('imagemin-jpegtran');
 const imageminPngquant = require('imagemin-pngquant');
 
 imagemin(['images/*.{jpg,png}'], 'build/images', {
 	plugins: [
-		imageminMozjpeg(),
+		imageminJpegtran(),
 		imageminPngquant({quality: '65-80'})
 	]
 }).then(files => {
