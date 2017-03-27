@@ -70,6 +70,23 @@ test('output at the specified location', async t => {
 	await del([tmp, 'output'], {force: true});
 });
 
+test('output at the specified folder location', async t => {
+	let testfolder = 'output2';
+	const tmp = tempfile();
+	const buf = await fsP.readFile(path.join(__dirname, 'fixture.jpg'));
+	await pify(mkdirp)(tmp);
+	await pify(mkdirp)(path.join(tmp, 'bar')).then(data => console.log('data', data));
+
+	await fsP.writeFile(path.join(tmp, 'bar', 'fixture.jpg'), buf);
+	// await fsP.writeFile(path.join(tmp, 'bar', 'foo', 'fixture.jpg'), buf);
+	const files = await m([`${tmp}/**/*.jpg`], testfolder, {plugins: imageminJpegtran()});
+	console.log('files', files);
+	t.is(path.relative(__dirname, files[0].path), path.join(testfolder, 'bar', 'fixture.jpg'));
+	// t.is(path.relative(__dirname, files[1].path), path.join(testfolder, 'bar', 'foo', 'fixture.jpg'));
+
+	await del([tmp, testfolder], {force: true});
+});
+
 test('set webp ext', async t => {
 	const tmp = tempfile();
 	const files = await m(['fixture.jpg'], tmp, {plugins: imageminWebp()});
