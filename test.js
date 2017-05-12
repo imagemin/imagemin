@@ -14,7 +14,9 @@ const fsP = pify(fs);
 
 test('optimize a file', async t => {
 	const buf = await fsP.readFile(path.join(__dirname, 'fixture.jpg'));
-	const files = await m(['fixture.jpg'], {plugins: imageminJpegtran()});
+	const files = await m(['fixture.jpg'], {
+		plugins: [imageminJpegtran()]
+	});
 
 	t.is(files[0].path, null);
 	t.true(files[0].data.length < buf.length);
@@ -23,14 +25,18 @@ test('optimize a file', async t => {
 
 test('optimize a buffer', async t => {
 	const buf = await fsP.readFile(path.join(__dirname, 'fixture.jpg'));
-	const data = await m.buffer(buf, {plugins: imageminJpegtran()});
+	const data = await m.buffer(buf, {
+		plugins: [imageminJpegtran()]
+	});
 
 	t.true(data.length < buf.length);
 	t.true(isJpg(data));
 });
 
 test('output error on corrupt images', async t => {
-	await t.throws(m(['fixture-corrupt.jpg'], {plugins: imageminJpegtran()}), /Corrupt JPEG data/);
+	await t.throws(m(['fixture-corrupt.jpg'], {
+		plugins: [imageminJpegtran()]
+	}), /Corrupt JPEG data/);
 });
 
 test('throw on wrong input', async t => {
@@ -62,7 +68,9 @@ test('output at the specified location', async t => {
 	await makeDir(tmp);
 	await fsP.writeFile(path.join(tmp, 'fixture.jpg'), buf);
 
-	const files = await m(['fixture.jpg', `${tmp}/*.jpg`], 'output', {plugins: imageminJpegtran()});
+	const files = await m(['fixture.jpg', `${tmp}/*.jpg`], 'output', {
+		plugins: [imageminJpegtran()]
+	});
 
 	t.is(path.relative(__dirname, files[0].path), path.join('output', 'fixture.jpg'));
 	t.is(path.relative(__dirname, files[1].path), path.join('output', 'fixture.jpg'));
@@ -72,7 +80,9 @@ test('output at the specified location', async t => {
 
 test('set webp ext', async t => {
 	const tmp = tempy.file();
-	const files = await m(['fixture.jpg'], tmp, {plugins: imageminWebp()});
+	const files = await m(['fixture.jpg'], tmp, {
+		plugins: [imageminWebp()]
+	});
 
 	t.is(path.extname(files[0].path), '.webp');
 	await del(tmp, {force: true});
