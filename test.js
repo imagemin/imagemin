@@ -4,9 +4,9 @@ import del from 'del';
 import imageminJpegtran from 'imagemin-jpegtran';
 import imageminWebp from 'imagemin-webp';
 import isJpg from 'is-jpg';
-import mkdirp from 'mkdirp';
+import makeDir from 'make-dir';
 import pify from 'pify';
-import tempfile from 'tempfile';
+import tempy from 'tempy';
 import test from 'ava';
 import m from '.';
 
@@ -29,13 +29,13 @@ test('optimize a buffer', async t => {
 	t.true(isJpg(data));
 });
 
-test('output error on corrupt images', t => {
-	t.throws(m(['fixture-corrupt.jpg'], {plugins: imageminJpegtran()}), /Corrupt JPEG data/);
+test('output error on corrupt images', async t => {
+	await t.throws(m(['fixture-corrupt.jpg'], {plugins: imageminJpegtran()}), /Corrupt JPEG data/);
 });
 
-test('throw on wrong input', t => {
-	t.throws(m('foo'), /Expected an array/);
-	t.throws(m.buffer('foo'), /Expected a buffer/);
+test('throw on wrong input', async t => {
+	await t.throws(m('foo'), /Expected an array/);
+	await t.throws(m.buffer('foo'), /Expected a buffer/);
 });
 
 test('return original file if no plugins are defined', async t => {
@@ -56,10 +56,10 @@ test('return original buffer if no plugins are defined', async t => {
 });
 
 test('output at the specified location', async t => {
-	const tmp = tempfile();
+	const tmp = tempy.directory();
 	const buf = await fsP.readFile(path.join(__dirname, 'fixture.jpg'));
 
-	await pify(mkdirp)(tmp);
+	await makeDir(tmp);
 	await fsP.writeFile(path.join(tmp, 'fixture.jpg'), buf);
 
 	const files = await m(['fixture.jpg', `${tmp}/*.jpg`], 'output', {plugins: imageminJpegtran()});
@@ -71,7 +71,7 @@ test('output at the specified location', async t => {
 });
 
 test('set webp ext', async t => {
-	const tmp = tempfile();
+	const tmp = tempy.file();
 	const files = await m(['fixture.jpg'], tmp, {plugins: imageminWebp()});
 
 	t.is(path.extname(files[0].path), '.webp');

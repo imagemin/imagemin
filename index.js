@@ -3,16 +3,16 @@ const fs = require('fs');
 const path = require('path');
 const fileType = require('file-type');
 const globby = require('globby');
-const mkdirp = require('mkdirp');
+const makeDir = require('make-dir');
 const pify = require('pify');
-const promisePipe = require('promise.pipe');
+const pPipe = require('p-pipe');
 const replaceExt = require('replace-ext');
 
 const fsP = pify(fs);
 
 const handleFile = (input, output, opts) => fsP.readFile(input).then(data => {
 	const dest = output ? path.join(output, path.basename(input)) : null;
-	const pipe = opts.plugins.length > 0 ? promisePipe(opts.plugins)(data) : Promise.resolve(data);
+	const pipe = opts.plugins.length > 0 ? pPipe(opts.plugins)(data) : Promise.resolve(data);
 
 	return pipe
 		.then(buf => {
@@ -27,7 +27,7 @@ const handleFile = (input, output, opts) => fsP.readFile(input).then(data => {
 				return ret;
 			}
 
-			return pify(mkdirp)(path.dirname(ret.path))
+			return makeDir(path.dirname(ret.path))
 				.then(() => fsP.writeFile(ret.path, ret.data))
 				.then(() => ret);
 		})
@@ -61,7 +61,7 @@ module.exports.buffer = (input, opts) => {
 	opts = Object.assign({plugins: []}, opts);
 	opts.plugins = opts.use || opts.plugins;
 
-	const pipe = opts.plugins.length > 0 ? promisePipe(opts.plugins)(input) : Promise.resolve(input);
+	const pipe = opts.plugins.length > 0 ? pPipe(opts.plugins)(input) : Promise.resolve(input);
 
 	return pipe.then(buf => buf.length < input.length ? buf : input);
 };

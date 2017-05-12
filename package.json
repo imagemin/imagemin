@@ -43,9 +43,9 @@
   "dependencies": {
     "file-type": "^4.1.0",
     "globby": "^6.1.0",
-    "mkdirp": "^0.5.1",
+    "make-dir": "^1.0.0",
+    "p-pipe": "^1.0.0",
     "pify": "^2.3.0",
-    "promise.pipe": "^3.0.0",
     "replace-ext": "^1.0.0"
   },
   "devDependencies": {
@@ -54,8 +54,7 @@
     "imagemin-jpegtran": "^5.0.0",
     "imagemin-webp": "^4.0.0",
     "is-jpg": "^1.0.0",
-    "mkdirp": "^0.5.1",
-    "tempfile": "^1.1.1",
+    "tempy": "^0.1.0",
     "xo": "*"
   }
 }
