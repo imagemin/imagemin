@@ -31,7 +31,7 @@ imagemin(['images/*.{jpg,png}'], 'build/images', {
 
 ## API
 
-### imagemin(input, output, [options])
+### imagemin(input, [output], [options])
 
 Returns `Promise<Object[]>` in the format `{data: Buffer, path: String}`.
 
