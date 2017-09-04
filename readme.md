@@ -6,7 +6,7 @@
 ## Install
 
 ```
-$ npm install --save imagemin
+$ npm install imagemin
 ```
 
 

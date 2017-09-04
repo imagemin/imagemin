@@ -40,8 +40,8 @@ test('output error on corrupt images', async t => {
 });
 
 test('throw on wrong input', async t => {
-	await t.throws(m('foo'), /Expected an array/);
-	await t.throws(m.buffer('foo'), /Expected a buffer/);
+	await t.throws(m('foo'), /Expected an `Array`, got `string`/);
+	await t.throws(m.buffer('foo'), /Expected a `Buffer`, got `string`/);
 });
 
 test('return original file if no plugins are defined', async t => {

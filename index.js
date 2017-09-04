@@ -44,7 +44,7 @@ const handleFile = (input, output, opts) => fsP.readFile(input).then(data => {
 
 module.exports = (input, output, opts) => {
 	if (!Array.isArray(input)) {
-		return Promise.reject(new TypeError('Expected an array'));
+		return Promise.reject(new TypeError(`Expected an \`Array\`, got \`${typeof input}\``));
 	}
 
 	if (typeof output === 'object') {
@@ -60,13 +60,15 @@ module.exports = (input, output, opts) => {
 
 module.exports.buffer = (input, opts) => {
 	if (!Buffer.isBuffer(input)) {
-		return Promise.reject(new TypeError('Expected a buffer'));
+		return Promise.reject(new TypeError(`Expected a \`Buffer\`, got \`${typeof input}\``));
 	}
 
 	opts = Object.assign({plugins: []}, opts);
 	opts.plugins = opts.use || opts.plugins;
 
-	const pipe = opts.plugins.length > 0 ? pPipe(opts.plugins)(input) : Promise.resolve(input);
+	if (opts.plugins.length === 0) {
+		return Promise.resolve(input);
+	}
 
-	return pipe.then(buf => buf.length < input.length ? buf : input);
+	return pPipe(opts.plugins)(input).then(buf => (buf.length < input.length ? buf : input));
 };
