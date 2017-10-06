@@ -6,6 +6,8 @@
 ## Install
 
 ```
+$ npm install imagemin-pngquant
+$ npm install imagemin-jpegtran
 $ npm install imagemin
 ```
 
