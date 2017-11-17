@@ -10,8 +10,19 @@ const replaceExt = require('replace-ext');
 
 const fsP = pify(fs);
 
+const getOutputPath = (input, output, opts) => {
+	const basedir = opts.basedir;
+	if (!output) {
+		return null;
+	} else if (basedir) {
+		return path.join(output, path.relative(basedir, input));
+	} else {
+		return path.join(output, path.basename(input));
+	}
+};
+
 const handleFile = (input, output, opts) => fsP.readFile(input).then(data => {
-	const dest = output ? path.join(output, path.basename(input)) : null;
+	const dest = opts.outputPath(input, output, opts);
 
 	if (opts.plugins && !Array.isArray(opts.plugins)) {
 		throw new TypeError('The plugins option should be an `Array`');
@@ -52,8 +63,13 @@ module.exports = (input, output, opts) => {
 		output = null;
 	}
 
-	opts = Object.assign({plugins: []}, opts);
+	opts = Object.assign({plugins: [], outputPath: getOutputPath}, opts);
 	opts.plugins = opts.use || opts.plugins;
+
+	if (opts.basedir) {
+		input = input.map(input => path.join(opts.basedir, input));
+		output = path.join(opts.basedir, output);
+	}
 
 	return globby(input, {nodir: true}).then(paths => Promise.all(paths.map(x => handleFile(x, output, opts))));
 };
