@@ -6,7 +6,7 @@ const imageminJpegtran = require('imagemin-jpegtran')
 const imageminWebp = require('imagemin-webp')
 const isJpg = require('is-jpg')
 const tempfile = require('tempfile')
-const m = require('../index')
+const m = require('../lib/index')
 
 const expect = require('chai').expect
 

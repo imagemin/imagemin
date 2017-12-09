@@ -3,7 +3,7 @@
 const path = require('path')
 const imageminJpegtran = require('imagemin-jpegtran')
 const tempfile = require('tempfile')
-const m = require('../index')
+const m = require('../lib/index')
 const expect = require('chai').expect
 const fs = require('fs-extra')
 
