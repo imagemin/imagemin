@@ -22,7 +22,7 @@ $ npm install --save image-2-min
 
 ```js
 const imagemin = require('image-2-min');
-const imageminJpegtran() = require('imagemin-jpegtran');
+const imageminJpegtran = require('imagemin-jpegtran');
 const imageminPngquant = require('imagemin-pngquant');
 
 imagemin(['images/*.{jpg,png}'], 'build/images', {
