@@ -27,6 +27,10 @@
     "node": ">=4"
   },
   "scripts": {
+    "release-major": "npm version major -m \"chore(release): v%s\"",
+    "release-minor": "npm version minor -m \"chore(release): v%s\"",
+    "release-patch": "npm version patch -m \"chore(release): v%s\"",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r",
     "test": "mocha test/*.spec.js --check-leaks"
   },
   "files": [
@@ -44,6 +48,8 @@
     "svg"
   ],
   "dependencies": {
+    "conventional-changelog": "^1.1.7",
+    "conventional-changelog-cli": "^1.3.5",
     "file-type": "^7.4.0",
     "globby": "^7.1.1",
     "mkdirp": "^0.5.1",
