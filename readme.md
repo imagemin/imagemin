@@ -1,5 +1,13 @@
-> Minify images seamlessly
+[![Build Status](https://travis-ci.org/stfsy/node-image-2-min.svg)](https://travis-ci.org/stfsy/node-image-2-min)
+[![Dependency Status](https://img.shields.io/david/stfsy/image-2-min.svg)](https://github.com/stfsy/node-image-2-min/blob/master/package.json)
+[![DevDependency Status](https://img.shields.io/david/dev/stfsy/image-2-min.svg)](https://github.com/stfsy/node-image-2-min/blob/master/package.json)
+[![Npm downloads](https://img.shields.io/npm/dm/image-2-min.svg)](https://www.npmjs.com/package/node-image-2-min)
+[![Npm Version](https://img.shields.io/npm/v/image-2-min.svg)](https://www.npmjs.com/package/node-image-2-min)
+[![Git tag](https://img.shields.io/github/tag/stfsy/node-image-2-min.svg)](https://github.com/stfsy/node-image-2-min/releases)
+[![Github issues](https://img.shields.io/github/issues/stfsy/node-image-2-min.svg)](https://github.com/stfsy/node-image-2-min/issues)
+[![License](https://img.shields.io/npm/l/image-2-min.svg)](https://github.com/stfsy/node-image-2-min/blob/master/LICENSE)
 
+> Minify images seamlessly
 
 ## Install
 
