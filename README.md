@@ -22,12 +22,12 @@ $ npm install --save image-2-min
 
 ```js
 const imagemin = require('image-2-min');
-const imageminMozjpeg = require('imagemin-mozjpeg');
+const imageminJpegtran() = require('imagemin-jpegtran');
 const imageminPngquant = require('imagemin-pngquant');
 
 imagemin(['images/*.{jpg,png}'], 'build/images', {
 	plugins: [
-		imageminMozjpeg(),
+		imageminJpegtran()(),
 		imageminPngquant({quality: '65-80'})
 	]
 }).then(files => {
@@ -41,7 +41,7 @@ imagemin(['images/*.{jpg,png}'], 'build/images', {
 
 ### imagemin(input, output, [options])
 
-Returns a promise for an array of objects in the format `{data: Buffer, path: String}`.
+Returns `Promise<Object[]>` in the format `{data: Buffer, path: String}`.
 
 #### input
 
