@@ -60,8 +60,7 @@
     "istanbul": "^0.4.5",
     "mkdirp": "^0.5.1",
     "pify": "^3.0.0",
-    "promise.pipe": "^3.0.0",
-    "replace-ext": "1.0.0"
+    "promise.pipe": "^3.0.0"
   },
   "devDependencies": {
     "chai": "^4.1.2",
