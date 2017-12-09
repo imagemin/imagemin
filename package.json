@@ -7,17 +7,17 @@
   "author": {
     "name": "Kevin Mårtensson",
     "email": "kevinmartensson@gmail.com",
-    "url": "github.com/kevva"
+    "url": "https://github.com/kevva"
   },
   "maintainers": [
     {
       "name": "Sindre Sorhus",
       "email": "sindresorhus@gmail.com",
-      "url": "sindresorhus.com"
+      "url": "https://sindresorhus.com"
     },
     {
       "name": "Shinnosuke Watanabe",
-      "url": "github.com/shinnn"
+      "url": "https://github.com/shinnn"
     }
   ],
   "engines": {
