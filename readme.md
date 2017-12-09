@@ -4,14 +4,14 @@
 ## Install
 
 ```
-$ npm install --save imagemin-2
+$ npm install --save image-2-min
 ```
 
 
 ## Usage
 
 ```js
-const imagemin = require('imagemin-2');
+const imagemin = require('image-2-min');
 const imageminMozjpeg = require('imagemin-mozjpeg');
 const imageminPngquant = require('imagemin-pngquant');
 
