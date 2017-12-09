@@ -24,7 +24,7 @@
     "node": ">=4"
   },
   "scripts": {
-    "test": "xo && ava test --serial"
+    "test": "mocha test/*.spec.js --check-leaks"
   },
   "files": [
     "index.js"
@@ -49,13 +49,13 @@
     "replace-ext": "0.0.1"
   },
   "devDependencies": {
-    "ava": "*",
-    "del": "^2.2.0",
+    "chai": "^4.1.2",
+    "fs-extra": "^4.0.3",
     "imagemin-jpegtran": "^5.0.0",
     "imagemin-webp": "^4.0.0",
     "is-jpg": "^1.0.0",
     "mkdirp": "^0.5.1",
-    "tempfile": "^1.1.1",
-    "xo": "*"
+    "mocha": "^4.0.1",
+    "tempfile": "^1.1.1"
   }
 }
