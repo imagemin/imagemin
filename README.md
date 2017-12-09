@@ -63,6 +63,12 @@ Type: `array`
 
 Array of [plugins](https://www.npmjs.com/browse/keyword/imageminplugin) to use.
 
+### cwd
+
+Type: `string`
+
+The working directoy for image lookups.
+
 ### imagemin.buffer(buffer, [options])
 
 Returns a promise for a buffer.
@@ -78,6 +84,7 @@ The buffer to optimize.
 Type: `string`
 
 The working directoy for image lookups.
+
 ## Related
 
 - [imagemin-cli](https://github.com/imagemin/imagemin-cli) - CLI for this module
