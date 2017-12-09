@@ -1,11 +1,11 @@
 {
-  "name": "imagemin-2",
+  "name": "image-2-min",
   "version": "5.3.0",
   "description": "Minify images",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/stfsy/imagemin-2"
+    "url": "https://github.com/stfsy/node-image-2-min"
   },
   "author": {
     "name": "Kevin Mårtensson",
