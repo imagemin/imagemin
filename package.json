@@ -1,9 +1,12 @@
 {
-  "name": "imagemin",
+  "name": "imagemin-2",
   "version": "5.3.0",
   "description": "Minify images",
   "license": "MIT",
-  "repository": "imagemin/imagemin",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stfsy/imagemin-2"
+  },
   "author": {
     "name": "Kevin Mårtensson",
     "email": "kevinmartensson@gmail.com",
