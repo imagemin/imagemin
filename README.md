@@ -1,3 +1,7 @@
+## image-2-min
+
+Image minifier that respects folder structure.. :)
+
 [![Build Status](https://travis-ci.org/stfsy/node-image-2-min.svg)](https://travis-ci.org/stfsy/node-image-2-min)
 [![Dependency Status](https://img.shields.io/david/stfsy/image-2-min.svg)](https://github.com/stfsy/node-image-2-min/blob/master/package.json)
 [![DevDependency Status](https://img.shields.io/david/dev/stfsy/image-2-min.svg)](https://github.com/stfsy/node-image-2-min/blob/master/package.json)
@@ -6,8 +10,6 @@
 [![Git tag](https://img.shields.io/github/tag/stfsy/node-image-2-min.svg)](https://github.com/stfsy/node-image-2-min/releases)
 [![Github issues](https://img.shields.io/github/issues/stfsy/node-image-2-min.svg)](https://github.com/stfsy/node-image-2-min/issues)
 [![License](https://img.shields.io/npm/l/image-2-min.svg)](https://github.com/stfsy/node-image-2-min/blob/master/LICENSE)
-
-> Minify images seamlessly
 
 ## Install
 
@@ -71,15 +73,11 @@ Type: `buffer`
 
 The buffer to optimize.
 
-#### options
+### cwd
 
-##### plugins
+Type: `string`
 
-Type: `array`
-
-Array of [plugins](https://www.npmjs.com/browse/keyword/imageminplugin) to use.
-
-
+The working directoy for image lookups.
 ## Related
 
 - [imagemin-cli](https://github.com/imagemin/imagemin-cli) - CLI for this module
