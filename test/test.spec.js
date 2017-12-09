@@ -1,3 +1,5 @@
+'use strict'
+
 const fs = require('fs-extra')
 const path = require('path')
 const imageminJpegtran = require('imagemin-jpegtran')

@@ -1,3 +1,5 @@
+'use strict'
+
 const path = require('path')
 const imageminJpegtran = require('imagemin-jpegtran')
 const tempfile = require('tempfile')
