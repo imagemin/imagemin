@@ -1,7 +1,7 @@
 {
   "name": "image-2-min",
   "version": "5.3.0",
-  "description": "Minify images",
+  "description": "Image minifier for NodeJS with subdirectoy support",
   "license": "MIT",
   "repository": {
     "type": "git",
