@@ -41,20 +41,20 @@
 		"svg"
 	],
 	"dependencies": {
-		"file-type": "^4.1.0",
+		"file-type": "^7.4.0",
 		"globby": "^6.1.0",
 		"make-dir": "^1.0.0",
 		"p-pipe": "^1.1.0",
-		"pify": "^2.3.0",
+		"pify": "^3.0.0",
 		"replace-ext": "^1.0.0"
 	},
 	"devDependencies": {
 		"ava": "*",
-		"del": "^2.2.0",
+		"del": "^3.0.0",
 		"imagemin-jpegtran": "^5.0.0",
 		"imagemin-webp": "^4.0.0",
 		"is-jpg": "^1.0.0",
-		"tempy": "^0.1.0",
+		"tempy": "^0.2.1",
 		"xo": "*"
 	}
 }
