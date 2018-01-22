@@ -33,7 +33,7 @@ imagemin(['images/*.{jpg,png}'], 'build/images', {
 
 ### imagemin(input, [output], [options])
 
-Returns `Promise<Object[]>` in the format `{data: Buffer, path: String}`.
+Returns `Promise<Object[]>` in the format `{data: Buffer, path: String, inputPath: String}`.
 
 #### input
 
