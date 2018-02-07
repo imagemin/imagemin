@@ -38,9 +38,6 @@
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r",
     "test": "mocha test/*.spec.js --check-leaks"
   },
-  "files": [
-    "lib/index.js"
-  ],
   "keywords": [
     "minify",
     "compress",
