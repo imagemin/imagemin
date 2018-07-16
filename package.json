@@ -52,6 +52,7 @@
 		"ava": "*",
 		"del": "^3.0.0",
 		"imagemin-jpegtran": "^5.0.0",
+		"imagemin-svgo": "^6.0.0",
 		"imagemin-webp": "^4.0.0",
 		"is-jpg": "^1.0.0",
 		"tempy": "^0.2.1",
