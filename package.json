@@ -41,7 +41,7 @@
 		"svg"
 	],
 	"dependencies": {
-		"file-type": "^7.4.0",
+		"file-type": "^8.1.0",
 		"globby": "^6.1.0",
 		"make-dir": "^1.0.0",
 		"p-pipe": "^1.1.0",
