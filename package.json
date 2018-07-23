@@ -4,22 +4,6 @@
 	"description": "Minify images",
 	"license": "MIT",
 	"repository": "imagemin/imagemin",
-	"author": {
-		"name": "Kevin Mårtensson",
-		"email": "kevinmartensson@gmail.com",
-		"url": "github.com/kevva"
-	},
-	"maintainers": [
-		{
-			"name": "Sindre Sorhus",
-			"email": "sindresorhus@gmail.com",
-			"url": "sindresorhus.com"
-		},
-		{
-			"name": "Shinnosuke Watanabe",
-			"url": "github.com/shinnn"
-		}
-	],
 	"engines": {
 		"node": ">=6"
 	},
