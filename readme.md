@@ -17,15 +17,17 @@ const imagemin = require('imagemin');
 const imageminJpegtran = require('imagemin-jpegtran');
 const imageminPngquant = require('imagemin-pngquant');
 
-imagemin(['images/*.{jpg,png}'], 'build/images', {
-	plugins: [
-		imageminJpegtran(),
-		imageminPngquant({quality: '65-80'})
-	]
-}).then(files => {
+(async () => {
+	const files = await imagemin(['images/*.{jpg,png}'], 'build/images', {
+		plugins: [
+			imageminJpegtran(),
+			imageminPngquant({quality: '65-80'})
+		]
+	});
+
 	console.log(files);
 	//=> [{data: <Buffer 89 50 4e …>, path: 'build/images/foo.jpg'}, …]
-});
+})();
 ```
 
 
@@ -37,7 +39,7 @@ Returns `Promise<Object[]>` in the format `{data: Buffer, path: String}`.
 
 #### input
 
-Type: `Array`
+Type: `string[]`
 
 Files to be optimized. See supported `minimatch` [patterns](https://github.com/isaacs/minimatch#usage).
 
