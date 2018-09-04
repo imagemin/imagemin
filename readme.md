@@ -30,6 +30,53 @@ const imageminPngquant = require('imagemin-pngquant');
 })();
 ```
 
+```js
+// keep folder structure as input
+const imagemin = require('imagemin');
+
+imagemin(['images/**/*.{jpg,png}'], {
+  
+});
+// for example
+// images/a.jpg => images/a.jpg
+// images/foo/a.jpg => images/foo/a.jpg
+// images/foo/bar/a.jpg => images/foo/bar/a.jpg
+```
+
+```js
+// keep folder structure as input use imagemin-webp
+const imagemin = require('imagemin');
+const imageminWebp = require("imagemin-webp");
+
+imagemin(['images/**/*.{jpg,png}'], {
+  use: [
+    imageminWebp({})
+  ]
+});
+// for example
+// images/a.jpg => images/a.webp
+// images/foo/a.jpg => images/foo/a.webp
+// images/foo/bar/a.jpg => images/foo/bar/a.webp
+```
+
+```js
+// customize folder structure as input use imagemin-webp
+const imagemin = require('imagemin');
+const imageminWebp = require("imagemin-webp");
+
+imagemin(['images/**/*.{jpg,png}'], {
+  use: [
+    imageminWebp({})
+  ],
+  replaceOutputDir: output => {
+    return output.replace(/images\//, '.webp/')
+  }
+});
+// for example
+// images/a.jpg => .webp/a.webp
+// images/foo/a.jpg => .webp/foo/a.webp
+// images/foo/bar/a.jpg => .webp/foo/bar/a.webp
+```
 
 ## API
 
