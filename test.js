@@ -12,7 +12,7 @@ import m from '.';
 
 const fsP = pify(fs);
 
-test('optimize a file', async t => {
+test('optimize an array of files', async t => {
 	const buf = await fsP.readFile(path.join(__dirname, 'fixture.jpg'));
 	const files = await m(['fixture.jpg'], {
 		plugins: [imageminJpegtran()]
@@ -21,6 +21,17 @@ test('optimize a file', async t => {
 	t.is(files[0].path, null);
 	t.true(files[0].data.length < buf.length);
 	t.true(isJpg(files[0].data));
+});
+
+test('optimize a single file', async t => {
+	const buf = await fsP.readFile(path.join(__dirname, 'fixture.jpg'));
+	const file = await m('fixture.jpg', {
+		plugins: [imageminJpegtran()]
+	});
+
+	t.is(file.path, null);
+	t.true(file.data.length < buf.length);
+	t.true(isJpg(file.data));
 });
 
 test('optimize a buffer', async t => {
@@ -40,7 +51,7 @@ test('output error on corrupt images', async t => {
 });
 
 test('throw on wrong input', async t => {
-	await t.throws(m('foo'), /Expected an `Array`, got `string`/);
+	await t.throws(m({foo: 'baar'}), /Expected an `Array<string>` or `string`, got `object`/);
 	await t.throws(m.buffer('foo'), /Expected a `Buffer`, got `string`/);
 });
 

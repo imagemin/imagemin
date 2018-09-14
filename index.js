@@ -36,9 +36,9 @@ const handleFile = (input, output, opts) => fsP.readFile(input).then(data => {
 				.then(() => fsP.writeFile(ret.path, ret.data))
 				.then(() => ret);
 		})
-		.catch(err => {
-			err.message = `Error in file: ${input}\n\n${err.message}`;
-			throw err;
+		.catch(error => {
+			error.message = `Error in file: ${input}\n\n${error.message}`;
+			throw error;
 		});
 });
 
@@ -48,11 +48,11 @@ module.exports = (input, output, opts) => {
 		output = null;
 	}
 
-	opts = Object.assign({ plugins: [] }, opts);
+	opts = Object.assign({plugins: []}, opts);
 	opts.plugins = opts.use || opts.plugins;
 
 	if (Array.isArray(input)) {
-		return globby(input, { onlyFiles: true }).then(paths => Promise.all(paths.map(x => handleFile(x, output, opts))));
+		return globby(input, {onlyFiles: true}).then(paths => Promise.all(paths.map(x => handleFile(x, output, opts))));
 	}
 
 	if (typeof input === 'string') {
@@ -67,7 +67,7 @@ module.exports.buffer = (input, opts) => {
 		return Promise.reject(new TypeError(`Expected a \`Buffer\`, got \`${typeof input}\``));
 	}
 
-	opts = Object.assign({ plugins: [] }, opts);
+	opts = Object.assign({plugins: []}, opts);
 	opts.plugins = opts.use || opts.plugins;
 
 	if (opts.plugins.length === 0) {
