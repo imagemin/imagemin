@@ -25,21 +25,21 @@
 		"svg"
 	],
 	"dependencies": {
-		"file-type": "^8.1.0",
+		"file-type": "^10.7.0",
 		"globby": "^8.0.1",
 		"make-dir": "^1.0.0",
 		"p-pipe": "^1.1.0",
-		"pify": "^3.0.0",
+		"pify": "^4.0.1",
 		"replace-ext": "^1.0.0"
 	},
 	"devDependencies": {
-		"ava": "*",
+		"ava": "^1.0.1",
 		"del": "^3.0.0",
-		"imagemin-jpegtran": "^5.0.0",
-		"imagemin-svgo": "^6.0.0",
-		"imagemin-webp": "^4.0.0",
+		"imagemin-jpegtran": "^6.0.0",
+		"imagemin-svgo": "^7.0.0",
+		"imagemin-webp": "^5.0.0",
 		"is-jpg": "^2.0.0",
 		"tempy": "^0.2.1",
-		"xo": "*"
+		"xo": "^0.23.0"
 	}
 }

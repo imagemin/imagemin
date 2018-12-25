@@ -10,20 +10,20 @@ const replaceExt = require('replace-ext');
 
 const fsP = pify(fs);
 
-const handleFile = (input, output, opts) => fsP.readFile(input).then(data => {
+const handleFile = (input, output, options) => fsP.readFile(input).then(data => {
 	const dest = output ? path.join(output, path.basename(input)) : null;
 
-	if (opts.plugins && !Array.isArray(opts.plugins)) {
-		throw new TypeError('The plugins option should be an `Array`');
+	if (options.plugins && !Array.isArray(options.plugins)) {
+		throw new TypeError('The `plugins` option should be an `Array`');
 	}
 
-	const pipe = opts.plugins.length > 0 ? pPipe(opts.plugins)(data) : Promise.resolve(data);
+	const pipe = options.plugins.length > 0 ? pPipe(options.plugins)(data) : Promise.resolve(data);
 
 	return pipe
-		.then(buf => {
+		.then(buffer => {
 			const ret = {
-				data: buf,
-				path: (fileType(buf) && fileType(buf).ext === 'webp') ? replaceExt(dest, '.webp') : dest
+				data: buffer,
+				path: (fileType(buffer) && fileType(buffer).ext === 'webp') ? replaceExt(dest, '.webp') : dest
 			};
 
 			if (!dest) {
@@ -34,39 +34,39 @@ const handleFile = (input, output, opts) => fsP.readFile(input).then(data => {
 				.then(() => fsP.writeFile(ret.path, ret.data))
 				.then(() => ret);
 		})
-		.catch(err => {
-			err.message = `Error in file: ${input}\n\n${err.message}`;
-			throw err;
+		.catch(error => {
+			error.message = `Error in file: ${input}\n\n${error.message}`;
+			throw error;
 		});
 });
 
-module.exports = (input, output, opts) => {
+module.exports = (input, output, options) => {
 	if (!Array.isArray(input)) {
 		return Promise.reject(new TypeError(`Expected an \`Array\`, got \`${typeof input}\``));
 	}
 
 	if (typeof output === 'object') {
-		opts = output;
+		options = output;
 		output = null;
 	}
 
-	opts = Object.assign({plugins: []}, opts);
-	opts.plugins = opts.use || opts.plugins;
+	options = Object.assign({plugins: []}, options);
+	options.plugins = options.use || options.plugins;
 
-	return globby(input, {onlyFiles: true}).then(paths => Promise.all(paths.map(x => handleFile(x, output, opts))));
+	return globby(input, {onlyFiles: true}).then(paths => Promise.all(paths.map(x => handleFile(x, output, options))));
 };
 
-module.exports.buffer = (input, opts) => {
+module.exports.buffer = (input, options) => {
 	if (!Buffer.isBuffer(input)) {
 		return Promise.reject(new TypeError(`Expected a \`Buffer\`, got \`${typeof input}\``));
 	}
 
-	opts = Object.assign({plugins: []}, opts);
-	opts.plugins = opts.use || opts.plugins;
+	options = Object.assign({plugins: []}, options);
+	options.plugins = options.use || options.plugins;
 
-	if (opts.plugins.length === 0) {
+	if (options.plugins.length === 0) {
 		return Promise.resolve(input);
 	}
 
-	return pPipe(opts.plugins)(input);
+	return pPipe(options.plugins)(input);
 };

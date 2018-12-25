@@ -35,7 +35,7 @@ const imageminPngquant = require('imagemin-pngquant');
 
 ### imagemin(input, [output], [options])
 
-Returns `Promise<Object[]>` in the format `{data: Buffer, path: String}`.
+Returns `Promise<Object[]>` in the format `{data: Buffer, path: string}`.
 
 #### input
 

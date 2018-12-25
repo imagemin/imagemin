@@ -9,13 +9,13 @@ import makeDir from 'make-dir';
 import pify from 'pify';
 import tempy from 'tempy';
 import test from 'ava';
-import m from '.';
+import imagemin from '.';
 
 const fsP = pify(fs);
 
 test('optimize a file', async t => {
 	const buf = await fsP.readFile(path.join(__dirname, 'fixture.jpg'));
-	const files = await m(['fixture.jpg'], {
+	const files = await imagemin(['fixture.jpg'], {
 		plugins: [imageminJpegtran()]
 	});
 
@@ -26,7 +26,7 @@ test('optimize a file', async t => {
 
 test('optimize a buffer', async t => {
 	const buf = await fsP.readFile(path.join(__dirname, 'fixture.jpg'));
-	const data = await m.buffer(buf, {
+	const data = await imagemin.buffer(buf, {
 		plugins: [imageminJpegtran()]
 	});
 
@@ -35,19 +35,19 @@ test('optimize a buffer', async t => {
 });
 
 test('output error on corrupt images', async t => {
-	await t.throws(m(['fixture-corrupt.jpg'], {
+	await t.throwsAsync(imagemin(['fixture-corrupt.jpg'], {
 		plugins: [imageminJpegtran()]
 	}), /Corrupt JPEG data/);
 });
 
 test('throw on wrong input', async t => {
-	await t.throws(m('foo'), /Expected an `Array`, got `string`/);
-	await t.throws(m.buffer('foo'), /Expected a `Buffer`, got `string`/);
+	await t.throwsAsync(imagemin('foo'), /Expected an `Array`, got `string`/);
+	await t.throwsAsync(imagemin.buffer('foo'), /Expected a `Buffer`, got `string`/);
 });
 
 test('return original file if no plugins are defined', async t => {
 	const buf = await fsP.readFile(path.join(__dirname, 'fixture.jpg'));
-	const files = await m(['fixture.jpg']);
+	const files = await imagemin(['fixture.jpg']);
 
 	t.is(files[0].path, null);
 	t.deepEqual(files[0].data, buf);
@@ -56,7 +56,7 @@ test('return original file if no plugins are defined', async t => {
 
 test('return original buffer if no plugins are defined', async t => {
 	const buf = await fsP.readFile(path.join(__dirname, 'fixture.jpg'));
-	const data = await m.buffer(buf);
+	const data = await imagemin.buffer(buf);
 
 	t.deepEqual(data, buf);
 	t.true(isJpg(data));
@@ -65,7 +65,7 @@ test('return original buffer if no plugins are defined', async t => {
 test('return processed buffer even it is a bad optimization', async t => {
 	const buf = await fsP.readFile(path.join(__dirname, 'fixture.svg'));
 	t.false(buf.includes('http://www.w3.org/2000/svg'));
-	const data = await m.buffer(buf, {
+	const data = await imagemin.buffer(buf, {
 		plugins: [
 			imageminSvgo({
 				plugins: [{
@@ -78,7 +78,7 @@ test('return processed buffer even it is a bad optimization', async t => {
 			})
 		]
 	});
-	t.true(data.includes(`xmlns="http://www.w3.org/2000/svg"`));
+	t.true(data.includes('xmlns="http://www.w3.org/2000/svg"'));
 	t.true(data.length > buf.length);
 });
 
@@ -89,7 +89,7 @@ test('output at the specified location', async t => {
 	await makeDir(tmp);
 	await fsP.writeFile(path.join(tmp, 'fixture.jpg'), buf);
 
-	const files = await m(['fixture.jpg', `${tmp}/*.jpg`], 'output', {
+	const files = await imagemin(['fixture.jpg', `${tmp}/*.jpg`], 'output', {
 		plugins: [imageminJpegtran()]
 	});
 
@@ -101,7 +101,7 @@ test('output at the specified location', async t => {
 
 test('set webp ext', async t => {
 	const tmp = tempy.file();
-	const files = await m(['fixture.jpg'], tmp, {
+	const files = await imagemin(['fixture.jpg'], tmp, {
 		plugins: [imageminWebp()]
 	});
 
