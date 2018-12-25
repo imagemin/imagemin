@@ -3,6 +3,7 @@ import path from 'path';
 import del from 'del';
 import imageminJpegtran from 'imagemin-jpegtran';
 import imageminWebp from 'imagemin-webp';
+import imageminSvgo from 'imagemin-svgo';
 import isJpg from 'is-jpg';
 import makeDir from 'make-dir';
 import pify from 'pify';
@@ -59,6 +60,26 @@ test('return original buffer if no plugins are defined', async t => {
 
 	t.deepEqual(data, buf);
 	t.true(isJpg(data));
+});
+
+test('return processed buffer even it is a bad optimization', async t => {
+	const buf = await fsP.readFile(path.join(__dirname, 'fixture.svg'));
+	t.false(buf.includes('http://www.w3.org/2000/svg'));
+	const data = await m.buffer(buf, {
+		plugins: [
+			imageminSvgo({
+				plugins: [{
+					addAttributesToSVGElement: {
+						attributes: [{
+							xmlns: 'http://www.w3.org/2000/svg'
+						}]
+					}
+				}]
+			})
+		]
+	});
+	t.true(data.includes(`xmlns="http://www.w3.org/2000/svg"`));
+	t.true(data.length > buf.length);
 });
 
 test('output at the specified location', async t => {

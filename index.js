@@ -21,8 +21,6 @@ const handleFile = (input, output, opts) => fsP.readFile(input).then(data => {
 
 	return pipe
 		.then(buf => {
-			buf = buf.length < data.length ? buf : data;
-
 			const ret = {
 				data: buf,
 				path: (fileType(buf) && fileType(buf).ext === 'webp') ? replaceExt(dest, '.webp') : dest
@@ -70,5 +68,5 @@ module.exports.buffer = (input, opts) => {
 		return Promise.resolve(input);
 	}
 
-	return pPipe(opts.plugins)(input).then(buf => (buf.length < input.length ? buf : input));
+	return pPipe(opts.plugins)(input);
 };
