@@ -108,3 +108,23 @@ test('set webp ext', async t => {
 	t.is(path.extname(files[0].path), '.webp');
 	await del(tmp, {force: true});
 });
+
+test('ignores junk files', async t => {
+	const tmp = tempy.directory();
+	const buf = await fsP.readFile(path.join(__dirname, 'fixture.jpg'));
+
+	await makeDir(tmp);
+	await fsP.writeFile(path.join(tmp, '.DS_Store'), '');
+	await fsP.writeFile(path.join(tmp, 'Thumbs.db'), '');
+	await fsP.writeFile(path.join(tmp, 'fixture.jpg'), buf);
+
+	await t.notThrowsAsync(() => imagemin([`${tmp}/*`], 'output', {
+		plugins: [imageminJpegtran()]
+	}));
+
+	t.true(fs.existsSync(path.join('output', 'fixture.jpg')));
+	t.false(fs.existsSync(path.join('output', '.DS_Store')));
+	t.false(fs.existsSync(path.join('output', 'Thumbs.db')));
+
+	await del([tmp, 'output'], {force: true});
+});

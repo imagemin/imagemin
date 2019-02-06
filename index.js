@@ -7,6 +7,7 @@ const makeDir = require('make-dir');
 const pify = require('pify');
 const pPipe = require('p-pipe');
 const replaceExt = require('replace-ext');
+const junk = require('junk');
 
 const fsP = pify(fs);
 
@@ -53,7 +54,8 @@ module.exports = (input, output, options) => {
 	options = Object.assign({plugins: []}, options);
 	options.plugins = options.use || options.plugins;
 
-	return globby(input, {onlyFiles: true}).then(paths => Promise.all(paths.map(x => handleFile(x, output, options))));
+	return globby(input, {onlyFiles: true})
+		.then(paths => Promise.all(paths.reduce((acc, x) => junk.is(path.basename(x)) ? acc : acc.concat(handleFile(x, output, options)), [])));
 };
 
 module.exports.buffer = (input, options) => {
