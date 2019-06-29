@@ -55,7 +55,7 @@ module.exports = (input, output, options) => {
 	options.plugins = options.use || options.plugins;
 
 	return globby(input, {onlyFiles: true})
-		.then(paths => Promise.all(paths.filter(x => junk.not(path.basename(x))).map(x => handleFile(x, output, options)) ));
+		.then(paths => Promise.all(paths.filter(x => junk.not(path.basename(x))).map(x => handleFile(x, output, options))));
 };
 
 module.exports.buffer = (input, options) => {
