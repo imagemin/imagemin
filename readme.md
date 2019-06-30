@@ -19,7 +19,7 @@ const imageminPngquant = require('imagemin-pngquant');
 
 (async () => {
 	const files = await imagemin(['images/*.{jpg,png}'], {
-		output: 'build/images',
+		destination: 'build/images',
 		plugins: [
 			imageminJpegtran(),
 			imageminPngquant({
@@ -50,7 +50,7 @@ File paths or [glob patterns](https://github.com/sindresorhus/globby#globbing-pa
 
 Type: `object`
 
-##### output
+##### destination
 
 Type: `string`
 

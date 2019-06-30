@@ -12,7 +12,7 @@ const junk = require('junk');
 const readFile = promisify(fs.readFile);
 const writeFile = promisify(fs.writeFile);
 
-const handleFile = async (sourcePath, {output, plugins = []}) => {
+const handleFile = async (sourcePath, {destination, plugins = []}) => {
 	if (plugins && !Array.isArray(plugins)) {
 		throw new TypeError('The `plugins` option should be an `Array`');
 	}
@@ -20,7 +20,7 @@ const handleFile = async (sourcePath, {output, plugins = []}) => {
 	let data = await readFile(sourcePath);
 	data = await (plugins.length > 0 ? pPipe(...plugins)(data) : data);
 
-	let destinationPath = output ? path.join(output, path.basename(sourcePath)) : undefined;
+	let destinationPath = destination ? path.join(destination, path.basename(sourcePath)) : undefined;
 	destinationPath = (fileType(data) && fileType(data).ext === 'webp') ? replaceExt(destinationPath, '.webp') : destinationPath;
 
 	const returnValue = {

@@ -87,27 +87,27 @@ test('return processed buffer even it is a bad optimization', async t => {
 
 test('output at the specified location', async t => {
 	const temp = tempy.directory();
-	const outputTemp = tempy.directory();
+	const destinationTemp = tempy.directory();
 	const buffer = await readFile(path.join(__dirname, 'fixture.jpg'));
 
 	await makeDir(temp);
 	await writeFile(path.join(temp, 'fixture.jpg'), buffer);
 
 	const files = await imagemin(['fixture.jpg', `${temp}/*.jpg`], {
-		output: outputTemp,
+		destination: destinationTemp,
 		plugins: [imageminJpegtran()]
 	});
 
 	t.true(fs.existsSync(files[0].destinationPath));
 	t.true(fs.existsSync(files[1].destinationPath));
 
-	await del([temp, outputTemp], {force: true});
+	await del([temp, destinationTemp], {force: true});
 });
 
 test('set webp ext', async t => {
 	const temp = tempy.file();
 	const files = await imagemin(['fixture.jpg'], {
-		output: temp,
+		destination: temp,
 		plugins: [imageminWebp()]
 	});
 
@@ -117,7 +117,7 @@ test('set webp ext', async t => {
 
 test('ignores junk files', async t => {
 	const temp = tempy.directory();
-	const outputTemp = tempy.directory();
+	const destinationTemp = tempy.directory();
 	const buffer = await readFile(path.join(__dirname, 'fixture.jpg'));
 
 	await makeDir(temp);
@@ -126,15 +126,15 @@ test('ignores junk files', async t => {
 	await writeFile(path.join(temp, 'fixture.jpg'), buffer);
 
 	await t.notThrowsAsync(imagemin([`${temp}/*`], {
-		output: outputTemp,
+		destination: destinationTemp,
 		plugins: [imageminJpegtran()]
 	}));
 
-	t.true(fs.existsSync(path.join(outputTemp, 'fixture.jpg')));
-	t.false(fs.existsSync(path.join(outputTemp, '.DS_Store')));
-	t.false(fs.existsSync(path.join(outputTemp, 'Thumbs.db')));
+	t.true(fs.existsSync(path.join(destinationTemp, 'fixture.jpg')));
+	t.false(fs.existsSync(path.join(destinationTemp, '.DS_Store')));
+	t.false(fs.existsSync(path.join(destinationTemp, 'Thumbs.db')));
 
-	await del([temp, outputTemp], {force: true});
+	await del([temp, destinationTemp], {force: true});
 });
 
 test('glob option', async t => {
