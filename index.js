@@ -12,26 +12,29 @@ const junk = require('junk');
 const readFile = promisify(fs.readFile);
 const writeFile = promisify(fs.writeFile);
 
-const handleFile = async (input, {output, plugins = []}) => {
+const handleFile = async (sourcePath, {output, plugins = []}) => {
 	if (plugins && !Array.isArray(plugins)) {
 		throw new TypeError('The `plugins` option should be an `Array`');
 	}
 
-	const destination = output ? path.join(output, path.basename(input)) : undefined;
-	const data = await readFile(input);
-	const buffer = await (plugins.length > 0 ? pPipe(...plugins)(data) : data);
+	let data = await readFile(sourcePath);
+	data = await (plugins.length > 0 ? pPipe(...plugins)(data) : data);
+
+	let destinationPath = output ? path.join(output, path.basename(sourcePath)) : undefined;
+	destinationPath = (fileType(data) && fileType(data).ext === 'webp') ? replaceExt(destinationPath, '.webp') : destinationPath;
 
 	const returnValue = {
-		data: buffer,
-		path: (fileType(buffer) && fileType(buffer).ext === 'webp') ? replaceExt(destination, '.webp') : destination
+		data,
+		sourcePath,
+		destinationPath
 	};
 
-	if (!destination) {
+	if (!destinationPath) {
 		return returnValue;
 	}
 
-	await makeDir(path.dirname(returnValue.path));
-	await writeFile(returnValue.path, returnValue.data);
+	await makeDir(path.dirname(returnValue.destinationPath));
+	await writeFile(returnValue.destinationPath, returnValue.data);
 
 	return returnValue;
 };

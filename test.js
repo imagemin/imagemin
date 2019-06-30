@@ -20,7 +20,7 @@ test('optimize a file', async t => {
 		plugins: [imageminJpegtran()]
 	});
 
-	t.is(files[0].path, undefined);
+	t.is(files[0].destinationPath, undefined);
 	t.true(files[0].data.length < buffer.length);
 	t.true(isJpg(files[0].data));
 });
@@ -50,7 +50,7 @@ test('return original file if no plugins are defined', async t => {
 	const buffer = await readFile(path.join(__dirname, 'fixture.jpg'));
 	const files = await imagemin(['fixture.jpg']);
 
-	t.is(files[0].path, undefined);
+	t.is(files[0].destinationPath, undefined);
 	t.deepEqual(files[0].data, buffer);
 	t.true(isJpg(files[0].data));
 });
@@ -98,8 +98,8 @@ test('output at the specified location', async t => {
 		plugins: [imageminJpegtran()]
 	});
 
-	t.true(fs.existsSync(files[0].path));
-	t.true(fs.existsSync(files[1].path));
+	t.true(fs.existsSync(files[0].destinationPath));
+	t.true(fs.existsSync(files[1].destinationPath));
 
 	await del([temp, outputTemp], {force: true});
 });
@@ -111,7 +111,7 @@ test('set webp ext', async t => {
 		plugins: [imageminWebp()]
 	});
 
-	t.is(path.extname(files[0].path), '.webp');
+	t.is(path.extname(files[0].destinationPath), '.webp');
 	await del(temp, {force: true});
 });
 
