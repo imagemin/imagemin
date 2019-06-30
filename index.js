@@ -36,12 +36,12 @@ const handleFile = async (input, {output, plugins = []}) => {
 	return returnValue;
 };
 
-module.exports = async (input, options = {}) => {
+module.exports = async (input, {glob = true, ...options} = {}) => {
 	if (!Array.isArray(input)) {
 		throw new TypeError(`Expected an \`Array\`, got \`${typeof input}\``);
 	}
 
-	const filePaths = await globby(input, {onlyFiles: true});
+	const filePaths = glob ? await globby(input, {onlyFiles: true}) : input;
 
 	return Promise.all(
 		filePaths

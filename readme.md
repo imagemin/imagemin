@@ -62,6 +62,13 @@ Type: `Array`
 
 [Plugins](https://www.npmjs.com/browse/keyword/imageminplugin) to use.
 
+##### glob
+
+Type: `boolean`<br>
+Default: `true`
+
+Enable globbing when matching file paths.
+
 ### imagemin.buffer(buffer, options?)
 
 Returns `Promise<Buffer>`.

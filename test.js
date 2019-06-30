@@ -136,3 +136,12 @@ test('ignores junk files', async t => {
 
 	await del([temp, outputTemp], {force: true});
 });
+
+test('glob option', async t => {
+	const files = await imagemin(['fixture.jpg'], {
+		glob: false,
+		plugins: [imageminJpegtran()]
+	});
+
+	t.true(isJpg(files[0].data));
+});
