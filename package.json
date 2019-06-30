@@ -1,11 +1,11 @@
 {
 	"name": "imagemin",
 	"version": "6.1.0",
-	"description": "Minify images",
+	"description": "Minify images seamlessly",
 	"license": "MIT",
 	"repository": "imagemin/imagemin",
 	"engines": {
-		"node": ">=6"
+		"node": ">=8"
 	},
 	"scripts": {
 		"test": "xo && ava"
@@ -25,22 +25,21 @@
 		"svg"
 	],
 	"dependencies": {
-		"file-type": "^10.7.0",
-		"globby": "^8.0.1",
-		"junk": "^2.1.0",
-		"make-dir": "^1.0.0",
-		"p-pipe": "^1.1.0",
-		"pify": "^4.0.1",
+		"file-type": "^12.0.0",
+		"globby": "^10.0.0",
+		"junk": "^3.1.0",
+		"make-dir": "^3.0.0",
+		"p-pipe": "^3.0.0",
 		"replace-ext": "^1.0.0"
 	},
 	"devDependencies": {
-		"ava": "^1.0.1",
-		"del": "^3.0.0",
+		"ava": "^2.1.0",
+		"del": "^4.1.1",
 		"imagemin-jpegtran": "^6.0.0",
 		"imagemin-svgo": "^7.0.0",
 		"imagemin-webp": "^5.0.0",
 		"is-jpg": "^2.0.0",
-		"tempy": "^0.2.1",
-		"xo": "^0.23.0"
+		"tempy": "^0.3.0",
+		"xo": "^0.24.0"
 	}
 }

@@ -1,74 +1,70 @@
 'use strict';
+const {promisify} = require('util');
 const fs = require('fs');
 const path = require('path');
 const fileType = require('file-type');
 const globby = require('globby');
 const makeDir = require('make-dir');
-const pify = require('pify');
 const pPipe = require('p-pipe');
 const replaceExt = require('replace-ext');
 const junk = require('junk');
 
-const fsP = pify(fs);
+const readFile = promisify(fs.readFile);
+const writeFile = promisify(fs.writeFile);
 
-const handleFile = (input, output, options) => fsP.readFile(input).then(data => {
-	const dest = output ? path.join(output, path.basename(input)) : null;
-
-	if (options.plugins && !Array.isArray(options.plugins)) {
+const handleFile = async (input, {output, plugins = []}) => {
+	if (plugins && !Array.isArray(plugins)) {
 		throw new TypeError('The `plugins` option should be an `Array`');
 	}
 
-	const pipe = options.plugins.length > 0 ? pPipe(options.plugins)(data) : Promise.resolve(data);
+	const destination = output ? path.join(output, path.basename(input)) : undefined;
+	const data = await readFile(input);
+	const buffer = await (plugins.length > 0 ? pPipe(...plugins)(data) : data);
 
-	return pipe
-		.then(buffer => {
-			const ret = {
-				data: buffer,
-				path: (fileType(buffer) && fileType(buffer).ext === 'webp') ? replaceExt(dest, '.webp') : dest
-			};
+	const returnValue = {
+		data: buffer,
+		path: (fileType(buffer) && fileType(buffer).ext === 'webp') ? replaceExt(destination, '.webp') : destination
+	};
 
-			if (!dest) {
-				return ret;
-			}
-
-			return makeDir(path.dirname(ret.path))
-				.then(() => fsP.writeFile(ret.path, ret.data))
-				.then(() => ret);
-		})
-		.catch(error => {
-			error.message = `Error in file: ${input}\n\n${error.message}`;
-			throw error;
-		});
-});
-
-module.exports = (input, output, options) => {
-	if (!Array.isArray(input)) {
-		return Promise.reject(new TypeError(`Expected an \`Array\`, got \`${typeof input}\``));
+	if (!destination) {
+		return returnValue;
 	}
 
-	if (typeof output === 'object') {
-		options = output;
-		output = null;
-	}
+	await makeDir(path.dirname(returnValue.path));
+	await writeFile(returnValue.path, returnValue.data);
 
-	options = Object.assign({plugins: []}, options);
-	options.plugins = options.use || options.plugins;
-
-	return globby(input, {onlyFiles: true})
-		.then(paths => Promise.all(paths.filter(x => junk.not(path.basename(x))).map(x => handleFile(x, output, options))));
+	return returnValue;
 };
 
-module.exports.buffer = (input, options) => {
+module.exports = async (input, options = {}) => {
+	if (!Array.isArray(input)) {
+		throw new TypeError(`Expected an \`Array\`, got \`${typeof input}\``);
+	}
+
+	const filePaths = await globby(input, {onlyFiles: true});
+
+	return Promise.all(
+		filePaths
+			.filter(filePath => junk.not(path.basename(filePath)))
+			.map(async filePath => {
+				try {
+					return await handleFile(filePath, options);
+				} catch (error) {
+					error.message = `Error occurred when handling file: ${input}\n\n${error.stack}`;
+					throw error;
+				}
+			})
+	);
+};
+
+module.exports.buffer = async (input, {plugins = []} = {}) => {
 	if (!Buffer.isBuffer(input)) {
-		return Promise.reject(new TypeError(`Expected a \`Buffer\`, got \`${typeof input}\``));
+		throw new TypeError(`Expected a \`Buffer\`, got \`${typeof input}\``);
 	}
 
-	options = Object.assign({plugins: []}, options);
-	options.plugins = options.use || options.plugins;
-
-	if (options.plugins.length === 0) {
-		return Promise.resolve(input);
+	if (plugins.length === 0) {
+		return input;
 	}
 
-	return pPipe(options.plugins)(input);
+	return pPipe(...plugins)(input);
 };

@@ -18,7 +18,8 @@ const imageminJpegtran = require('imagemin-jpegtran');
 const imageminPngquant = require('imagemin-pngquant');
 
 (async () => {
-	const files = await imagemin(['images/*.{jpg,png}'], 'build/images', {
+	const files = await imagemin(['images/*.{jpg,png}'], {
+		output: 'build/images',
 		plugins: [
 			imageminJpegtran(),
 			imageminPngquant({
@@ -35,25 +36,25 @@ const imageminPngquant = require('imagemin-pngquant');
 
 ## API
 
-### imagemin(input, [output], [options])
+### imagemin(input, options?)
 
-Returns `Promise<Object[]>` in the format `{data: Buffer, path: string}`.
+Returns `Promise<object[]>` in the format `{data: Buffer, path: string}`.
 
 #### input
 
 Type: `string[]`
 
-Files to be optimized. See supported `minimatch` [patterns](https://github.com/isaacs/minimatch#usage).
-
-#### output
-
-Type: `string`
-
-Set the destination folder to where your files will be written. If no destination is specified no files will be written.
+File paths or [glob patterns](https://github.com/sindresorhus/globby#globbing-patterns).
 
 #### options
 
-Type: `Object`
+Type: `object`
+
+##### output
+
+Type: `string`
+
+Set the destination folder to where your files will be written. If no destination is specified, no files will be written.
 
 ##### plugins
 
@@ -61,7 +62,7 @@ Type: `Array`
 
 [Plugins](https://www.npmjs.com/browse/keyword/imageminplugin) to use.
 
-### imagemin.buffer(buffer, [options])
+### imagemin.buffer(buffer, options?)
 
 Returns `Promise<Buffer>`.
 
@@ -73,7 +74,7 @@ Buffer to optimize.
 
 #### options
 
-Type: `Object`
+Type: `object`
 
 ##### plugins
 
@@ -88,8 +89,3 @@ Type: `Array`
 - [imagemin-app](https://github.com/imagemin/imagemin-app) - GUI app for this module
 - [gulp-imagemin](https://github.com/sindresorhus/gulp-imagemin) - Gulp plugin
 - [grunt-contrib-imagemin](https://github.com/gruntjs/grunt-contrib-imagemin) - Grunt plugin
-
-
-## License
-
-MIT © [imagemin](https://github.com/imagemin)
