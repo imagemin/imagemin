@@ -2,6 +2,20 @@
 
 > Minify images seamlessly
 
+---
+
+<div align="center">
+	<sup>Gumlet is helping make open source sustainable by sponsoring Sindre Sorhus.</sup>
+	<a href="https://www.gumlet.com">
+		<div>
+			<img src="https://sindresorhus.com/assets/thanks/gumlet-logo.svg" width="300"/>
+		</div>
+		<sup><b>Optimised Image Delivery made simple</b></sup>
+	</a>
+</div>
+
+---
+
 
 ## Install
 
