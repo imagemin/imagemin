@@ -27,6 +27,7 @@
 	"dependencies": {
 		"file-type": "^12.0.0",
 		"globby": "^10.0.0",
+		"graceful-fs": "^3.2.2",
 		"junk": "^3.1.0",
 		"make-dir": "^3.0.0",
 		"p-pipe": "^3.0.0",
