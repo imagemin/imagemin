@@ -103,6 +103,15 @@ Type: `Array`
 
 [Plugins](https://www.npmjs.com/browse/keyword/imageminplugin) to use.
 
+## SaaS API
+
+We also provide a hosted, SaaS API for imagemin which may simplify your use case.
+
+80% of all API revenue goes directly to funding the OSS authors behind imagemin!
+
+<a href="https://imagemin.saasify.sh">
+	<img src="https://badges.saasify.sh?text=View%20SaaS%20API" height="40"/>
+</a>
 
 ## Related
 
