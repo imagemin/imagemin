@@ -1,7 +1,7 @@
 'use strict';
 const {promisify} = require('util');
-const fs = require('fs');
 const path = require('path');
+const fs = require('graceful-fs');
 const fileType = require('file-type');
 const globby = require('globby');
 const makeDir = require('make-dir');
