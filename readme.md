@@ -103,6 +103,13 @@ Type: `Array`
 
 [Plugins](https://www.npmjs.com/browse/keyword/imageminplugin) to use.
 
+## Hosted API
+
+We also provide a hosted API for imagemin which may simplify your use case.
+
+<a href="https://imagemin.saasify.sh">
+	<img src="https://badges.saasify.sh?text=View%20Hosted%20API" height="40"/>
+</a>
 
 ## Related
 
