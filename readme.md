@@ -43,7 +43,7 @@ const imageminPngquant = require('imagemin-pngquant');
 	});
 
 	console.log(files);
-	//=> [{data: <Buffer 89 50 4e …>, path: 'build/images/foo.jpg'}, …]
+	//=> [{data: <Buffer 89 50 4e …>, destinationPath: 'build/images/foo.jpg'}, …]
 })();
 ```
 
