@@ -13,7 +13,7 @@ import convertToUnixPath from 'slash';
 const readFile = promisify(fs.readFile);
 const writeFile = promisify(fs.writeFile);
 
-const handleFile = async (sourcePath, {destination, plugins = []}) => {
+const handleFile = async (sourcePath, baseDirectory, {destination, preserveDirectories, plugins = []}) => {
 	if (plugins && !Array.isArray(plugins)) {
 		throw new TypeError('The `plugins` option should be an `Array`');
 	}
@@ -35,6 +35,10 @@ const handleFile = async (sourcePath, {destination, plugins = []}) => {
 		return returnValue;
 	}
 
+	if (preserveDirectories) {
+		returnValue.destinationPath = path.join(path.dirname(destinationPath), sourcePath.replace(baseDirectory, ''));
+	}
+
 	await fsPromises.mkdir(path.dirname(returnValue.destinationPath), {recursive: true});
 	await writeFile(returnValue.destinationPath, returnValue.data);
 
@@ -48,13 +52,14 @@ export default async function imagemin(input, {glob = true, ...options} = {}) {
 
 	const unixFilePaths = input.map(path => convertToUnixPath(path));
 	const filePaths = glob ? await globby(unixFilePaths, {onlyFiles: true}) : input;
+	const baseDirectory = path.dirname(filePaths[0]);
 
 	return Promise.all(
 		filePaths
 			.filter(filePath => junk.not(path.basename(filePath)))
 			.map(async filePath => {
 				try {
-					return await handleFile(filePath, options);
+					return await handleFile(filePath, baseDirectory, options);
 				} catch (error) {
 					error.message = `Error occurred when handling file: ${input}\n\n${error.stack}`;
 					throw error;

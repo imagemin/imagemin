@@ -8,6 +8,7 @@ import imageminSvgo from 'imagemin-svgo';
 import isJpg from 'is-jpg';
 import tempy from 'tempy';
 import test from 'ava';
+import cpy from 'cpy';
 import imagemin from './index.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -174,4 +175,25 @@ test('glob option', async t => {
 	});
 
 	t.true(isJpg(files[0].data));
+});
+
+test('Preserve directory structure', async t => {
+	const buffer = await readFile(path.join(__dirname, 'fixture.jpg'));
+	const destinationTemp = tempy.directory();
+	const srcTemp = await makeDir('fixture/nested');
+	await cpy('fixture.jpg', 'fixture/');
+	await cpy('fixture.jpg', srcTemp);
+	const files = await imagemin(['fixture/**/*.jpg'], {
+		plugins: [imageminJpegtran()],
+		destination: destinationTemp,
+		preserveDirectories: true
+	});
+
+	t.is(files[0].destinationPath, `${destinationTemp}/fixture.jpg`);
+	t.is(files[1].destinationPath, `${destinationTemp}/nested/fixture.jpg`);
+	t.true(files[0].data.length < buffer.length);
+	t.true(isJpg(files[0].data));
+
+	await del(destinationTemp, {force: true});
+	await del('fixture', {force: true});
 });

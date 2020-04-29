@@ -99,6 +99,12 @@ Type: `string`
 
 Set the destination folder to where your files will be written. If no destination is specified, no files will be written.
 
+##### preserveDirectories
+
+Type: `boolean`
+
+If enabled the directory structure from the input is preserved.
+
 ##### plugins
 
 Type: `Array`
