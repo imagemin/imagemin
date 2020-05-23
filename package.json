@@ -31,7 +31,8 @@
 		"junk": "^3.1.0",
 		"make-dir": "^3.0.0",
 		"p-pipe": "^3.0.0",
-		"replace-ext": "^1.0.0"
+		"replace-ext": "^1.0.0",
+		"slash": "^3.0.0"
 	},
 	"devDependencies": {
 		"ava": "^2.1.0",

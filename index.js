@@ -8,6 +8,7 @@ const makeDir = require('make-dir');
 const pPipe = require('p-pipe');
 const replaceExt = require('replace-ext');
 const junk = require('junk');
+const convertToUnixPath = require('slash');
 
 const readFile = promisify(fs.readFile);
 const writeFile = promisify(fs.writeFile);
@@ -44,7 +45,8 @@ module.exports = async (input, {glob = true, ...options} = {}) => {
 		throw new TypeError(`Expected an \`Array\`, got \`${typeof input}\``);
 	}
 
-	const filePaths = glob ? await globby(input, {onlyFiles: true}) : input;
+	const unixFilePaths = input.map(path => convertToUnixPath(path));
+	const filePaths = glob ? await globby(unixFilePaths, {onlyFiles: true}) : input;
 
 	return Promise.all(
 		filePaths
