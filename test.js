@@ -1,15 +1,15 @@
-import {promisify} from 'util';
-import fs from 'fs';
-import path from 'path';
-import del from 'del';
-import imageminJpegtran from 'imagemin-jpegtran';
-import imageminWebp from 'imagemin-webp';
-import imageminSvgo from 'imagemin-svgo';
-import isJpg from 'is-jpg';
-import makeDir from 'make-dir';
-import tempy from 'tempy';
-import test from 'ava';
-import imagemin from '.';
+const {promisify} = require('util');
+const fs = require('fs');
+const path = require('path');
+const del = require('del');
+const imageminJpegtran = require('imagemin-jpegtran');
+const imageminWebp = require('imagemin-webp');
+const imageminSvgo = require('imagemin-svgo');
+const isJpg = require('is-jpg');
+const makeDir = require('make-dir');
+const tempy = require('tempy');
+const test = require('ava');
+const imagemin = require('.');
 
 const readFile = promisify(fs.readFile);
 const writeFile = promisify(fs.writeFile);
@@ -38,12 +38,12 @@ test('optimize a buffer', async t => {
 test('output error on corrupt images', async t => {
 	await t.throwsAsync(imagemin(['fixture-corrupt.jpg'], {
 		plugins: [imageminJpegtran()]
-	}), /Corrupt JPEG data/);
+	}), {message: /Corrupt JPEG data/});
 });
 
 test('throw on wrong input', async t => {
-	await t.throwsAsync(imagemin('foo'), /Expected an `Array`, got `string`/);
-	await t.throwsAsync(imagemin.buffer('foo'), /Expected a `Buffer`, got `string`/);
+	await t.throwsAsync(imagemin('foo'), {message: /Expected an `Array`, got `string`/});
+	await t.throwsAsync(imagemin.buffer('foo'), {message: /Expected a `Buffer`, got `string`/});
 });
 
 test('return original file if no plugins are defined', async t => {
@@ -86,55 +86,55 @@ test('return processed buffer even it is a bad optimization', async t => {
 });
 
 test('output at the specified location', async t => {
-	const temp = tempy.directory();
-	const destinationTemp = tempy.directory();
+	const temporary = tempy.directory();
+	const destinationTemporary = tempy.directory();
 	const buffer = await readFile(path.join(__dirname, 'fixture.jpg'));
 
-	await makeDir(temp);
-	await writeFile(path.join(temp, 'fixture.jpg'), buffer);
+	await makeDir(temporary);
+	await writeFile(path.join(temporary, 'fixture.jpg'), buffer);
 
-	const files = await imagemin(['fixture.jpg', `${temp}/*.jpg`], {
-		destination: destinationTemp,
+	const files = await imagemin(['fixture.jpg', `${temporary}/*.jpg`], {
+		destination: destinationTemporary,
 		plugins: [imageminJpegtran()]
 	});
 
 	t.true(fs.existsSync(files[0].destinationPath));
 	t.true(fs.existsSync(files[1].destinationPath));
 
-	await del([temp, destinationTemp], {force: true});
+	await del([temporary, destinationTemporary], {force: true});
 });
 
 test('set webp ext', async t => {
-	const temp = tempy.file();
+	const temporary = tempy.file();
 	const files = await imagemin(['fixture.jpg'], {
-		destination: temp,
+		destination: temporary,
 		plugins: [imageminWebp()]
 	});
 
 	t.is(path.extname(files[0].destinationPath), '.webp');
-	await del(temp, {force: true});
+	await del(temporary, {force: true});
 });
 
 test('ignores junk files', async t => {
-	const temp = tempy.directory();
-	const destinationTemp = tempy.directory();
+	const temporary = tempy.directory();
+	const destinationTemporary = tempy.directory();
 	const buffer = await readFile(path.join(__dirname, 'fixture.jpg'));
 
-	await makeDir(temp);
-	await writeFile(path.join(temp, '.DS_Store'), '');
-	await writeFile(path.join(temp, 'Thumbs.db'), '');
-	await writeFile(path.join(temp, 'fixture.jpg'), buffer);
+	await makeDir(temporary);
+	await writeFile(path.join(temporary, '.DS_Store'), '');
+	await writeFile(path.join(temporary, 'Thumbs.db'), '');
+	await writeFile(path.join(temporary, 'fixture.jpg'), buffer);
 
-	await t.notThrowsAsync(imagemin([`${temp}/*`], {
-		destination: destinationTemp,
+	await t.notThrowsAsync(imagemin([`${temporary}/*`], {
+		destination: destinationTemporary,
 		plugins: [imageminJpegtran()]
 	}));
 
-	t.true(fs.existsSync(path.join(destinationTemp, 'fixture.jpg')));
-	t.false(fs.existsSync(path.join(destinationTemp, '.DS_Store')));
-	t.false(fs.existsSync(path.join(destinationTemp, 'Thumbs.db')));
+	t.true(fs.existsSync(path.join(destinationTemporary, 'fixture.jpg')));
+	t.false(fs.existsSync(path.join(destinationTemporary, '.DS_Store')));
+	t.false(fs.existsSync(path.join(destinationTemporary, 'Thumbs.db')));
 
-	await del([temp, destinationTemp], {force: true});
+	await del([temporary, destinationTemporary], {force: true});
 });
 
 test('glob option', async t => {
