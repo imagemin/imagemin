@@ -1,28 +1,12 @@
-# imagemin [![Build Status](https://travis-ci.org/imagemin/imagemin.svg?branch=master)](https://travis-ci.org/imagemin/imagemin)
+# imagemin [![Build Status](https://travis-ci.com/imagemin/imagemin.svg?branch=master)](https://travis-ci.com/github/imagemin/imagemin)
 
 > Minify images seamlessly
-
----
-
-<div align="center">
-	<sup>Gumlet is helping make open source sustainable by sponsoring Sindre Sorhus.</sup>
-	<a href="https://www.gumlet.com">
-		<div>
-			<img src="https://sindresorhus.com/assets/thanks/gumlet-logo.svg" width="300"/>
-		</div>
-		<sup><b>Optimised Image Delivery made simple</b></sup>
-	</a>
-</div>
-
----
-
 
 ## Install
 
 ```
 $ npm install imagemin
 ```
-
 
 ## Usage
 
@@ -46,7 +30,6 @@ const imageminPngquant = require('imagemin-pngquant');
 	//=> [{data: <Buffer 89 50 4e …>, destinationPath: 'build/images/foo.jpg'}, …]
 })();
 ```
-
 
 ## API
 
@@ -78,7 +61,7 @@ Type: `Array`
 
 ##### glob
 
-Type: `boolean`<br>
+Type: `boolean`\
 Default: `true`
 
 Enable globbing when matching file paths.
