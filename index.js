@@ -2,7 +2,7 @@
 const {promisify} = require('util');
 const path = require('path');
 const fs = require('graceful-fs');
-const fileType = require('file-type');
+const FileType = require('file-type');
 const globby = require('globby');
 const makeDir = require('make-dir');
 const pPipe = require('p-pipe');
@@ -20,8 +20,9 @@ const handleFile = async (sourcePath, {destination, plugins = []}) => {
 	let data = await readFile(sourcePath);
 	data = await (plugins.length > 0 ? pPipe(...plugins)(data) : data);
 
+	const {ext} = await FileType.fromBuffer(data);
 	let destinationPath = destination ? path.join(destination, path.basename(sourcePath)) : undefined;
-	destinationPath = (fileType(data) && fileType(data).ext === 'webp') ? replaceExt(destinationPath, '.webp') : destinationPath;
+	destinationPath = ext === 'webp' ? replaceExt(destinationPath, '.webp') : destinationPath;
 
 	const returnValue = {
 		data,
