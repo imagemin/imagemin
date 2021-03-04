@@ -1,4 +1,4 @@
-# imagemin [![Build Status](https://travis-ci.com/imagemin/imagemin.svg?branch=master)](https://travis-ci.com/github/imagemin/imagemin)
+# imagemin ![GitHub Actions Status](https://github.com/imagemin/imagemin/workflows/test/badge.svg?branch=master)
 
 > Minify images seamlessly
 
