@@ -1,4 +1,4 @@
-# imagemin ![GitHub Actions Status](https://github.com/imagemin/imagemin/workflows/test/badge.svg?branch=master)
+# imagemin ![GitHub Actions Status](https://github.com/imagemin/imagemin/workflows/CI/badge.svg?branch=main)
 
 > Minify images seamlessly
 
