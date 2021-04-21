@@ -48,24 +48,22 @@ $ npm install imagemin
 ## Usage
 
 ```js
-const imagemin = require('imagemin');
-const imageminJpegtran = require('imagemin-jpegtran');
-const imageminPngquant = require('imagemin-pngquant');
+import imagemin from 'imagemin';
+import imageminJpegtran from 'imagemin-jpegtran';
+import imageminPngquant from 'imagemin-pngquant';
 
-(async () => {
-	const files = await imagemin(['images/*.{jpg,png}'], {
-		destination: 'build/images',
-		plugins: [
-			imageminJpegtran(),
-			imageminPngquant({
-				quality: [0.6, 0.8]
-			})
-		]
-	});
+const files = await imagemin(['images/*.{jpg,png}'], {
+	destination: 'build/images',
+	plugins: [
+		imageminJpegtran(),
+		imageminPngquant({
+			quality: [0.6, 0.8]
+		})
+	]
+});
 
-	console.log(files);
-	//=> [{data: <Buffer 89 50 4e …>, destinationPath: 'build/images/foo.jpg'}, …]
-})();
+console.log(files);
+//=> [{data: <Buffer 89 50 4e …>, destinationPath: 'build/images/foo.jpg'}, …]
 ```
 
 ## API

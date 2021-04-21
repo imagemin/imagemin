@@ -1,13 +1,12 @@
-'use strict';
-const {promisify} = require('util');
-const path = require('path');
-const fs = require('graceful-fs');
-const FileType = require('file-type');
-const globby = require('globby');
-const makeDir = require('make-dir');
-const pPipe = require('p-pipe');
-const replaceExt = require('replace-ext');
-const junk = require('junk');
+import {promisify} from 'util';
+import path from 'path';
+import fs from 'graceful-fs';
+import {promises as fsPromises} from 'fs';
+import FileType from 'file-type';
+import globby from 'globby';
+import pPipe from 'p-pipe';
+import replaceExt from 'replace-ext';
+import junk from 'junk';
 
 const readFile = promisify(fs.readFile);
 const writeFile = promisify(fs.writeFile);
@@ -34,13 +33,13 @@ const handleFile = async (sourcePath, {destination, plugins = []}) => {
 		return returnValue;
 	}
 
-	await makeDir(path.dirname(returnValue.destinationPath));
+	await fsPromises.mkdir(path.dirname(returnValue.destinationPath), {recursive: true});
 	await writeFile(returnValue.destinationPath, returnValue.data);
 
 	return returnValue;
 };
 
-module.exports = async (input, {glob = true, ...options} = {}) => {
+export default async function imagemin(input, {glob = true, ...options} = {}) {
 	if (!Array.isArray(input)) {
 		throw new TypeError(`Expected an \`Array\`, got \`${typeof input}\``);
 	}
@@ -59,9 +58,9 @@ module.exports = async (input, {glob = true, ...options} = {}) => {
 				}
 			})
 	);
-};
+}
 
-module.exports.buffer = async (input, {plugins = []} = {}) => {
+imagemin.buffer = async (input, {plugins = []} = {}) => {
 	if (!Buffer.isBuffer(input)) {
 		throw new TypeError(`Expected a \`Buffer\`, got \`${typeof input}\``);
 	}

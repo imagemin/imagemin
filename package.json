@@ -4,8 +4,10 @@
 	"description": "Minify images seamlessly",
 	"license": "MIT",
 	"repository": "imagemin/imagemin",
+	"type": "module",
+	"exports": "./index.js",
 	"engines": {
-		"node": ">=10"
+		"node": ">=12"
 	},
 	"scripts": {
 		"test": "xo && ava"
@@ -26,21 +28,20 @@
 	],
 	"dependencies": {
 		"file-type": "^14.6.0",
-		"globby": "^11.0.0",
-		"graceful-fs": "^4.2.2",
+		"globby": "^11.0.3",
+		"graceful-fs": "^4.2.6",
 		"junk": "^3.1.0",
-		"make-dir": "^3.0.0",
-		"p-pipe": "^3.0.0",
+		"p-pipe": "^4.0.0",
 		"replace-ext": "^2.0.0"
 	},
 	"devDependencies": {
-		"ava": "^3.8.0",
-		"del": "^5.1.0",
+		"ava": "^3.15.0",
+		"del": "^6.0.0",
 		"imagemin-jpegtran": "^7.0.0",
-		"imagemin-svgo": "^8.0.0",
+		"imagemin-svgo": "^9.0.0",
 		"imagemin-webp": "^6.0.0",
 		"is-jpg": "^2.0.0",
-		"tempy": "^0.5.0",
-		"xo": "^0.32.0"
+		"tempy": "^1.0.1",
+		"xo": "^0.39.1"
 	}
 }
