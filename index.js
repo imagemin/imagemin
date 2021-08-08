@@ -19,7 +19,8 @@ const handleFile = async (sourcePath, {destination, plugins = []}) => {
 	let data = await readFile(sourcePath);
 	data = await (plugins.length > 0 ? pPipe(...plugins)(data) : data);
 
-	const {ext} = await FileType.fromBuffer(data);
+	// NOTE FT may not detect some extensions like `svg`
+	const {ext} = await FileType.fromBuffer(data) || {ext: path.extname(sourcePath)};
 	let destinationPath = destination ? path.join(destination, path.basename(sourcePath)) : undefined;
 	destinationPath = ext === 'webp' ? replaceExt(destinationPath, '.webp') : destinationPath;
 

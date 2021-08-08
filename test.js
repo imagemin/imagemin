@@ -114,6 +114,17 @@ test('set webp ext', async t => {
 	await del(temporary, {force: true});
 });
 
+test('set svg ext', async t => {
+	const temporary = tempy.file();
+	const files = await imagemin(['fixture.svg'], {
+		destination: temporary,
+		plugins: [imageminSvgo()]
+	});
+
+	t.is(path.extname(files[0].destinationPath), '.svg');
+	await del(temporary, {force: true});
+});
+
 test('ignores junk files', async t => {
 	const temporary = tempy.directory();
 	const destinationTemporary = tempy.directory();
