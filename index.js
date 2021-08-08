@@ -1,9 +1,10 @@
-import {promisify} from 'util';
-import path from 'path';
+import {Buffer} from 'node:buffer';
+import {promises as fsPromises} from 'node:fs';
+import {promisify} from 'node:util';
+import path from 'node:path';
 import fs from 'graceful-fs';
-import {promises as fsPromises} from 'fs';
 import FileType from 'file-type';
-import globby from 'globby';
+import {globby} from 'globby';
 import pPipe from 'p-pipe';
 import replaceExt from 'replace-ext';
 import junk from 'junk';
@@ -27,7 +28,7 @@ const handleFile = async (sourcePath, {destination, plugins = []}) => {
 	const returnValue = {
 		data,
 		sourcePath,
-		destinationPath
+		destinationPath,
 	};
 
 	if (!destinationPath) {
@@ -57,7 +58,7 @@ export default async function imagemin(input, {glob = true, ...options} = {}) {
 					error.message = `Error occurred when handling file: ${input}\n\n${error.stack}`;
 					throw error;
 				}
-			})
+			}),
 	);
 }
 

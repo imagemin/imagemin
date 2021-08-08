@@ -27,9 +27,9 @@
 		"svg"
 	],
 	"dependencies": {
-		"file-type": "^14.6.0",
-		"globby": "^11.0.3",
-		"graceful-fs": "^4.2.6",
+		"file-type": "^16.5.3",
+		"globby": "^12.0.0",
+		"graceful-fs": "^4.2.8",
 		"junk": "^3.1.0",
 		"p-pipe": "^4.0.0",
 		"replace-ext": "^2.0.0"
@@ -42,6 +42,6 @@
 		"imagemin-webp": "^6.0.0",
 		"is-jpg": "^2.0.0",
 		"tempy": "^1.0.1",
-		"xo": "^0.39.1"
+		"xo": "^0.43.0"
 	}
 }
