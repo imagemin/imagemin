@@ -7,6 +7,7 @@ import globby from 'globby';
 import pPipe from 'p-pipe';
 import replaceExt from 'replace-ext';
 import junk from 'junk';
+import convertToUnixPath from 'slash';
 
 const readFile = promisify(fs.readFile);
 const writeFile = promisify(fs.writeFile);
@@ -44,7 +45,8 @@ export default async function imagemin(input, {glob = true, ...options} = {}) {
 		throw new TypeError(`Expected an \`Array\`, got \`${typeof input}\``);
 	}
 
-	const filePaths = glob ? await globby(input, {onlyFiles: true}) : input;
+	const unixFilePaths = input.map(path => convertToUnixPath(path));
+	const filePaths = glob ? await globby(unixFilePaths, {onlyFiles: true}) : input;
 
 	return Promise.all(
 		filePaths
