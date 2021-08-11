@@ -1,6 +1,6 @@
-import fs, {promises as fsPromises} from 'fs';
-import path from 'path';
-import {fileURLToPath} from 'url';
+import fs, {promises as fsPromises} from 'node:fs';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
 import del from 'del';
 import imageminJpegtran from 'imagemin-jpegtran';
 import imageminWebp from 'imagemin-webp';
@@ -15,7 +15,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 test('optimize a file', async t => {
 	const buffer = await fsPromises.readFile(path.join(__dirname, 'fixture.jpg'));
 	const files = await imagemin(['fixture.jpg'], {
-		plugins: [imageminJpegtran()]
+		plugins: [imageminJpegtran()],
 	});
 
 	t.is(files[0].destinationPath, undefined);
@@ -26,7 +26,7 @@ test('optimize a file', async t => {
 test('optimize a buffer', async t => {
 	const buffer = await fsPromises.readFile(path.join(__dirname, 'fixture.jpg'));
 	const data = await imagemin.buffer(buffer, {
-		plugins: [imageminJpegtran()]
+		plugins: [imageminJpegtran()],
 	});
 
 	t.true(data.length < buffer.length);
@@ -35,7 +35,7 @@ test('optimize a buffer', async t => {
 
 test('output error on corrupt images', async t => {
 	await t.throwsAsync(imagemin(['fixture-corrupt.jpg'], {
-		plugins: [imageminJpegtran()]
+		plugins: [imageminJpegtran()],
 	}), {message: /Corrupt JPEG data/});
 });
 
@@ -72,12 +72,12 @@ test.failing('return processed buffer even it is a bad optimization', async t =>
 				plugins: [{
 					addAttributesToSVGElement: {
 						attributes: [{
-							xmlns: 'http://www.w3.org/2000/svg'
-						}]
-					}
-				}]
-			})
-		]
+							xmlns: 'http://www.w3.org/2000/svg',
+						}],
+					},
+				}],
+			}),
+		],
 	});
 
 	t.true(data.includes('xmlns="http://www.w3.org/2000/svg"'));
@@ -94,7 +94,7 @@ test('output at the specified location', async t => {
 
 	const files = await imagemin(['fixture.jpg', `${temporary}/*.jpg`], {
 		destination: destinationTemporary,
-		plugins: [imageminJpegtran()]
+		plugins: [imageminJpegtran()],
 	});
 
 	t.true(fs.existsSync(files[0].destinationPath));
@@ -127,10 +127,21 @@ test('set webp ext', async t => {
 	const temporary = tempy.file();
 	const files = await imagemin(['fixture.jpg'], {
 		destination: temporary,
-		plugins: [imageminWebp()]
+		plugins: [imageminWebp()],
 	});
 
 	t.is(path.extname(files[0].destinationPath), '.webp');
+	await del(temporary, {force: true});
+});
+
+test('set svg ext', async t => {
+	const temporary = tempy.file();
+	const files = await imagemin(['fixture.svg'], {
+		destination: temporary,
+		plugins: [imageminSvgo()],
+	});
+
+	t.is(path.extname(files[0].destinationPath), '.svg');
 	await del(temporary, {force: true});
 });
 
@@ -146,7 +157,7 @@ test('ignores junk files', async t => {
 
 	await t.notThrowsAsync(imagemin([`${temporary}/*`], {
 		destination: destinationTemporary,
-		plugins: [imageminJpegtran()]
+		plugins: [imageminJpegtran()],
 	}));
 
 	t.true(fs.existsSync(path.join(destinationTemporary, 'fixture.jpg')));
@@ -159,7 +170,7 @@ test('ignores junk files', async t => {
 test('glob option', async t => {
 	const files = await imagemin(['fixture.jpg'], {
 		glob: false,
-		plugins: [imageminJpegtran()]
+		plugins: [imageminJpegtran()],
 	});
 
 	t.true(isJpg(files[0].data));
