@@ -104,23 +104,23 @@ test('output at the specified location', async t => {
 });
 
 test('output at the specified location when input paths contain Windows path delimiter', async t => {
-	const temp = tempy.directory();
-	const destinationTemp = tempy.directory();
-	const buffer = await readFile(path.join(__dirname, 'fixture.jpg'));
+	const temporary = tempy.directory();
+	const destinationTemporary = tempy.directory();
+	const buffer = await fsPromises.readFile(path.join(__dirname, 'fixture.jpg'));
 
-	await makeDir(temp);
-	await writeFile(path.join(temp, 'fixture.jpg'), buffer);
+	await fsPromises.mkdir(temporary, {recursive: true});
+	await fsPromises.writeFile(path.join(temporary, 'fixture.jpg'), buffer);
 
-	const fileNameWithWindowsPathDelimiter = `${temp}\\*.jpg`;
+	const fileNameWithWindowsPathDelimiter = `${temporary}\\*.jpg`;
 
 	const files = await imagemin([fileNameWithWindowsPathDelimiter], {
-		destination: destinationTemp,
-		plugins: [imageminJpegtran()]
+		destination: destinationTemporary,
+		plugins: [imageminJpegtran()],
 	});
 
 	t.true(fs.existsSync(files[0].destinationPath));
 
-	await del([temp, destinationTemp], {force: true});
+	await del([temporary, destinationTemporary], {force: true});
 });
 
 test('set webp ext', async t => {

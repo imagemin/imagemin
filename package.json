@@ -33,7 +33,7 @@
 		"junk": "^3.1.0",
 		"p-pipe": "^4.0.0",
 		"replace-ext": "^2.0.0",
-    "slash": "^3.0.0"
+		"slash": "^3.0.0"
 	},
 	"devDependencies": {
 		"ava": "^3.15.0",
