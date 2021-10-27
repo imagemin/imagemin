@@ -175,3 +175,27 @@ test('glob option', async t => {
 
 	t.true(isJpg(files[0].data));
 });
+
+test('preserve directory structure', async t => {
+	const temporary = tempy.directory();
+	const destinationTemporary = tempy.directory();
+	const buffer = await fsPromises.readFile(path.join(__dirname, 'fixture.jpg'));
+
+	await fsPromises.mkdir(`${temporary}/nested`, {recursive: true});
+	await fsPromises.writeFile(path.join(temporary, 'fixture.jpg'), buffer);
+	await fsPromises.writeFile(path.join(temporary, 'nested', 'fixture.jpg'), buffer);
+
+	const files = await imagemin([`${temporary}/**/*.jpg`], {
+		plugins: [imageminJpegtran()],
+		destination: destinationTemporary,
+		basePath: temporary,
+		preserveDirectories: true,
+	});
+
+	t.is(files[0].destinationPath, path.join(destinationTemporary, 'fixture.jpg'));
+	t.is(files[1].destinationPath, path.join(`${destinationTemporary}`, 'nested', 'fixture.jpg'));
+	t.true(files[0].data.length < buffer.length);
+	t.true(isJpg(files[0].data));
+
+	await del([temporary, destinationTemporary], {force: true});
+});

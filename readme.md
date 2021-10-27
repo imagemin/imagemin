@@ -99,6 +99,30 @@ Type: `string`
 
 Set the destination folder to where your files will be written. If no destination is specified, no files will be written.
 
+##### preserveDirectories
+
+Type: `boolean`\
+Default: `false`
+
+Preserve the source directory structure in the output.
+
+##### basePath
+
+Type: `string`\
+Default: `''`
+
+Ignore certain directories in the output.
+
+```js
+await imagemin(['assets/images/**/*.jpg'], {
+	destination: 'dist',
+	basePath: 'assets/images',
+	preserveDirectories: true,
+});
+```
+- `assets/images/1.jpg` -> `dist/1.jpg`
+- `assets/images/nested/2.svg` -> `dist/nested/2.svg`
+
 ##### plugins
 
 Type: `Array`

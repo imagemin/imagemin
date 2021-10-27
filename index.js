@@ -13,7 +13,7 @@ import convertToUnixPath from 'slash';
 const readFile = promisify(fs.readFile);
 const writeFile = promisify(fs.writeFile);
 
-const handleFile = async (sourcePath, {destination, plugins = []}) => {
+const handleFile = async (sourcePath, {destination, preserveDirectories = false, plugins = [], basePath = ''}) => {
 	if (plugins && !Array.isArray(plugins)) {
 		throw new TypeError('The `plugins` option should be an `Array`');
 	}
@@ -33,6 +33,10 @@ const handleFile = async (sourcePath, {destination, plugins = []}) => {
 
 	if (!destinationPath) {
 		return returnValue;
+	}
+
+	if (preserveDirectories) {
+		returnValue.destinationPath = path.join(destination, path.parse(sourcePath).dir.replace(basePath, ''), path.basename(destinationPath));
 	}
 
 	await fsPromises.mkdir(path.dirname(returnValue.destinationPath), {recursive: true});
