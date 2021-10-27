@@ -176,7 +176,7 @@ test('glob option', async t => {
 	t.true(isJpg(files[0].data));
 });
 
-test('Preserve directory structure', async t => {
+test('preserve directory structure', async t => {
 	const temporary = tempy.directory();
 	const destinationTemporary = tempy.directory();
 	const buffer = await fsPromises.readFile(path.join(__dirname, 'fixture.jpg'));
