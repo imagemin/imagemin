@@ -8,7 +8,6 @@ import imageminSvgo from 'imagemin-svgo';
 import isJpg from 'is-jpg';
 import tempy from 'tempy';
 import test from 'ava';
-import cpy from 'cpy';
 import imagemin from './index.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -178,22 +177,25 @@ test('glob option', async t => {
 });
 
 test('Preserve directory structure', async t => {
-	const buffer = await readFile(path.join(__dirname, 'fixture.jpg'));
-	const destinationTemp = tempy.directory();
-	const srcTemp = await makeDir('fixture/nested');
-	await cpy('fixture.jpg', 'fixture/');
-	await cpy('fixture.jpg', srcTemp);
-	const files = await imagemin(['fixture/**/*.jpg'], {
+	const temporary = tempy.directory();
+	const destinationTemporary = tempy.directory();
+	const buffer = await fsPromises.readFile(path.join(__dirname, 'fixture.jpg'));
+
+	await fsPromises.mkdir(`${temporary}/nested`, {recursive: true});
+	await fsPromises.writeFile(path.join(temporary, 'fixture.jpg'), buffer);
+	await fsPromises.writeFile(path.join(temporary, 'nested', 'fixture.jpg'), buffer);
+
+	const files = await imagemin([`${temporary}/**/*.jpg`], {
 		plugins: [imageminJpegtran()],
-		destination: destinationTemp,
-		preserveDirectories: true
+		destination: destinationTemporary,
+		basePath: temporary,
+		preserveDirectories: true,
 	});
 
-	t.is(files[0].destinationPath, `${destinationTemp}/fixture.jpg`);
-	t.is(files[1].destinationPath, `${destinationTemp}/nested/fixture.jpg`);
+	t.is(files[0].destinationPath, path.join(destinationTemporary, 'fixture.jpg'));
+	t.is(files[1].destinationPath, path.join(`${destinationTemporary}`, 'nested', 'fixture.jpg'));
 	t.true(files[0].data.length < buffer.length);
 	t.true(isJpg(files[0].data));
 
-	await del(destinationTemp, {force: true});
-	await del('fixture', {force: true});
+	await del([temporary, destinationTemporary], {force: true});
 });

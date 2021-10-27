@@ -37,7 +37,6 @@
 	},
 	"devDependencies": {
 		"ava": "^3.15.0",
-	  	"cpy": "^8.1.0",
 		"del": "^6.0.0",
 		"imagemin-jpegtran": "^7.0.0",
 		"imagemin-svgo": "^9.0.0",
