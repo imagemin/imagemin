@@ -1,7 +1,7 @@
-import {Buffer} from 'node:buffer';
-import {promises as fsPromises} from 'node:fs';
-import {promisify} from 'node:util';
-import path from 'node:path';
+import {Buffer} from 'buffer';
+import {promises as fsPromises} from 'fs';
+import {promisify} from 'util';
+import path from 'path';
 import fs from 'graceful-fs';
 import FileType from 'file-type';
 import {globby} from 'globby';
