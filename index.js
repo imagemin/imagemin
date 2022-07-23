@@ -49,18 +49,21 @@ export default async function imagemin(input, {glob = true, ...options} = {}) {
 	const unixFilePaths = input.map(path => convertToUnixPath(path));
 	const filePaths = glob ? await globby(unixFilePaths, {onlyFiles: true}) : input;
 
-	return Promise.all(
-		filePaths
-			.filter(filePath => junk.not(path.basename(filePath)))
-			.map(async filePath => {
-				try {
-					return await handleFile(filePath, options);
-				} catch (error) {
-					error.message = `Error occurred when handling file: ${input}\n\n${error.stack}`;
-					throw error;
-				}
-			}),
-	);
+	let res = [];
+
+	for (let file of filePaths)
+	{
+		if (!junk.not(path.basename(file)))
+			continue;
+		try {
+			res.push(await handleFile(file, options));
+		} catch (error) {
+			error.message = `Error occurred when handling file: ${input}\n\n${error.stack}`;
+			throw error;
+		}
+	}
+
+	return res;
 }
 
 imagemin.buffer = async (input, {plugins = []} = {}) => {
