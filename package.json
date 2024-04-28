@@ -4,10 +4,11 @@
 	"description": "Minify images seamlessly",
 	"license": "MIT",
 	"repository": "imagemin/imagemin",
+	"funding": "https://github.com/sponsors/sindresorhus",
 	"type": "module",
 	"exports": "./index.js",
 	"engines": {
-		"node": ">=12"
+		"node": ">=18"
 	},
 	"scripts": {
 		"test": "xo && ava"
@@ -27,22 +28,23 @@
 		"svg"
 	],
 	"dependencies": {
-		"file-type": "^16.5.3",
-		"globby": "^12.0.0",
-		"graceful-fs": "^4.2.8",
-		"junk": "^3.1.0",
+		"change-file-extension": "^0.1.1",
+		"environment": "^1.0.0",
+		"file-type": "^19.0.0",
+		"globby": "^14.0.1",
+		"junk": "^4.0.1",
+		"ow": "^2.0.0",
 		"p-pipe": "^4.0.0",
-		"replace-ext": "^2.0.0",
-		"slash": "^3.0.0"
+		"slash": "^5.1.0",
+		"uint8array-extras": "^1.1.0"
 	},
 	"devDependencies": {
-		"ava": "^3.15.0",
-		"del": "^6.0.0",
+		"ava": "^6.1.2",
+		"del": "^7.1.0",
 		"imagemin-jpegtran": "^7.0.0",
-		"imagemin-svgo": "^9.0.0",
-		"imagemin-webp": "^6.0.0",
-		"is-jpg": "^2.0.0",
-		"tempy": "^1.0.1",
-		"xo": "^0.43.0"
+		"imagemin-svgo": "^10.0.1",
+		"imagemin-webp": "^8.0.0",
+		"tempy": "^3.1.0",
+		"xo": "^0.58.0"
 	}
 }

@@ -21,19 +21,6 @@
 		</a>
 		<br>
 		<br>
-		<br>
-		<a href="https://doppler.com/?utm_campaign=github_repo&utm_medium=referral&utm_content=imagemin&utm_source=github">
-			<div>
-				<img src="https://dashboard.doppler.com/imgs/logo-long.svg" width="240" alt="Doppler">
-			</div>
-			<b>All your environment variables, in one place</b>
-			<div>
-				<span>Stop struggling with scattered API keys, hacking together home-brewed tools,</span>
-				<br>
-				<span>and avoiding access controls. Keep your team and servers in sync with Doppler.</span>
-			</div>
-		</a>
-		<br>
 		<a href="https://strapi.io/?ref=sindresorhus">
 			<div>
 				<img src="https://sindresorhus.com/assets/thanks/strapi-logo-white-bg.png" width="200" alt="Strapi">
@@ -52,8 +39,8 @@
 
 ## Install
 
-```
-$ npm install imagemin
+```sh
+npm install imagemin
 ```
 
 ## Usage
@@ -74,14 +61,14 @@ const files = await imagemin(['images/*.{jpg,png}'], {
 });
 
 console.log(files);
-//=> [{data: <Buffer 89 50 4e …>, destinationPath: 'build/images/foo.jpg'}, …]
+//=> [{data: <Uint8Array 89 50 4e …>, destinationPath: 'build/images/foo.jpg'}, …]
 ```
 
 ## API
 
 ### imagemin(input, options?)
 
-Returns `Promise<object[]>` in the format `{data: Buffer, sourcePath: string, destinationPath: string}`.
+Returns `Promise<object[]>` in the format `{data: Uint8Array, sourcePath: string, destinationPath: string}`.
 
 #### input
 
@@ -103,7 +90,7 @@ Set the destination folder to where your files will be written. If no destinatio
 
 Type: `Array`
 
-[Plugins](https://www.npmjs.com/browse/keyword/imageminplugin) to use.
+The [plugins](https://www.npmjs.com/browse/keyword/imageminplugin) to use.
 
 ##### glob
 
@@ -112,15 +99,15 @@ Default: `true`
 
 Enable globbing when matching file paths.
 
-### imagemin.buffer(buffer, options?)
+### imagemin.buffer(data, options?)
 
-Returns `Promise<Buffer>`.
+Returns `Promise<Uint8Array>`.
 
-#### buffer
+#### data
 
-Type: `Buffer`
+Type: `Uint8Array`
 
-Buffer to optimize.
+The image data to optimize.
 
 #### options
 
@@ -135,6 +122,4 @@ Type: `Array`
 ## Related
 
 - [imagemin-cli](https://github.com/imagemin/imagemin-cli) - CLI for this module
-- [imagemin-app](https://github.com/imagemin/imagemin-app) - GUI app for this module
 - [gulp-imagemin](https://github.com/sindresorhus/gulp-imagemin) - Gulp plugin
-- [grunt-contrib-imagemin](https://github.com/gruntjs/grunt-contrib-imagemin) - Grunt plugin
