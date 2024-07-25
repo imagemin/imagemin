@@ -32,6 +32,7 @@
 		"environment": "^1.0.0",
 		"file-type": "^19.0.0",
 		"globby": "^14.0.1",
+		"image-dimensions": "^2.3.0",
 		"junk": "^4.0.1",
 		"ow": "^2.0.0",
 		"p-pipe": "^4.0.0",
@@ -42,7 +43,7 @@
 		"ava": "^6.1.2",
 		"del": "^7.1.0",
 		"imagemin-jpegtran": "^7.0.0",
-		"imagemin-svgo": "^10.0.1",
+		"imagemin-svgo": "^11.0.1",
 		"imagemin-webp": "^8.0.0",
 		"tempy": "^3.1.0",
 		"xo": "^0.58.0"

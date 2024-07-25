@@ -9,12 +9,17 @@ import convertToUnixPath from 'slash';
 import {assertUint8Array} from 'uint8array-extras';
 import {isBrowser} from 'environment';
 import ow from 'ow';
+import {imageDimensionsFromData} from 'image-dimensions';
 
 const handleFile = async (sourcePath, {destination, plugins = []}) => {
 	ow(plugins, ow.optional.array.message('The `plugins` option should be an `Array`'));
 
 	let data = await fsPromises.readFile(sourcePath);
-	data = await (plugins.length > 0 ? pPipe(...plugins)(data) : data);
+
+	const dimensions = imageDimensionsFromData(data);
+	if (dimensions === undefined || (dimensions.width !== 0 && dimensions.height !== 0)) {
+		data = await (plugins.length > 0 ? pPipe(...plugins)(data) : data);
+	}
 
 	const {ext} = await fileTypeFromBuffer(data) ?? {ext: path.extname(sourcePath)};
 	let destinationPath = destination ? path.join(destination, path.basename(sourcePath)) : undefined;
