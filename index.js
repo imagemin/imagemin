@@ -23,7 +23,9 @@ const handleFile = async (sourcePath, {destination, plugins = []}) => {
 
 	const {ext} = await fileTypeFromBuffer(data) ?? {ext: path.extname(sourcePath)};
 	let destinationPath = destination ? path.join(destination, path.basename(sourcePath)) : undefined;
-	destinationPath = ext === 'webp' ? changeFileExtension(destinationPath, 'webp') : destinationPath;
+	destinationPath = ext === 'webp' && destinationPath
+		? changeFileExtension(destinationPath, 'webp')
+		: destinationPath;
 
 	const returnValue = {
 		data: new Uint8Array(data),
